@@ -85,6 +85,7 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+LineBoii/Config.xcconfig
 LineBoii/env.swift
 # End of https://www.toptal.com/developers/gitignore/api/swift
 
