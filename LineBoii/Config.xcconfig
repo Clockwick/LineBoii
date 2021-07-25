@@ -1,0 +1,13 @@
+//
+//  Config.xcconfig
+//  LineBoii
+//
+//  Created by Paratthakorn Sribunyong on 25/7/2564 BE.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+LINE_CHANNEL_ID = 1656247614
+LINE_AUTH_URL_SCHEME = lineauth2
+LINE_SDK_URL_SCHEME = line3rdp
