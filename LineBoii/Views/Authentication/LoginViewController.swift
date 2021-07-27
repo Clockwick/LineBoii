@@ -10,11 +10,8 @@ import LineSDK
 
 
 
-class LoginViewController: UIViewController, LoginViewProtocol {
-    
-    
-    var presenter: LoginPresenterProtocol?
-    
+class LoginViewController: UIViewController {
+        
     private let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login with LINE", for: .normal)
@@ -42,16 +39,12 @@ class LoginViewController: UIViewController, LoginViewProtocol {
             switch result {
             case .success(let loginResult):
                 // Cache token
-                guard let token = AccessTokenStore.shared.current else {
-                    return
-                }
-                let accessToken = token.value
-                let expirationDate = token.expiresAt
+                let accessToken = loginResult.accessToken.value
+                let expirationDate = loginResult.accessToken.expiresAt
                 AuthManager.shared.cacheToken(accessToken: accessToken, expirationDate: expirationDate)
+                // Redirect user to Home
                 UIApplication.shared.windows.first?.rootViewController = TabBarViewController()
                 UIApplication.shared.windows.first?.makeKeyAndVisible()
-                    
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -59,9 +52,6 @@ class LoginViewController: UIViewController, LoginViewProtocol {
         
     }
     
-    func update() {
-        
-    }
     
 }
 

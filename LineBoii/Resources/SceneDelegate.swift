@@ -27,17 +27,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
         else {
-            let loginRouter = LoginRouter.start()
-            let initialVC = loginRouter.entry
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = initialVC
+            window.rootViewController = LoginViewController()
             self.window = window
             window.makeKeyAndVisible()
         }
-        
-        
-        
-        
+    
         
     }
 

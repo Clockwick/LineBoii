@@ -108,12 +108,15 @@ class AuthManager {
         
         refreshingToken = true
         
+        print("Refreshing token ...")
+        
         API.Auth.refreshAccessToken { [weak self] result in
             switch result {
             case .success(_):
                 guard let token = AccessTokenStore.shared.current else {
                     return
                 }
+                print("Refresh token success")
                 self?.onRefreshBlocks.removeAll()
                 let accessToken = token.value
                 let expirationDate = token.expiresAt
