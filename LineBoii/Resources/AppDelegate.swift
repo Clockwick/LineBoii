@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if AuthManager.shared.isSignedIn {
                 print("Sign in")
+                
                 AuthManager.shared.refreshIfNeeded(completion: nil)
                 
                 window.rootViewController = TabBarViewController()

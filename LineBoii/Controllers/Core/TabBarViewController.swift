@@ -21,7 +21,7 @@ class TabBarViewController: UITabBarController {
         vc2.title = "Order"
         vc3.title = "Inbox"
         vc4.title = "Others"
-        
+                        
         vc1.navigationItem.largeTitleDisplayMode = .never
         vc2.navigationItem.largeTitleDisplayMode = .never
         vc3.navigationItem.largeTitleDisplayMode = .never
@@ -36,6 +36,7 @@ class TabBarViewController: UITabBarController {
         nav2.navigationBar.tintColor = .label
         nav3.navigationBar.tintColor = .label
         nav4.navigationBar.tintColor = .label
+    
         
         nav1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
         nav2.tabBarItem = UITabBarItem(title: "Order", image: UIImage(systemName: "clock.arrow.circlepath"), tag: 1)
@@ -51,6 +52,5 @@ class TabBarViewController: UITabBarController {
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
 
     }
-    
 
 }

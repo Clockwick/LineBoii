@@ -6,6 +6,8 @@ target 'LineBoii' do
   use_frameworks!
 
   # Pods for LineBoii
+	pod 'SDWebImage'
+	pod 'TinyConstraints'
 	pod 'LineSDKSwift', '~> 5.0'
   target 'LineBoiiTests' do
     inherit! :search_paths
