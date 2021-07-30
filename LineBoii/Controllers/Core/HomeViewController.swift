@@ -26,13 +26,16 @@ class HomeViewController: UIViewController {
     
     private var timer: Timer?
     
-    private var currentIndex = 0
+    private var currentAdvertisementIndex = 0
+    private var currentDiscountIndex = 0
     
     private var sections = [HomeSectionType]()
     
-    private var photos = [String]()
+    private var advertisementPhotos = [String]()
     
-    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 400)
+    private var discountPhotos = [String]()
+    
+    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 1000)
     
     
     // MARK: - Floor
@@ -48,7 +51,6 @@ class HomeViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .secondarySystemBackground
         view.frame.size = contentViewSize
-        
         return view
     }()
     
@@ -62,18 +64,31 @@ class HomeViewController: UIViewController {
     )
     
     private var photoCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _ ) -> NSCollectionLayoutSection? in
-        return HomeViewController.createPhotoSectionLayout(section: sectionIndex)
+        return HomeViewController.createAdvertisementPhotosectionLayout(section: sectionIndex)
+    }))
+    
+    private var discountPhotoCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _ ) -> NSCollectionLayoutSection? in
+        return HomeViewController.createDiscountPhotosectionLayout(section: sectionIndex)
     }))
     
     // MARK: - PageControl
     
-    private let pageControl: UIPageControl = {
+    private let advertismentPageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.tintColor = .secondaryLabel
-        pageControl.currentPageIndicatorTintColor = .label
+        pageControl.currentPageIndicatorTintColor = .tertiaryLabel
 
         return pageControl
     }()
+    
+    
+    private let discountPageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.tintColor = .secondaryLabel
+        pageControl.currentPageIndicatorTintColor = .tertiaryLabel
+        return pageControl
+    }()
+    
     
     // MARK: - Spinner
     
@@ -195,21 +210,25 @@ class HomeViewController: UIViewController {
         contentView.addSubview(messengerTextLabel)
         contentView.addSubview(taxiTextLabel)
         contentView.addSubview(advertisementImageView)
-        contentView.addSubview(pageControl)
+        contentView.addSubview(advertismentPageControl)
+        contentView.addSubview(discountPageControl)
         
         cardCollectionView.dataSource = self
         cardCollectionView.delegate = self
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
+        discountPhotoCollectionView.delegate = self
+        discountPhotoCollectionView.dataSource = self
         
         configureCollectionView()
         configurePhotoCollectionView()
         
         configureModels()
         
-        deliveryButton.addTarget(self, action: #selector(didTapDelivery), for: .touchUpInside)
+        configureTargets()
         
-        timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNext), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNextAdvertisement), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNextDiscount), userInfo: nil, repeats: true)
         
     }
     override func viewDidLayoutSubviews() {
@@ -226,26 +245,45 @@ class HomeViewController: UIViewController {
         messengerTextLabel.frame = CGRect(x: bikeIconButton.left, y: bikeIconButton.bottom + 10, width: iconButtonSize, height: 20)
         taxiTextLabel.frame = CGRect(x: taxiIconButton.left, y: taxiIconButton.bottom + 10, width: iconButtonSize, height: 20)
         
-        advertisementImageView.frame = CGRect(x: 10, y: taxiTextLabel.bottom + 10, width: contentView.width - 20 , height: contentView.height * 0.15)
         
-        photoCollectionView.frame = CGRect(x: 10, y: advertisementImageView.bottom + 10, width: contentView.width - 20, height: contentView.height * 0.15)
+        advertisementImageView.frame = CGRect(x: 10, y: taxiTextLabel.bottom + 10, width: contentView.width - 20 , height: 200)
         
-        pageControl.frame = CGRect(x: 0, y: photoCollectionView.bottom + 5, width: contentView.width, height: 20)
+        photoCollectionView.frame = CGRect(x: 10, y: advertisementImageView.bottom + 10, width: contentView.width - 20, height: 200)
         
-        cardCollectionView.frame = CGRect(x: 10, y: pageControl.bottom + 10, width: contentView.width - 20, height: contentView.height)
+        advertismentPageControl.frame = CGRect(x: 0, y: photoCollectionView.bottom + 5, width: contentView.width, height: 20)
+        
+        cardCollectionView.frame = CGRect(x: 10, y: advertismentPageControl.bottom + 10, width: contentView.width - 20, height: 425)
+        
+        discountPhotoCollectionView.frame = CGRect(x: 10, y: cardCollectionView.bottom + 10, width: contentView.width - 20, height: 200)
+        
+        discountPageControl.frame = CGRect(x: 0, y: discountPhotoCollectionView.bottom + 5, width: contentView.width, height: 20)
         
     }
     
+    // MARK: - Selector
+    
     @objc func didTapDelivery() {
-        
+        print("Tap")
+        let vc = OrderFoodViewController()
+        vc.title = "สั่งอาหาร"
+        vc.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: - Configure
     
+    private func configureTargets() {
+        deliveryButton.addTarget(self, action: #selector(didTapDelivery), for: .touchUpInside)
+    }
+    
     private func configurePhotoCollectionView() {
-        photoCollectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
+        photoCollectionView.register(HorizontalScrollCollectionRoundViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionRoundViewCell.identifier)
         photoCollectionView.backgroundColor = .secondarySystemBackground
         contentView.addSubview(photoCollectionView)
+        
+        discountPhotoCollectionView.register(HorizontalScrollCollectionRoundViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionRoundViewCell.identifier)
+        discountPhotoCollectionView.backgroundColor = .secondarySystemBackground
+        contentView.addSubview(discountPhotoCollectionView)
     }
     
     
@@ -278,36 +316,81 @@ class HomeViewController: UIViewController {
 
         sections.append(.streetFoodRestaurantPromotion(viewModels: previewRestaurantList))
         
-        photos.append("")
-        photos.append("")
-        photos.append("")
-        photos.append("")
-        photos.append("")
-        photos.append("")
-        photos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
+        advertisementPhotos.append("")
         
-        pageControl.numberOfPages = photos.count
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
+        discountPhotos.append("")
         
-        cardCollectionView.reloadData()
-        photoCollectionView.reloadData()
+        advertismentPageControl.numberOfPages = advertisementPhotos.count
+        discountPageControl.numberOfPages = discountPhotos.count
+        
+        DispatchQueue.main.async {
+            self.cardCollectionView.reloadData()
+            self.photoCollectionView.reloadData()
+            self.discountPhotoCollectionView.reloadData()
+        }
+        
     }
     
     
-    @objc private func slideToNext() {
-        pageControl.currentPage = currentIndex
-        photoCollectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .right, animated: true)
-        if currentIndex <= photos.count - 1 {
-            currentIndex += 1
+    @objc private func slideToNextAdvertisement() {
+        advertismentPageControl.currentPage = currentAdvertisementIndex
+        photoCollectionView.scrollToItem(at: IndexPath(item: currentAdvertisementIndex, section: 0), at: .right, animated: true)
+        if currentAdvertisementIndex <= advertisementPhotos.count - 1 {
+            currentAdvertisementIndex += 1
         }
         else {
-            currentIndex = 0
+            currentAdvertisementIndex = 0
         }
-        
+    }
+    
+    @objc private func slideToNextDiscount() {
+        discountPageControl.currentPage = currentDiscountIndex
+        discountPhotoCollectionView.scrollToItem(at: IndexPath(item: currentDiscountIndex, section: 0), at: .right, animated: true)
+        if currentDiscountIndex <= discountPhotos.count - 1 {
+            currentDiscountIndex += 1
+        }
+        else {
+            currentDiscountIndex = 0
+        }
     }
     
     // MARK: - Section layout
     
-    static func createPhotoSectionLayout(section: Int) -> NSCollectionLayoutSection {
+    static func createDiscountPhotosectionLayout(section: Int) -> NSCollectionLayoutSection {
+        
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
+        // Vertical Group in horizontal group
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(190)),
+            subitem: item,
+            count: 1)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        return section
+        
+    }
+    
+    static func createAdvertisementPhotosectionLayout(section: Int) -> NSCollectionLayoutSection {
         
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
@@ -452,22 +535,44 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let visibleRect = CGRect(origin: photoCollectionView.contentOffset, size: photoCollectionView.bounds.size)
-        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-        if let visibleIndexPath = photoCollectionView.indexPathForItem(at: visiblePoint) {
-            if currentIndex <= photos.count - 1 {
-                currentIndex = visibleIndexPath.item
+        
+        if collectionView == self.photoCollectionView {
+            let visibleRect = CGRect(origin: photoCollectionView.contentOffset, size: photoCollectionView.bounds.size)
+            let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+            if let visibleIndexPath = photoCollectionView.indexPathForItem(at: visiblePoint) {
+                if currentAdvertisementIndex <= advertisementPhotos.count - 1 {
+                    currentAdvertisementIndex = visibleIndexPath.item
+                }
+                else {
+                    currentAdvertisementIndex = 0
+                }
+                advertismentPageControl.currentPage = currentAdvertisementIndex
             }
-            else {
-                currentIndex = 0
-            }
-            pageControl.currentPage = currentIndex
         }
+        
+        if collectionView == self.discountPhotoCollectionView {
+            let visibleRect = CGRect(origin: discountPhotoCollectionView.contentOffset, size: discountPhotoCollectionView.bounds.size)
+            let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+            if let visibleIndexPath = discountPhotoCollectionView.indexPathForItem(at: visiblePoint) {
+                if currentDiscountIndex <= discountPhotos.count - 1 {
+                    currentDiscountIndex = visibleIndexPath.item
+                }
+                else {
+                    currentDiscountIndex = 0
+                }
+                discountPageControl.currentPage = currentDiscountIndex
+            }
+        }
+        
+        
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.photoCollectionView {
-            return photos.count
+            return advertisementPhotos.count
+        }
+        if collectionView == self.discountPhotoCollectionView {
+            return discountPhotos.count
         }
         if collectionView == self.cardCollectionView {
             let type = sections[section]
@@ -483,15 +588,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.photoCollectionView {
-            guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionViewCell else {
+            guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionRoundViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionRoundViewCell else {
                 return UICollectionViewCell()
             }
-            
+            return cell
+        }
+        
+        if collectionView == self.discountPhotoCollectionView {
+            guard let cell = discountPhotoCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionRoundViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionRoundViewCell else {
+                return UICollectionViewCell()
+            }
             return cell
         }
 
         if collectionView == self.cardCollectionView {
-
             let type = sections[indexPath.section]
             switch type {
 
@@ -519,6 +629,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         cardCollectionView.deselectItem(at: indexPath, animated: true)
         photoCollectionView.deselectItem(at: indexPath, animated: true)
+        discountPhotoCollectionView.deselectItem(at: indexPath, animated: true)
     }
 //
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -529,6 +640,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == self.photoCollectionView {
             return 1
         }
+        
+        if collectionView == self.discountPhotoCollectionView {
+            return 1
+        }
+        
         return 0
     }
 

@@ -2,15 +2,15 @@
 //  HoritonzalScrollCollectionViewCell.swift
 //  LineBoii
 //
-//  Created by Paratthakorn Sribunyong on 30/7/2564 BE.
+//  Created by Paratthakorn Sribunyong on 28/7/2564 BE.
 //
 
 import UIKit
 import SDWebImage
 
-class HorizontalScrollCollectionViewCell: UICollectionViewCell {
-
-    static let identifier = "HorizontalScrollCollectionViewCell"
+class HorizontalScrollCollectionRoundViewCell: UICollectionViewCell {
+    
+    static let identifier = "HorizontalScrollCollectionRoundViewCell"
     
     private var isRound = true
     
@@ -28,6 +28,8 @@ class HorizontalScrollCollectionViewCell: UICollectionViewCell {
         ]
         
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 10
         
         imageView.backgroundColor = color.randomElement()
         imageView.tintColor = .secondarySystemBackground
@@ -65,4 +67,3 @@ class HorizontalScrollCollectionViewCell: UICollectionViewCell {
     
     
 }
-
