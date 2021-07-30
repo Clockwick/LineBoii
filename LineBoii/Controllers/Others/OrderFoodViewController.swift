@@ -10,6 +10,7 @@ import UIKit
 class OrderFoodViewController: UIViewController {
     
     private var advertisementPhotos = [String]()
+    private var promotionPhotos = [String]()
     
     private var currentAdvertisementIndex = 0
     
@@ -23,7 +24,11 @@ class OrderFoodViewController: UIViewController {
         return pageControl
     }()
     
-    private var collectionView: UICollectionView = UICollectionView(
+    private var promotionCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _) -> NSCollectionLayoutSection? in
+        return OrderFoodViewController.createSectionLayout(section: sectionIndex)
+    }))
+    
+    private var advertisementCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _ ) -> NSCollectionLayoutSection? in
             return CollectionView.createSectionLayout(section: sectionIndex)
@@ -93,19 +98,50 @@ class OrderFoodViewController: UIViewController {
 
     }
     
-    private func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
+    
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(30),
+                                               heightDimension: .absolute(30)
+            )
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
         
-        collectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
-        collectionView.backgroundColor = .secondarySystemBackground
-        view.addSubview(collectionView)
+        let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)),
+            subitem: item,
+            count: 4)
+        
+        let verticalGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(30), heightDimension: .absolute(100)),
+            subitem: horizontalGroup,
+            count: 2)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: verticalGroup)
+        section.orthogonalScrollingBehavior = .none
+        return section
+    }
+    
+    private func configureCollectionView() {
+        advertisementCollectionView.delegate = self
+        advertisementCollectionView.dataSource = self
+        
+        advertisementCollectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
+        advertisementCollectionView.backgroundColor = .secondarySystemBackground
+        
+        promotionCollectionView.delegate = self
+        promotionCollectionView.dataSource = self
+        
+        promotionCollectionView.register(_2x4CollectionViewCell.self, forCellWithReuseIdentifier: _2x4CollectionViewCell.identifier)
+        
+        view.addSubview(advertisementCollectionView)
 
     }
     
     @objc private func slideToNextAdvertisement() {
         advertisementPageControl.currentPage = currentAdvertisementIndex
-        collectionView.scrollToItem(at: IndexPath(item: currentAdvertisementIndex, section: 0), at: .right, animated: true)
+        advertisementCollectionView.scrollToItem(at: IndexPath(item: currentAdvertisementIndex, section: 0), at: .right, animated: true)
         if currentAdvertisementIndex <= advertisementPhotos.count - 1 {
             currentAdvertisementIndex += 1
         }
@@ -119,8 +155,8 @@ class OrderFoodViewController: UIViewController {
         
         tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 89)
         imageView.frame = CGRect(x: 0, y: tableView.bottom, width: view.width, height: 90)
-        collectionView.frame = CGRect(x: 0, y: imageView.bottom, width: view.width, height: 200)
-        advertisementPageControl.frame = CGRect(x: 0, y: collectionView.bottom + 5, width: view.width, height: 20)
+        advertisementCollectionView.frame = CGRect(x: 0, y: imageView.bottom, width: view.width, height: 200)
+        advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: view.width, height: 20)
         couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: view.width, height: 20)
         couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
     }
@@ -137,46 +173,76 @@ class OrderFoodViewController: UIViewController {
         advertisementPhotos.append("")
         advertisementPhotos.append("")
         
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        promotionPhotos.append("")
+        
         advertisementPageControl.numberOfPages = advertisementPhotos.count
         
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.advertisementCollectionView.reloadData()
+            self.promotionCollectionView.reloadData()
         }
     }
-    
 
-    
     
 }
 
+
+
 extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-        if let visibleIndexPath = collectionView.indexPathForItem(at: visiblePoint) {
-            if currentAdvertisementIndex <= advertisementPhotos.count - 1 {
-                currentAdvertisementIndex = visibleIndexPath.item
+        if collectionView == self.advertisementCollectionView {
+            let visibleRect = CGRect(origin: advertisementCollectionView.contentOffset, size: advertisementCollectionView.bounds.size)
+            let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+            if let visibleIndexPath = advertisementCollectionView.indexPathForItem(at: visiblePoint) {
+                if currentAdvertisementIndex <= advertisementPhotos.count - 1 {
+                    currentAdvertisementIndex = visibleIndexPath.item
+                }
+                else {
+                    currentAdvertisementIndex = 0
+                }
+                advertisementPageControl.currentPage = currentAdvertisementIndex
             }
-            else {
-                currentAdvertisementIndex = 0
-            }
-            advertisementPageControl.currentPage = currentAdvertisementIndex
         }
-        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return advertisementPhotos.count
+        if collectionView == self.advertisementCollectionView {
+            return advertisementPhotos.count
+        }
+        if collectionView == self.promotionCollectionView {
+            return 0
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionViewCell else {
+        if collectionView == self.advertisementCollectionView {
+            guard let cell = advertisementCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            return cell
+        }
+        if collectionView == self.promotionCollectionView {
             return UICollectionViewCell()
         }
-        return cell
+        return UICollectionViewCell()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        if collectionView == self.advertisementCollectionView {
+            return 1
+        }
+        if collectionView == self.promotionCollectionView {
+            return 1
+        }
+        return 0
+        
     }
     
 }
