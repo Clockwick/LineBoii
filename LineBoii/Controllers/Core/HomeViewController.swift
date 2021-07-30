@@ -6,39 +6,39 @@
 //
 
 import UIKit
-import TinyConstraints
 
 
 enum HomeSectionType {
-    case advertisementList(viewModels: [AdvertisementViewModel])
     case hotRestaurantPromotion(viewModels: [RestaurantPreviewViewModel])
     case streetFoodRestaurantPromotion(viewModels: [RestaurantPreviewViewModel])
-    case promotionList(viewModels: [PromotionViewModel])
 
     var title: String {
         switch self {
-        case .advertisementList:
-            return "Header 1"
         case .hotRestaurantPromotion:
             return "รวมดีลร้านดัง ลดสูงสุด 60%"
         case .streetFoodRestaurantPromotion:
             return "สตรีทฟู้ดมีโปรลดสูงสุด 30%"
-        case .promotionList:
-            return ""
         }
     }
-    
 }
 
 class HomeViewController: UIViewController {
     
+    private var timer: Timer?
+    
+    private var currentIndex = 0
+    
     private var sections = [HomeSectionType]()
+    
+    private var photos = [String]()
     
     lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 400)
     
+    
+    // MARK: - Floor
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
-        scrollView.backgroundColor = .systemBackground
+        scrollView.backgroundColor = .secondarySystemBackground
         scrollView.frame = self.view.bounds
         scrollView.contentSize = contentViewSize
         return scrollView
@@ -46,17 +46,36 @@ class HomeViewController: UIViewController {
     
     lazy var contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         view.frame.size = contentViewSize
         
         return view
     }()
     
-    private var collectionView: UICollectionView = UICollectionView(
+    
+    // MARK: - CollectionView
+    private var cardCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _ ) -> NSCollectionLayoutSection? in
-            return HomeViewController.createSectionLayout(section: sectionIndex)
-        }))
+            return HomeViewController.createCardSectionLayout(section: sectionIndex)
+        })
+    )
+    
+    private var photoCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _ ) -> NSCollectionLayoutSection? in
+        return HomeViewController.createPhotoSectionLayout(section: sectionIndex)
+    }))
+    
+    // MARK: - PageControl
+    
+    private let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.tintColor = .secondaryLabel
+        pageControl.currentPageIndicatorTintColor = .label
+
+        return pageControl
+    }()
+    
+    // MARK: - Spinner
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -64,6 +83,8 @@ class HomeViewController: UIViewController {
         spinner.hidesWhenStopped = true
         return spinner
     }()
+    
+    // MARK: - Text
     
     private let helloText: UILabel = {
         let label = UILabel()
@@ -85,54 +106,48 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    private let deliveryButton: UIButton = UIButton()
-    
+    // MARK: - ImageView
     private let advertisementImageView: UIImageView = {
-        
         let image = UIImage(systemName: "photo")
-        
         let imageView = UIImageView(image: image)
-        
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         imageView.backgroundColor = .label
-        imageView.tintColor = .systemBackground
-        
+        imageView.tintColor = .secondarySystemBackground
         return imageView
     }()
     
-    private let advertisementImageView1: UIImageView = {
-        
-        let image = UIImage(systemName: "photo")
-        
-        let imageView = UIImageView(image: image)
-        
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 10
-        imageView.backgroundColor = .label
-        imageView.tintColor = .systemBackground
-        
-        return imageView
-    }()
+    // MARK: - Button
+    
+    private let deliveryButton: UIButton = UIButton()
     
     private let bikeIconButton: UIButton = {
         let button = UIButton()
         let image = UIImage(systemName: "bicycle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .regular))
         
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = .secondarySystemBackground
         button.setImage(image, for: .normal)
         button.tintColor = .label
         return button
     }()
     
+    private let taxiIconButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .regular))
+        button.backgroundColor = .secondarySystemBackground
+        button.setImage(image, for: .normal)
+        button.tintColor = .label
+        
+        return button
+    }()
+    
+    // MARK: - Label
+    
     private let messengerTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-//        label.backgroundColor = .green
         label.textAlignment = .center
         label.text = "Messenger"
         label.adjustsFontForContentSizeCategory = true
@@ -146,7 +161,6 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-//        label.backgroundColor = .red
         label.text = "Taxi"
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .label
@@ -155,22 +169,17 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    private let taxiIconButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .regular))
-        button.backgroundColor = .systemBackground
-        button.setImage(image, for: .normal)
-        button.tintColor = .label
-        
-        return button
-    }()
-
+    
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+        contentView.backgroundColor = .secondarySystemBackground
         
-        contentView.backgroundColor = .systemBackground
+        // Init
         createGradientBackground()
         contentView.addSubview(helloText)
         contentView.addSubview(helpText)
@@ -186,13 +195,23 @@ class HomeViewController: UIViewController {
         contentView.addSubview(messengerTextLabel)
         contentView.addSubview(taxiTextLabel)
         contentView.addSubview(advertisementImageView)
-        contentView.addSubview(advertisementImageView1)
+        contentView.addSubview(pageControl)
+        
+        cardCollectionView.dataSource = self
+        cardCollectionView.delegate = self
+        photoCollectionView.delegate = self
+        photoCollectionView.dataSource = self
+        
         configureCollectionView()
+        configurePhotoCollectionView()
+        
         configureModels()
         
+        deliveryButton.addTarget(self, action: #selector(didTapDelivery), for: .touchUpInside)
+        
+        timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNext), userInfo: nil, repeats: true)
+        
     }
-
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -209,29 +228,106 @@ class HomeViewController: UIViewController {
         
         advertisementImageView.frame = CGRect(x: 10, y: taxiTextLabel.bottom + 10, width: contentView.width - 20 , height: contentView.height * 0.15)
         
-        advertisementImageView1.frame = CGRect(x: 10, y: advertisementImageView.bottom + 10, width: contentView.width - 20 , height: contentView.height * 0.15)
-        collectionView.frame = CGRect(x: 10, y: advertisementImageView1.bottom + 10, width: contentView.width - 20, height: contentView.bounds.height)
+        photoCollectionView.frame = CGRect(x: 10, y: advertisementImageView.bottom + 10, width: contentView.width - 20, height: contentView.height * 0.15)
+        
+        pageControl.frame = CGRect(x: 0, y: photoCollectionView.bottom + 5, width: contentView.width, height: 20)
+        
+        cardCollectionView.frame = CGRect(x: 10, y: pageControl.bottom + 10, width: contentView.width - 20, height: contentView.height)
         
     }
     
+    @objc func didTapDelivery() {
+        
+    }
+    
+    // MARK: - Configure
+    
+    private func configurePhotoCollectionView() {
+        photoCollectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
+        photoCollectionView.backgroundColor = .secondarySystemBackground
+        contentView.addSubview(photoCollectionView)
+    }
+    
+    
     private func configureCollectionView() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
-//        collectionView.register(FeaturedPlaylistCollectionViewCell.self, forCellWithReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier)
-//        collectionView.register(RecommendedTrackCollectionViewCell.self, forCellWithReuseIdentifier: RecommendedTrackCollectionViewCell.identifier)
-        collectionView.register(
+        cardCollectionView.register(HorizontalScrollCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCardCollectionViewCell.identifier)
+        cardCollectionView.register(
             TitleHeaderCollectionReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: TitleHeaderCollectionReusableView.identifier
         )
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = .systemBackground
         
-        contentView.addSubview(collectionView)
+        cardCollectionView.backgroundColor = .secondarySystemBackground
+        contentView.addSubview(cardCollectionView)
     }
     
-    static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
+    private func configureModels() {
+        
+        let previewRestaurant1 = RestaurantPreviewViewModel(title: "Umm!..Milk", subtitle: "สั่งเลย!")
+        let previewRestaurant2 = RestaurantPreviewViewModel(title: "KFC", subtitle: "สั่งเลย!")
+        let previewRestaurant3 = RestaurantPreviewViewModel(title: "S&P", subtitle: "สั่งเลย!")
+        let previewRestaurant4 = RestaurantPreviewViewModel(title: "Tenjo", subtitle: "สั่งเลย!")
+        let previewRestaurant5 = RestaurantPreviewViewModel(title: "Senju", subtitle: "สั่งเลย!")
+        let previewRestaurant6 = RestaurantPreviewViewModel(title: "Swensen's", subtitle: "สั่งเลย!")
+        let previewRestaurant7 = RestaurantPreviewViewModel(title: "AuntieAnne's", subtitle: "สั่งเลย!")
+        let previewRestaurant8 = RestaurantPreviewViewModel(title: "Yoshinoya", subtitle: "สั่งเลย!")
+
+        let previewRestaurantList = [previewRestaurant1,previewRestaurant2,previewRestaurant3,previewRestaurant4,previewRestaurant5,previewRestaurant6,previewRestaurant7,previewRestaurant8]
+
+        sections.append(.hotRestaurantPromotion(viewModels: previewRestaurantList))
+
+        sections.append(.streetFoodRestaurantPromotion(viewModels: previewRestaurantList))
+        
+        photos.append("")
+        photos.append("")
+        photos.append("")
+        photos.append("")
+        photos.append("")
+        photos.append("")
+        photos.append("")
+        
+        pageControl.numberOfPages = photos.count
+        
+        cardCollectionView.reloadData()
+        photoCollectionView.reloadData()
+    }
+    
+    
+    @objc private func slideToNext() {
+        pageControl.currentPage = currentIndex
+        photoCollectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .right, animated: true)
+        if currentIndex <= photos.count - 1 {
+            currentIndex += 1
+        }
+        else {
+            currentIndex = 0
+        }
+        
+    }
+    
+    // MARK: - Section layout
+    
+    static func createPhotoSectionLayout(section: Int) -> NSCollectionLayoutSection {
+        
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
+        // Vertical Group in horizontal group
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(190)),
+            subitem: item,
+            count: 1)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        return section
+        
+    }
+    
+    static func createCardSectionLayout(section: Int) -> NSCollectionLayoutSection {
         let supplementaryViews = [
             NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
@@ -243,140 +339,31 @@ class HomeViewController: UIViewController {
             )
         ]
         
-        switch section {
-//        case 0:
-//            let item = NSCollectionLayoutItem(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                   heightDimension: .fractionalHeight(1.0)
-//                )
-//            )
-//
-//            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(400)),
-//                subitem: item,
-//                count: 1)
-//
-//            // Section
-//            let section = NSCollectionLayoutSection(group: horizontalGroup)
-//            section.orthogonalScrollingBehavior = .none
-//            section.boundarySupplementaryItems = supplementaryViews
-//            return section
         
-        case 1:
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalHeight(1.0)
-                )
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(1.0)
             )
-            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(400)),
-                subitem: item,
-                count: 1)
-
-            // Section
-            let section = NSCollectionLayoutSection(group: horizontalGroup)
-            section.orthogonalScrollingBehavior = .groupPaging
-            section.boundarySupplementaryItems = supplementaryViews
-            return section
-
-//        case 2:
-//            let item = NSCollectionLayoutItem(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
-//                                                   heightDimension: .fractionalHeight(0.8)
-//                )
-//            )
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-//
-//            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200)),
-//                subitem: item,
-//                count: 1)
-//
-//            // Section
-//            let section = NSCollectionLayoutSection(group: horizontalGroup)
-//            section.orthogonalScrollingBehavior = .continuous
-//            section.boundarySupplementaryItems = supplementaryViews
-//            return section
-//
-//        case 3:
-//            let item = NSCollectionLayoutItem(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
-//                                                   heightDimension: .fractionalHeight(0.8)
-//                )
-//            )
-//
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-//
-//            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200)),
-//                subitem: item,
-//                count: 1)
-//
-//            // Section
-//            let section = NSCollectionLayoutSection(group: horizontalGroup)
-//            section.orthogonalScrollingBehavior = .continuous
-//            section.boundarySupplementaryItems = supplementaryViews
-//            return section
-//
-//        case 4:
-//            let item = NSCollectionLayoutItem(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                   heightDimension: .fractionalHeight(1.0)
-//                )
-//            )
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-//
-//            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-//                layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(400)),
-//                subitem: item,
-//                count: 1)
-//
-//            // Section
-//            let section = NSCollectionLayoutSection(group: horizontalGroup)
-//            section.orthogonalScrollingBehavior = .groupPaging
-//            section.boundarySupplementaryItems = supplementaryViews
-//            return section
-            
-        default:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-            
-            // Vertical Group in horizontal group
-            let group = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200)),
-                subitem: item,
-                count: 1)
-            
-            // Section
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .groupPaging
-            section.boundarySupplementaryItems = supplementaryViews
-            return section
-        }
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 2)
         
+        let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.425), heightDimension: .absolute(175)),
+            subitem: item,
+            count: 1)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: horizontalGroup)
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = supplementaryViews
+        return section
+        
+       
         
     }
     
-    private func configureModels() {
-
-        //Configure Models
-        let advertisement1 = AdvertisementViewModel(imageURL: nil)
-        let advertisement2 = AdvertisementViewModel(imageURL: nil)
-        let advertisement3 = AdvertisementViewModel(imageURL: nil)
-        let advertisement4 = AdvertisementViewModel(imageURL: nil)
-        
-        let advertisementList = [advertisement1, advertisement2,advertisement3,advertisement4]
-        
-        sections.append(.advertisementList(viewModels: advertisementList))
-        
-       
-        collectionView.reloadData()
-    }
+    
+    // MARK: - Accessories
     
     private func createGradientBackground() {
         let imageView = UIImageView(frame: CGRect(x: 0, y: -60, width: contentView.width, height: view.height * 0.4))
@@ -403,7 +390,7 @@ class HomeViewController: UIViewController {
         // Elevation
         let button = addButtonElevation(button: deliveryButton)
         
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = .secondarySystemBackground
         button.titleLabel?.font = UIFont(name: "supermarket", size: 24)
         button.setTitleColor(.label, for: .normal)
         button.setTitle("Delivery", for: .normal)
@@ -432,9 +419,7 @@ class HomeViewController: UIViewController {
         button.layer.shadowRadius = 2.0
         return button
     }
-    
-    
-    
+
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
         let size = image.size
         
@@ -461,74 +446,107 @@ class HomeViewController: UIViewController {
         return newImage
     }
     
-    
-
 }
 
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let type = sections[section]
-        switch type {
-        case .advertisementList(viewModels: let viewModels):
-            return viewModels.count
-        case .hotRestaurantPromotion(viewModels: let viewModels):
-            return 0
-        case .streetFoodRestaurantPromotion(viewModels: let viewModels):
-            return 0
-        case .promotionList(viewModels: let viewModels):
-            return 0
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let visibleRect = CGRect(origin: photoCollectionView.contentOffset, size: photoCollectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        if let visibleIndexPath = photoCollectionView.indexPathForItem(at: visiblePoint) {
+            if currentIndex <= photos.count - 1 {
+                currentIndex = visibleIndexPath.item
+            }
+            else {
+                currentIndex = 0
+            }
+            pageControl.currentPage = currentIndex
         }
-        
     }
-    
-    
+        
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.photoCollectionView {
+            return photos.count
+        }
+        if collectionView == self.cardCollectionView {
+            let type = sections[section]
+            switch type {
+            case .hotRestaurantPromotion(viewModels: let viewModels):
+                return viewModels.count
+            case .streetFoodRestaurantPromotion(viewModels: let viewModels):
+                return viewModels.count
+            }
+        }
+        return 0
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let type = sections[indexPath.section]
-//
-        switch type {
-        case .advertisementList(viewModels: let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionViewCell else {
+        if collectionView == self.photoCollectionView {
+            guard let cell = photoCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            let viewModel = viewModels[indexPath.row]
-//            cell.configure(with: viewModel)
+            
             return cell
-        case .hotRestaurantPromotion(viewModels: let viewModels):
-            return UICollectionViewCell()
-        case .streetFoodRestaurantPromotion(viewModels: let viewModels):
-            return UICollectionViewCell()
+        }
 
-        case .promotionList(viewModels: let viewModels):
-            return UICollectionViewCell()
+        if collectionView == self.cardCollectionView {
 
+            let type = sections[indexPath.section]
+            switch type {
+
+            case .hotRestaurantPromotion(viewModels: let viewModels):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+
+                cell.configure(with: viewModel)
+                return cell
+            case .streetFoodRestaurantPromotion(viewModels: let viewModels):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
+            }
         }
         
+        return UICollectionViewCell()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        cardCollectionView.deselectItem(at: indexPath, animated: true)
+        photoCollectionView.deselectItem(at: indexPath, animated: true)
     }
-    
+//
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
-            return UICollectionReusableView()
+        if collectionView == self.cardCollectionView {
+            return sections.count
         }
         
-        let section = indexPath.section
-        let title = sections[section].title
-        header.configure(with: title)
-        return header
+        if collectionView == self.photoCollectionView {
+            return 1
+        }
+        return 0
     }
-    
-    
-    
-    
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if collectionView == self.cardCollectionView {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
+                return UICollectionReusableView()
+            }
+            let section = indexPath.section
+            let title = sections[section].title
+            header.configure(with: title)
+            return header
+        }
+        return UICollectionReusableView()
+    }
+
+
+
 }
 
 

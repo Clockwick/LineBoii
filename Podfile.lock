@@ -5,24 +5,20 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - TinyConstraints (4.0.1)
 
 DEPENDENCIES:
   - LineSDKSwift (~> 5.0)
   - SDWebImage
-  - TinyConstraints
 
 SPEC REPOS:
   trunk:
     - LineSDKSwift
     - SDWebImage
-    - TinyConstraints
 
 SPEC CHECKSUMS:
   LineSDKSwift: f9c232f89185b887b5725aa278325f3a23e33bbc
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
 
-PODFILE CHECKSUM: 5feb410e61e1c11d798b6cd245a86c3eb13ac24e
+PODFILE CHECKSUM: 961cdc8d36f0fe301c06f6567ad83772d5c3a28f
 
 COCOAPODS: 1.10.0

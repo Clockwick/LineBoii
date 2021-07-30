@@ -9,6 +9,6 @@ import Foundation
 
 struct RestaurantPreviewViewModel {
     let title: String
-    let subTitle: String
+    let subtitle: String
 }
 

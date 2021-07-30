@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class TitleHeaderCollectionReusableView: UICollectionReusableView {
     static let identifier = "TitleHeaderCollectionReusableView"
     
@@ -14,13 +15,13 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 1
-        label.font = UIFont(name: "supermarket", size: 16)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemBackground
+        backgroundColor = .secondarySystemBackground
         addSubview(label)
     }
     
@@ -30,7 +31,7 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        label.frame = CGRect(x: -40, y: 0, width: width, height: height)
     }
     
     func configure(with title: String) {

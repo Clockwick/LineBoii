@@ -26,12 +26,11 @@ class HorizontalScrollCollectionViewCell: UICollectionViewCell {
         ]
         
         imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
         
         imageView.backgroundColor = color.randomElement()
-        imageView.tintColor = .systemBackground
+        imageView.tintColor = .secondarySystemBackground
         
         return imageView
     }()
