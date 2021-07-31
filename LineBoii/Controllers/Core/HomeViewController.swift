@@ -75,8 +75,8 @@ class HomeViewController: UIViewController {
     
     private let advertismentPageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.tintColor = .secondaryLabel
-        pageControl.currentPageIndicatorTintColor = .tertiaryLabel
+        pageControl.pageIndicatorTintColor = .tertiaryLabel
+        pageControl.currentPageIndicatorTintColor = .label
 
         return pageControl
     }()
@@ -84,8 +84,8 @@ class HomeViewController: UIViewController {
     
     private let discountPageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.tintColor = .secondaryLabel
-        pageControl.currentPageIndicatorTintColor = .tertiaryLabel
+        pageControl.pageIndicatorTintColor = .tertiaryLabel
+        pageControl.currentPageIndicatorTintColor = .label
         return pageControl
     }()
     

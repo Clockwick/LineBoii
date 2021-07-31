@@ -10,16 +10,35 @@ import UIKit
 class OrderFoodViewController: UIViewController {
     
     private var advertisementPhotos = [String]()
-    private var promotionPhotos = [String]()
+    private var promotionCell = [PromotionCollectionViewCellViewModel]()
     
     private var currentAdvertisementIndex = 0
     
     private var couponAmount = 0
     
+    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 1000)
+    
+    
+    // MARK: - Floor
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.backgroundColor = .secondarySystemBackground
+        scrollView.frame = self.view.bounds
+        scrollView.contentSize = contentViewSize
+        return scrollView
+    }()
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .secondarySystemBackground
+        view.frame.size = contentViewSize
+        return view
+    }()
+    
     private let advertisementPageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.tintColor = .secondaryLabel
-        pageControl.currentPageIndicatorTintColor = .tertiaryLabel
+        pageControl.pageIndicatorTintColor = .tertiaryLabel
+        pageControl.currentPageIndicatorTintColor = .label
 
         return pageControl
     }()
@@ -78,17 +97,19 @@ class OrderFoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .secondarySystemBackground
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.backgroundColor = .secondarySystemBackground
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
     
-        view.addSubview(tableView)
-        view.addSubview(imageView)
-        view.addSubview(advertisementPageControl)
-        view.addSubview(couponImageView)
-        view.addSubview(couponLabel)
+        contentView.addSubview(tableView)
+        contentView.addSubview(imageView)
+        contentView.addSubview(advertisementPageControl)
+        contentView.addSubview(couponImageView)
+        contentView.addSubview(couponLabel)
         
         configureCollectionView()
         
@@ -101,19 +122,19 @@ class OrderFoodViewController: UIViewController {
     static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
     
         let item = NSCollectionLayoutItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(30),
-                                               heightDimension: .absolute(30)
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .absolute(150)
             )
         )
-        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 7.5, leading: 7.5, bottom: 7.5, trailing: 7.5)
         
         let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)),
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300)),
             subitem: item,
             count: 4)
         
         let verticalGroup = NSCollectionLayoutGroup.vertical(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(30), heightDimension: .absolute(100)),
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300)),
             subitem: horizontalGroup,
             count: 2)
         
@@ -129,13 +150,18 @@ class OrderFoodViewController: UIViewController {
         
         advertisementCollectionView.register(HorizontalScrollCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollCollectionViewCell.identifier)
         advertisementCollectionView.backgroundColor = .secondarySystemBackground
+        advertisementCollectionView.isScrollEnabled = false
         
         promotionCollectionView.delegate = self
         promotionCollectionView.dataSource = self
         
         promotionCollectionView.register(_2x4CollectionViewCell.self, forCellWithReuseIdentifier: _2x4CollectionViewCell.identifier)
+        promotionCollectionView.backgroundColor = .secondarySystemBackground
+        promotionCollectionView.isScrollEnabled = false
         
-        view.addSubview(advertisementCollectionView)
+        
+        contentView.addSubview(advertisementCollectionView)
+        contentView.addSubview(promotionCollectionView)
 
     }
     
@@ -153,12 +179,13 @@ class OrderFoodViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 89)
-        imageView.frame = CGRect(x: 0, y: tableView.bottom, width: view.width, height: 90)
-        advertisementCollectionView.frame = CGRect(x: 0, y: imageView.bottom, width: view.width, height: 200)
-        advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: view.width, height: 20)
-        couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: view.width, height: 20)
+        tableView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: 89)
+        imageView.frame = CGRect(x: 0, y: tableView.bottom, width: contentView.width, height: 90)
+        advertisementCollectionView.frame = CGRect(x: 0, y: imageView.bottom, width: contentView.width, height: 200)
+        advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: contentView.width, height: 20)
+        couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: contentView.width, height: 20)
         couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
+        promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 400)
     }
     
     private func configureModels() {
@@ -173,15 +200,19 @@ class OrderFoodViewController: UIViewController {
         advertisementPhotos.append("")
         advertisementPhotos.append("")
         
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
-        promotionPhotos.append("")
         
+        let cell1 = PromotionCollectionViewCellViewModel(title: "0 THB Delivery Fee", imageURL: nil)
+        let cell2 = PromotionCollectionViewCellViewModel(title: "ลดสูงสุด 60%", imageURL: nil)
+        let cell3 = PromotionCollectionViewCellViewModel(title: "เก็บโค้ดลดเพิ่ม", imageURL: nil)
+        let cell4 = PromotionCollectionViewCellViewModel(title: "ชวนเพื่อนใช้  ได้รถได้ทอง!", imageURL: nil)
+        let cell5 = PromotionCollectionViewCellViewModel(title: "ส่วนลดลูกค้า AIS", imageURL: nil)
+        let cell6 = PromotionCollectionViewCellViewModel(title: "ลดเพิ่ม 50 บาท", imageURL: nil)
+        let cell7 = PromotionCollectionViewCellViewModel(title: "ส่วนลดบัตรเครดิต/เดบิต", imageURL: nil)
+        let cell8 = PromotionCollectionViewCellViewModel(title: "รวมร้านสตรีทฟู้ดชื่อดัง", imageURL: nil)
+        
+        promotionCell = [cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8]
+        
+
         advertisementPageControl.numberOfPages = advertisementPhotos.count
         
         DispatchQueue.main.async {
@@ -216,7 +247,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             return advertisementPhotos.count
         }
         if collectionView == self.promotionCollectionView {
-            return 0
+            return promotionCell.count
         }
         return 0
     }
@@ -229,7 +260,12 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
         }
         if collectionView == self.promotionCollectionView {
-            return UICollectionViewCell()
+            guard let cell = promotionCollectionView.dequeueReusableCell(withReuseIdentifier: _2x4CollectionViewCell.identifier, for: indexPath) as? _2x4CollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            let viewModel = promotionCell[indexPath.row]
+            cell.configure(with: viewModel)
+            return cell
         }
         return UICollectionViewCell()
     }
