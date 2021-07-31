@@ -42,10 +42,12 @@
 		68F5117B26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5117A26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift */; };
 		68F5118026B4790E00BF1BAA /* _2x4CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5117F26B4790E00BF1BAA /* _2x4CollectionViewCell.swift */; };
 		68F5118526B4796900BF1BAA /* PromotionCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5118426B4796900BF1BAA /* PromotionCollectionViewCellViewModel.swift */; };
-		68F5118D26B4F1DE00BF1BAA /* PromotionCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5118C26B4F1DE00BF1BAA /* PromotionCollectionViewCellModel.swift */; };
 		68F5119226B50B8800BF1BAA /* FavoriteCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5119126B50B8800BF1BAA /* FavoriteCardViewModel.swift */; };
 		68F5119726B50BCE00BF1BAA /* BrandBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5119626B50BCE00BF1BAA /* BrandBadgeViewModel.swift */; };
 		68F5119C26B50C1B00BF1BAA /* PopularCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5119B26B50C1B00BF1BAA /* PopularCategoryViewModel.swift */; };
+		68F511A426B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */; };
+		68F511A926B50D7B00BF1BAA /* PromotionCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511A826B50D7B00BF1BAA /* PromotionCardViewModel.swift */; };
+		68F511AE26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */; };
 		8C9D06140EBA2A99D53E8D82 /* Pods_LineBoiiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC70841ECD435ACE97ED92D /* Pods_LineBoiiTests.framework */; };
 		A0E79F9A8883A447A6560A2A /* Pods_LineBoii.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 560A28EB8E44A7DC9FC81B54 /* Pods_LineBoii.framework */; };
 /* End PBXBuildFile section */
@@ -113,10 +115,12 @@
 		68F5117A26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollCollectionViewCell.swift; sourceTree = "<group>"; };
 		68F5117F26B4790E00BF1BAA /* _2x4CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _2x4CollectionViewCell.swift; sourceTree = "<group>"; };
 		68F5118426B4796900BF1BAA /* PromotionCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
-		68F5118C26B4F1DE00BF1BAA /* PromotionCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		68F5119126B50B8800BF1BAA /* FavoriteCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCardViewModel.swift; sourceTree = "<group>"; };
 		68F5119626B50BCE00BF1BAA /* BrandBadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandBadgeViewModel.swift; sourceTree = "<group>"; };
 		68F5119B26B50C1B00BF1BAA /* PopularCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCategoryViewModel.swift; sourceTree = "<group>"; };
+		68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollTitleCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		68F511A826B50D7B00BF1BAA /* PromotionCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionCardViewModel.swift; sourceTree = "<group>"; };
+		68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalRestaurantPromotionCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		78DB26AFFC55DEE7B13FA698 /* Pods-LineBoii-LineBoiiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LineBoii-LineBoiiUITests.debug.xcconfig"; path = "Target Support Files/Pods-LineBoii-LineBoiiUITests/Pods-LineBoii-LineBoiiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A118A695F38C28F099DB801D /* Pods-LineBoiiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LineBoiiTests.release.xcconfig"; path = "Target Support Files/Pods-LineBoiiTests/Pods-LineBoiiTests.release.xcconfig"; sourceTree = "<group>"; };
 		AAC70841ECD435ACE97ED92D /* Pods_LineBoiiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LineBoiiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +168,6 @@
 		68319B1D26AF129D00525821 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				68F5118C26B4F1DE00BF1BAA /* PromotionCollectionViewCellModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				68F5119126B50B8800BF1BAA /* FavoriteCardViewModel.swift */,
 				68F5119626B50BCE00BF1BAA /* BrandBadgeViewModel.swift */,
 				68F5119B26B50C1B00BF1BAA /* PopularCategoryViewModel.swift */,
+				68F511A826B50D7B00BF1BAA /* PromotionCardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -196,13 +200,6 @@
 				68319B2826AF96B200525821 /* supermarket.ttf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		68319B3026AFD70700525821 /* Button */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Button;
 			sourceTree = "<group>";
 		};
 		68319B4726B157CF00525821 /* Controllers */ = {
@@ -305,13 +302,8 @@
 		68E8078E26ADB1E4001F69CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				68319B4B26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift */,
-				68319B5926B1825E00525821 /* TitleHeaderCollectionReusableView.swift */,
-				68F5112726B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift */,
-				68F5115926B41ED100BF1BAA /* HeaderLocationTableViewCell.swift */,
-				68F5116D26B4430F00BF1BAA /* SearchTableViewCell.swift */,
-				68F5117A26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift */,
-				68F5117F26B4790E00BF1BAA /* _2x4CollectionViewCell.swift */,
+				68F511BA26B5433200BF1BAA /* TableView */,
+				68F511B626B5430D00BF1BAA /* CollectionView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,7 +323,6 @@
 		68E8079026ADB1F3001F69CD /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				68319B3026AFD70700525821 /* Button */,
 				68F5115426B41C3800BF1BAA /* OrderFoodViewController.swift */,
 				68F5115E26B4378800BF1BAA /* LocationSelectViewController.swift */,
 				68F5116326B43E5B00BF1BAA /* SearchResultsViewController.swift */,
@@ -339,6 +330,29 @@
 				68F5117226B450D200BF1BAA /* CollectionView.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		68F511B626B5430D00BF1BAA /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				68319B4B26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift */,
+				68319B5926B1825E00525821 /* TitleHeaderCollectionReusableView.swift */,
+				68F5112726B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift */,
+				68F5117A26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift */,
+				68F5117F26B4790E00BF1BAA /* _2x4CollectionViewCell.swift */,
+				68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */,
+				68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		68F511BA26B5433200BF1BAA /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				68F5115926B41ED100BF1BAA /* HeaderLocationTableViewCell.swift */,
+				68F5116D26B4430F00BF1BAA /* SearchTableViewCell.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 		7BFC9E09F1ADF131228BDCFB /* Pods */ = {
@@ -598,6 +612,7 @@
 				68E8077026AD97EF001F69CD /* Extensions.swift in Sources */,
 				68319B4C26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift in Sources */,
 				68E807A326ADB98B001F69CD /* OrderViewController.swift in Sources */,
+				68F511A926B50D7B00BF1BAA /* PromotionCardViewModel.swift in Sources */,
 				68319B3526B02EFA00525821 /* RestaurantListViewModel.swift in Sources */,
 				68CA5B3426ACA8E60022AEA8 /* ViewController.swift in Sources */,
 				68F5118026B4790E00BF1BAA /* _2x4CollectionViewCell.swift in Sources */,
@@ -608,12 +623,14 @@
 				68F5116E26B4430F00BF1BAA /* SearchTableViewCell.swift in Sources */,
 				68319B5A26B1825E00525821 /* TitleHeaderCollectionReusableView.swift in Sources */,
 				68F5115F26B4378800BF1BAA /* LocationSelectViewController.swift in Sources */,
+				68F511AE26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift in Sources */,
 				68E807AD26ADB998001F69CD /* OthersViewController.swift in Sources */,
 				68888B3126AD3B260090745B /* LoginViewController.swift in Sources */,
 				68F5118526B4796900BF1BAA /* PromotionCollectionViewCellViewModel.swift in Sources */,
 				68F5116926B43ECC00BF1BAA /* SearchViewController.swift in Sources */,
 				68F5117B26B457AD00BF1BAA /* HorizontalScrollCollectionViewCell.swift in Sources */,
 				68F5115A26B41ED100BF1BAA /* HeaderLocationTableViewCell.swift in Sources */,
+				68F511A426B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift in Sources */,
 				68F5119226B50B8800BF1BAA /* FavoriteCardViewModel.swift in Sources */,
 				68E807A826ADB992001F69CD /* InboxViewController.swift in Sources */,
 				68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */,
@@ -621,7 +638,6 @@
 				68F5119C26B50C1B00BF1BAA /* PopularCategoryViewModel.swift in Sources */,
 				68E8079E26ADB8E9001F69CD /* TabBarViewController.swift in Sources */,
 				68F5115526B41C3800BF1BAA /* OrderFoodViewController.swift in Sources */,
-				68F5118D26B4F1DE00BF1BAA /* PromotionCollectionViewCellModel.swift in Sources */,
 				68E8077626AD9853001F69CD /* AuthManager.swift in Sources */,
 				68F5116426B43E5B00BF1BAA /* SearchResultsViewController.swift in Sources */,
 				68E8079626ADB294001F69CD /* HomeViewController.swift in Sources */,

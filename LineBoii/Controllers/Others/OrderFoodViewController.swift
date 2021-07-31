@@ -7,7 +7,36 @@
 
 import UIKit
 
+enum OrderFoodSection {
+    case favorite(viewModels: [PreviewRestaurantCardViewModel])
+    case promotion(viewModels: [PromotionCardViewModel])
+    case trend(viewModels: [PreviewRestaurantCardViewModel])
+    case brand(viewModels: [BrandBadgeViewModel])
+    case latest(viewModels: [PreviewRestaurantCardViewModel])
+    case category(viewModels: [PopularCategoryViewModel])
+    
+    var title: String {
+        switch self {
+        case .favorite:
+            return "ร้านที่คุณน่าจะชอบ"
+        case .promotion:
+            return "โปรเด็ดต้องโดน"
+        case .trend:
+            return "ร้านฮิตติดเทรนด์"
+        case .brand:
+            return "แบรนด์แนะนำ"
+        case .latest:
+            return "ร้านที่สั่งซื้อล่าสุด"
+        case .category:
+            return "หมวดหมู่ยอดนิยม"
+        }
+    }
+    
+}
+
 class OrderFoodViewController: UIViewController {
+    
+    private var sections = [OrderFoodSection]()
     
     private var advertisementPhotos = [String]()
     private var promotionCell = [PromotionCollectionViewCellViewModel]()
@@ -16,7 +45,7 @@ class OrderFoodViewController: UIViewController {
     
     private var couponAmount = 0
     
-    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 1000)
+    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 2000)
     
     
     // MARK: - Floor
@@ -53,6 +82,10 @@ class OrderFoodViewController: UIViewController {
             return CollectionView.createSectionLayout(section: sectionIndex)
         })
     )
+    
+    private var foodCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, _) -> NSCollectionLayoutSection? in
+        return OrderFoodViewController.createFoodSectionLayout(section: sectionIndex)
+    }))
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -144,6 +177,40 @@ class OrderFoodViewController: UIViewController {
         return section
     }
     
+    static func createFoodSectionLayout(section: Int) -> NSCollectionLayoutSection {
+        let supplementaryViews = [
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(0.9),
+                    heightDimension: .absolute(50)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .topLeading
+            )
+        ]
+        
+        
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(1.0)
+            )
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 2)
+        
+        let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.425), heightDimension: .absolute(225)),
+            subitem: item,
+            count: 1)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: horizontalGroup)
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = supplementaryViews
+        return section
+    }
+    
+    
+    
     private func configureCollectionView() {
         advertisementCollectionView.delegate = self
         advertisementCollectionView.dataSource = self
@@ -159,9 +226,23 @@ class OrderFoodViewController: UIViewController {
         promotionCollectionView.backgroundColor = .secondarySystemBackground
         promotionCollectionView.isScrollEnabled = false
         
+        foodCollectionView.delegate = self
+        foodCollectionView.dataSource = self
+        
+        foodCollectionView.register(
+            TitleHeaderCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TitleHeaderCollectionReusableView.identifier
+        )
+        foodCollectionView.register(HorizontalScrollTitleCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollTitleCardCollectionViewCell.identifier)
+        foodCollectionView.register(HorizontalRestaurantPromotionCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalRestaurantPromotionCardCollectionViewCell.identifier)
+        
+        foodCollectionView.backgroundColor = .secondarySystemBackground
+        
         
         contentView.addSubview(advertisementCollectionView)
         contentView.addSubview(promotionCollectionView)
+        contentView.addSubview(foodCollectionView)
 
     }
     
@@ -185,7 +266,8 @@ class OrderFoodViewController: UIViewController {
         advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: contentView.width, height: 20)
         couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: contentView.width, height: 20)
         couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
-        promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 400)
+        promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 300)
+        foodCollectionView.frame = CGRect(x: 10, y: promotionCollectionView.bottom + 10, width: contentView.width, height: 2000)
     }
     
     private func configureModels() {
@@ -212,6 +294,37 @@ class OrderFoodViewController: UIViewController {
         
         promotionCell = [cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8]
         
+        let favoriteCell1 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell2 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell3 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell4 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell5 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell6 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell7 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell8 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell9 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell10 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell11 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        let favoriteCell12 = PreviewRestaurantCardViewModel(title: "รวมร้านสตรีทฟู้ด เวรี่กู๊ด", imageURL: nil)
+        
+        let favoriteCells = [favoriteCell1,favoriteCell2,favoriteCell3,favoriteCell4,favoriteCell5,favoriteCell6,favoriteCell7,favoriteCell8,favoriteCell9, favoriteCell10, favoriteCell11, favoriteCell12]
+        
+        let trueOrFalse: [Bool] = [true, false]
+        let badgeType: [BadgeType] = [.free, .discount]
+        
+        let promotionCell1 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell2 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell3 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell4 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell5 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell6 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell7 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell8 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        
+        
+        let promotionCells = [promotionCell1, promotionCell2, promotionCell3, promotionCell4, promotionCell5, promotionCell6, promotionCell7, promotionCell8]
+        sections.append(.favorite(viewModels: favoriteCells))
+        sections.append(.promotion(viewModels: promotionCells))
 
         advertisementPageControl.numberOfPages = advertisementPhotos.count
         
@@ -249,6 +362,23 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
         if collectionView == self.promotionCollectionView {
             return promotionCell.count
         }
+        if collectionView == self.foodCollectionView {
+            let type = sections[section]
+            switch type {
+            case .favorite(viewModels: let viewModels):
+                return viewModels.count
+            case .promotion(viewModels: let viewModels):
+                return viewModels.count
+            case .trend(viewModels: let viewModels):
+                return viewModels.count
+            case .brand(viewModels: let viewModels):
+                return viewModels.count
+            case .latest(viewModels: let viewModels):
+                return viewModels.count
+            case .category(viewModels: let viewModels):
+                return viewModels.count
+            }
+        }
         return 0
     }
     
@@ -267,6 +397,36 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.configure(with: viewModel)
             return cell
         }
+        if collectionView == self.foodCollectionView {
+            
+            let type = sections[indexPath.section]
+            switch type {
+            case .favorite(viewModels: let viewModels):
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollTitleCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollTitleCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
+            
+            case .promotion(viewModels: let viewModels):
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalRestaurantPromotionCardCollectionViewCell.identifier, for: indexPath) as? HorizontalRestaurantPromotionCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
+            case .trend(viewModels: let viewModels):
+                return UICollectionViewCell()
+            case .brand(viewModels: let viewModels):
+                return UICollectionViewCell()
+            case .latest(viewModels: let viewModels):
+                return UICollectionViewCell()
+            case .category(viewModels: let viewModels):
+                return UICollectionViewCell()
+            }
+            
+        }
         return UICollectionViewCell()
     }
     
@@ -277,8 +437,24 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
         if collectionView == self.promotionCollectionView {
             return 1
         }
+        if collectionView == self.foodCollectionView {
+            return sections.count
+        }
         return 0
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if collectionView == self.foodCollectionView {
+            guard let header = foodCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
+                return UICollectionReusableView()
+            }
+            let section = indexPath.section
+            let title = sections[section].title
+            header.configure(with: title)
+            return header
+        }
+        return UICollectionReusableView()
     }
     
 }

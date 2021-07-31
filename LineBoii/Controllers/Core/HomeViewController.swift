@@ -418,7 +418,7 @@ class HomeViewController: UIViewController {
                     heightDimension: .absolute(30)
                 ),
                 elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
+                alignment: .topLeading
             )
         ]
         
@@ -650,7 +650,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if collectionView == self.cardCollectionView {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
+            guard let header = cardCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
                 return UICollectionReusableView()
             }
             let section = indexPath.section

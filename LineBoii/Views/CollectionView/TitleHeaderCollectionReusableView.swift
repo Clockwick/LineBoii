@@ -23,6 +23,7 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
         super.init(frame: frame)
         backgroundColor = .secondarySystemBackground
         addSubview(label)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +32,11 @@ class TitleHeaderCollectionReusableView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = CGRect(x: -40, y: 0, width: width, height: height)
+        label.frame = CGRect(x: 0, y: 0, width: width, height: height)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
     
     func configure(with title: String) {
