@@ -146,7 +146,6 @@ class HorizontalRestaurantPromotionCardCollectionViewCell: UICollectionViewCell 
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.restaurantName
         
-        
         if viewModel.isFree {
             discountLabel.isHidden = true
             realPriceLabel.isHidden = true

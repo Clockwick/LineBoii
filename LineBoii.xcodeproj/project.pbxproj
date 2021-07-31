@@ -48,6 +48,8 @@
 		68F511A426B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */; };
 		68F511A926B50D7B00BF1BAA /* PromotionCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511A826B50D7B00BF1BAA /* PromotionCardViewModel.swift */; };
 		68F511AE26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */; };
+		68F511BF26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511BE26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift */; };
+		68F511C426B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F511C326B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift */; };
 		8C9D06140EBA2A99D53E8D82 /* Pods_LineBoiiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC70841ECD435ACE97ED92D /* Pods_LineBoiiTests.framework */; };
 		A0E79F9A8883A447A6560A2A /* Pods_LineBoii.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 560A28EB8E44A7DC9FC81B54 /* Pods_LineBoii.framework */; };
 /* End PBXBuildFile section */
@@ -121,6 +123,8 @@
 		68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollTitleCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		68F511A826B50D7B00BF1BAA /* PromotionCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionCardViewModel.swift; sourceTree = "<group>"; };
 		68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalRestaurantPromotionCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		68F511BE26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollBrandCollectionViewCell.swift; sourceTree = "<group>"; };
+		68F511C326B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollSmallCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		78DB26AFFC55DEE7B13FA698 /* Pods-LineBoii-LineBoiiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LineBoii-LineBoiiUITests.debug.xcconfig"; path = "Target Support Files/Pods-LineBoii-LineBoiiUITests/Pods-LineBoii-LineBoiiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A118A695F38C28F099DB801D /* Pods-LineBoiiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LineBoiiTests.release.xcconfig"; path = "Target Support Files/Pods-LineBoiiTests/Pods-LineBoiiTests.release.xcconfig"; sourceTree = "<group>"; };
 		AAC70841ECD435ACE97ED92D /* Pods_LineBoiiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LineBoiiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -342,6 +346,8 @@
 				68F5117F26B4790E00BF1BAA /* _2x4CollectionViewCell.swift */,
 				68F511A326B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift */,
 				68F511AD26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift */,
+				68F511BE26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift */,
+				68F511C326B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -613,10 +619,12 @@
 				68319B4C26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift in Sources */,
 				68E807A326ADB98B001F69CD /* OrderViewController.swift in Sources */,
 				68F511A926B50D7B00BF1BAA /* PromotionCardViewModel.swift in Sources */,
+				68F511C426B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift in Sources */,
 				68319B3526B02EFA00525821 /* RestaurantListViewModel.swift in Sources */,
 				68CA5B3426ACA8E60022AEA8 /* ViewController.swift in Sources */,
 				68F5118026B4790E00BF1BAA /* _2x4CollectionViewCell.swift in Sources */,
 				68CA5B3026ACA8E60022AEA8 /* AppDelegate.swift in Sources */,
+				68F511BF26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift in Sources */,
 				68F5117326B450D200BF1BAA /* CollectionView.swift in Sources */,
 				68E8078726AD9B0A001F69CD /* env.swift in Sources */,
 				68F5112826B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift in Sources */,

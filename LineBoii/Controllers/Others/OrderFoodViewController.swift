@@ -40,6 +40,7 @@ class OrderFoodViewController: UIViewController {
     
     private var advertisementPhotos = [String]()
     private var promotionCell = [PromotionCollectionViewCellViewModel]()
+    private var brands = [BrandBadgeViewModel]()
     
     private var currentAdvertisementIndex = 0
     
@@ -189,27 +190,68 @@ class OrderFoodViewController: UIViewController {
             )
         ]
         
+        switch section {
         
-        let item = NSCollectionLayoutItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(1.0)
+        case 3:
+            let item = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)
+                )
             )
-        )
-        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 2)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            
+            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.23), heightDimension: .absolute(125)),
+                subitem: item,
+                count: 1)
+            
+            // Section
+            let section = NSCollectionLayoutSection(group: horizontalGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryViews
+            return section
+        case 5:
+            let item = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)
+                )
+            )
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            
+            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.23), heightDimension: .absolute(175)),
+                subitem: item,
+                count: 1)
+            
+            // Section
+            let section = NSCollectionLayoutSection(group: horizontalGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryViews
+            return section
+            
+        default:
+            let item = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(1.0)
+                )
+            )
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 2)
+            
+            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.425), heightDimension: .absolute(225)),
+                subitem: item,
+                count: 1)
+            
+            // Section
+            let section = NSCollectionLayoutSection(group: horizontalGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = supplementaryViews
+            return section
+        }
         
-        let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.425), heightDimension: .absolute(225)),
-            subitem: item,
-            count: 1)
         
-        // Section
-        let section = NSCollectionLayoutSection(group: horizontalGroup)
-        section.orthogonalScrollingBehavior = .continuous
-        section.boundarySupplementaryItems = supplementaryViews
-        return section
     }
-    
-    
+
     
     private func configureCollectionView() {
         advertisementCollectionView.delegate = self
@@ -236,9 +278,10 @@ class OrderFoodViewController: UIViewController {
         )
         foodCollectionView.register(HorizontalScrollTitleCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollTitleCardCollectionViewCell.identifier)
         foodCollectionView.register(HorizontalRestaurantPromotionCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalRestaurantPromotionCardCollectionViewCell.identifier)
+        foodCollectionView.register(HorizontalScrollBrandCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollBrandCollectionViewCell.identifier)
+        foodCollectionView.register(HorizontalScrollSmallCardCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalScrollSmallCardCollectionViewCell.identifier)
         
         foodCollectionView.backgroundColor = .secondarySystemBackground
-        
         
         contentView.addSubview(advertisementCollectionView)
         contentView.addSubview(promotionCollectionView)
@@ -268,6 +311,7 @@ class OrderFoodViewController: UIViewController {
         couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
         promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 300)
         foodCollectionView.frame = CGRect(x: 10, y: promotionCollectionView.bottom + 10, width: contentView.width, height: 2000)
+        
     }
     
     private func configureModels() {
@@ -281,7 +325,6 @@ class OrderFoodViewController: UIViewController {
         advertisementPhotos.append("")
         advertisementPhotos.append("")
         advertisementPhotos.append("")
-        
         
         let cell1 = PromotionCollectionViewCellViewModel(title: "0 THB Delivery Fee", imageURL: nil)
         let cell2 = PromotionCollectionViewCellViewModel(title: "ลดสูงสุด 60%", imageURL: nil)
@@ -321,11 +364,67 @@ class OrderFoodViewController: UIViewController {
         let promotionCell7 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
         let promotionCell8 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
         
-        
         let promotionCells = [promotionCell1, promotionCell2, promotionCell3, promotionCell4, promotionCell5, promotionCell6, promotionCell7, promotionCell8]
+    
+        let trendCell1 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell2 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell3 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell4 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell5 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell6 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell7 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        let trendCell8 = PreviewRestaurantCardViewModel(title: "Dakasi เชียงใหม่", imageURL: nil)
+        
+        
+        let trendCells = [trendCell1, trendCell2, trendCell3, trendCell4, trendCell5, trendCell6, trendCell7, trendCell8]
+        
+        let brandCell1 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell2 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell3 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell4 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell5 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell6 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell7 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        let brandCell8 = BrandBadgeViewModel(title: "KFC", imageURL: nil)
+        
+        let brandCells: [BrandBadgeViewModel] = [brandCell1, brandCell2, brandCell3, brandCell4, brandCell5, brandCell6, brandCell7, brandCell8]
+        
+        let latestCell1 = PreviewRestaurantCardViewModel(title: "ครัวเจ๊หมวย อาหารตามสั่ง", imageURL: nil)
+        let latestCell2 = PreviewRestaurantCardViewModel(title: "ครัวเจ๊หมวย อาหารตามสั่ง", imageURL: nil)
+        let latestCell3 = PreviewRestaurantCardViewModel(title: "ครัวเจ๊หมวย อาหารตามสั่ง", imageURL: nil)
+        
+        let latestCells: [PreviewRestaurantCardViewModel] = [latestCell1, latestCell2, latestCell3]
+        
+        let popularCell1 = PopularCategoryViewModel(title: "อาหารไทย", imageURL: nil)
+        let popularCell2 = PopularCategoryViewModel(title: "อาหารอีสาน", imageURL: nil)
+        let popularCell3 = PopularCategoryViewModel(title: "อาหารจานเดียว", imageURL: nil)
+        let popularCell4 = PopularCategoryViewModel(title: "อาหารญี่ปุ่น", imageURL: nil)
+        let popularCell5 = PopularCategoryViewModel(title: "ก่วยเตี๋ยว", imageURL: nil)
+        let popularCell6 = PopularCategoryViewModel(title: "ของหวาน", imageURL: nil)
+        let popularCell7 = PopularCategoryViewModel(title: "อาหารจีน", imageURL: nil)
+        let popularCell8 = PopularCategoryViewModel(title: "อาหารทะเล", imageURL: nil)
+        let popularCell9 = PopularCategoryViewModel(title: "สตรีทฟู้ด/รถเข็น", imageURL: nil)
+        let popularCell10 = PopularCategoryViewModel(title: "ซูซิ", imageURL: nil)
+        let popularCell11 = PopularCategoryViewModel(title: "อาหารตามสั่ง", imageURL: nil)
+        let popularCell12 = PopularCategoryViewModel(title: "ข้าวต้ม", imageURL: nil)
+        let popularCell13 = PopularCategoryViewModel(title: "ฟาสต์ฟู้ด", imageURL: nil)
+        let popularCell14 = PopularCategoryViewModel(title: "อาหารเวียดนาม", imageURL: nil)
+        let popularCell15 = PopularCategoryViewModel(title: "อาหารคลีน/สลัด", imageURL: nil)
+        let popularCell16 = PopularCategoryViewModel(title: "ชานมไข่มุก", imageURL: nil)
+        let popularCell17 = PopularCategoryViewModel(title: "เบเกอรี่ เค้ก", imageURL: nil)
+        let popularCell18 = PopularCategoryViewModel(title: "ร้านกาแฟ", imageURL: nil)
+        let popularCell19 = PopularCategoryViewModel(title: "อาหารเช้า", imageURL: nil)
+        
+        let popularCells = [popularCell1,popularCell2,popularCell3,popularCell4,popularCell5,popularCell6,popularCell7,popularCell8,popularCell9,popularCell10,popularCell11,popularCell12,popularCell13,popularCell14,popularCell15,popularCell16,popularCell17,popularCell18,popularCell19]
+        
+        // Section Append
         sections.append(.favorite(viewModels: favoriteCells))
         sections.append(.promotion(viewModels: promotionCells))
-
+        sections.append(.trend(viewModels: trendCells))
+        sections.append(.brand(viewModels: brandCells))
+        sections.append(.latest(viewModels: latestCells))
+        sections.append(.category(viewModels: popularCells))
+        
         advertisementPageControl.numberOfPages = advertisementPhotos.count
         
         DispatchQueue.main.async {
@@ -336,8 +435,6 @@ class OrderFoodViewController: UIViewController {
 
     
 }
-
-
 
 extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -379,6 +476,9 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 return viewModels.count
             }
         }
+        
+        
+        
         return 0
     }
     
@@ -398,7 +498,6 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
         }
         if collectionView == self.foodCollectionView {
-            
             let type = sections[indexPath.section]
             switch type {
             case .favorite(viewModels: let viewModels):
@@ -417,16 +516,37 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 cell.configure(with: viewModel)
                 return cell
             case .trend(viewModels: let viewModels):
-                return UICollectionViewCell()
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollTitleCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollTitleCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
             case .brand(viewModels: let viewModels):
-                return UICollectionViewCell()
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollBrandCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollBrandCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
             case .latest(viewModels: let viewModels):
-                return UICollectionViewCell()
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollTitleCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollTitleCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
             case .category(viewModels: let viewModels):
-                return UICollectionViewCell()
+                guard let cell = foodCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalScrollSmallCardCollectionViewCell.identifier, for: indexPath) as? HorizontalScrollSmallCardCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                let viewModel = viewModels[indexPath.row]
+                cell.configure(with: viewModel)
+                return cell
             }
             
         }
+        
         return UICollectionViewCell()
     }
     
