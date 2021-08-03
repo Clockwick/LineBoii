@@ -1,4 +1,5 @@
 PODS:
+  - GSKStretchyHeaderView (1.0.4)
   - LineSDKSwift (5.7.0):
     - LineSDKSwift/Core (= 5.7.0)
   - LineSDKSwift/Core (5.7.0)
@@ -7,18 +8,21 @@ PODS:
   - SDWebImage/Core (5.11.1)
 
 DEPENDENCIES:
+  - GSKStretchyHeaderView
   - LineSDKSwift (~> 5.0)
   - SDWebImage
 
 SPEC REPOS:
   trunk:
+    - GSKStretchyHeaderView
     - LineSDKSwift
     - SDWebImage
 
 SPEC CHECKSUMS:
+  GSKStretchyHeaderView: 9743704c12bdc9cf7c7947bad3af8bf24f7061e3
   LineSDKSwift: f9c232f89185b887b5725aa278325f3a23e33bbc
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: 961cdc8d36f0fe301c06f6567ad83772d5c3a28f
+PODFILE CHECKSUM: a97fc42b89c6e156c4199b7bebf2ecd93e4376ba
 
 COCOAPODS: 1.10.0

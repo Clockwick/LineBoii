@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 enum OrderFoodSection {
     case favorite(viewModels: [PreviewRestaurantCardViewModel])
     case promotion(viewModels: [PromotionCardViewModel])
@@ -46,9 +47,10 @@ class OrderFoodViewController: UIViewController {
     
     private var couponAmount = 0
     
-    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 2000)
     
-    
+    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 3000)
+
+
     // MARK: - Floor
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -88,11 +90,25 @@ class OrderFoodViewController: UIViewController {
         return OrderFoodViewController.createFoodSectionLayout(section: sectionIndex)
     }))
     
+    private let restaurantListTableView: UITableView = {
+        let table = UITableView()
+        table.register(RestaurantPreviewTableViewCell.self, forCellReuseIdentifier: RestaurantPreviewTableViewCell.identifier)
+        return table
+    }()
+        
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(HeaderLocationTableViewCell.self, forCellReuseIdentifier: HeaderLocationTableViewCell.identifier)
         table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         return table
+    }()
+    
+    private let headerView: UIView = {
+        let header = UIView()
+        header.autoresizingMask = UIView.AutoresizingMask.flexibleTopMargin
+        header.backgroundColor = .red
+        header.layer.zPosition = 9999
+        return header
     }()
     
     private let imageView: UIImageView = {
@@ -131,6 +147,7 @@ class OrderFoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView.delegate = self
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.backgroundColor = .secondarySystemBackground
@@ -138,20 +155,85 @@ class OrderFoodViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
+        
+        restaurantListTableView.delegate = self
+        restaurantListTableView.dataSource = self
+        restaurantListTableView.isScrollEnabled = false
     
         contentView.addSubview(tableView)
         contentView.addSubview(imageView)
         contentView.addSubview(advertisementPageControl)
         contentView.addSubview(couponImageView)
         contentView.addSubview(couponLabel)
+        contentView.addSubview(headerView)
+        contentView.addSubview(restaurantListTableView)
         
         configureCollectionView()
         
+        configureTableView()
         configureModels()
-        
+            
         Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNextAdvertisement), userInfo: nil, repeats: true)
 
     }
+    
+    func configureTableView() {
+        
+    }
+    
+    private var savedPosition: CGFloat = 9999;
+
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: 89)
+        imageView.frame = CGRect(x: 0, y: tableView.bottom, width: contentView.width, height: 90)
+        advertisementCollectionView.frame = CGRect(x: 0, y: imageView.bottom, width: contentView.width, height: 200)
+        advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: contentView.width, height: 20)
+        couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: contentView.width, height: 20)
+        couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
+        promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 300)
+        foodCollectionView.frame = CGRect(x: 10, y: promotionCollectionView.bottom + 10, width: contentView.width, height: 1500)
+        headerView.frame = CGRect(x: 0, y: foodCollectionView.bottom, width: contentView.width, height: 44)
+        self.savedPosition = foodCollectionView.bottom
+        restaurantListTableView.frame = CGRect(x: 10, y: foodCollectionView.bottom + headerView.height, width: contentView.width - 20, height: 2000)
+    }
+    
+    
+    static func createRestaurantListSectionLayout(section: Int) -> NSCollectionLayoutSection {
+        let supplementaryViews = [
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(50)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .topLeading
+            )
+        ]
+        
+        
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(1.0)
+            )
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0)
+        
+        let verticalGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(400)),
+            subitem: item,
+            count: 1)
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: verticalGroup)
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = supplementaryViews
+        return section
+        
+    }
+    
     
     static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
     
@@ -286,7 +368,6 @@ class OrderFoodViewController: UIViewController {
         contentView.addSubview(advertisementCollectionView)
         contentView.addSubview(promotionCollectionView)
         contentView.addSubview(foodCollectionView)
-
     }
     
     @objc private func slideToNextAdvertisement() {
@@ -298,20 +379,6 @@ class OrderFoodViewController: UIViewController {
         else {
             currentAdvertisementIndex = 0
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tableView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: 89)
-        imageView.frame = CGRect(x: 0, y: tableView.bottom, width: contentView.width, height: 90)
-        advertisementCollectionView.frame = CGRect(x: 0, y: imageView.bottom, width: contentView.width, height: 200)
-        advertisementPageControl.frame = CGRect(x: 0, y: advertisementCollectionView.bottom + 5, width: contentView.width, height: 20)
-        couponImageView.frame = CGRect(x: 0, y: advertisementPageControl.bottom + 40, width: contentView.width, height: 20)
-        couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
-        promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 300)
-        foodCollectionView.frame = CGRect(x: 10, y: promotionCollectionView.bottom + 10, width: contentView.width, height: 2000)
-        
     }
     
     private func configureModels() {
@@ -430,13 +497,26 @@ class OrderFoodViewController: UIViewController {
         DispatchQueue.main.async {
             self.advertisementCollectionView.reloadData()
             self.promotionCollectionView.reloadData()
+            self.foodCollectionView.reloadData()
+//            self.restaurantListCollectionView.reloadData()
         }
     }
 
     
 }
 
-extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("\(self.scrollView.contentOffset.y + view.safeAreaInsets.top) : \(self.headerView.frame.origin.y)")
+        if self.scrollView.contentOffset.y + view.safeAreaInsets.top >= self.savedPosition {
+            self.headerView.frame.origin.y = self.scrollView.contentOffset.y + view.safeAreaInsets.top
+        }
+        else {
+            self.headerView.frame.origin.y = self.savedPosition
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == self.advertisementCollectionView {
             let visibleRect = CGRect(origin: advertisementCollectionView.contentOffset, size: advertisementCollectionView.bounds.size)
@@ -452,6 +532,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             }
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.advertisementCollectionView {
             return advertisementPhotos.count
@@ -476,9 +557,6 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 return viewModels.count
             }
         }
-        
-        
-        
         return 0
     }
     
@@ -545,8 +623,10 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 return cell
             }
             
+            
         }
         
+
         return UICollectionViewCell()
     }
     
@@ -565,6 +645,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         if collectionView == self.foodCollectionView {
             guard let header = foodCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderCollectionReusableView.identifier, for: indexPath) as? TitleHeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
                 return UICollectionReusableView()
@@ -574,53 +655,111 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             header.configure(with: title)
             return header
         }
+        
+
+        
         return UICollectionReusableView()
     }
+    
+    
     
 }
 
 extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if tableView == self.tableView {
+            return 1
+        }
+        
+        if tableView == self.restaurantListTableView {
+            return 1
+        }
+        return 0
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if tableView == self.tableView {
+            return 2
+        }
+        if tableView == self.restaurantListTableView {
+            return 40
+        }
+        return 1
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: HeaderLocationTableViewCell.identifier) as? HeaderLocationTableViewCell else {
+        if tableView == self.tableView  {
+            if indexPath.section == 0 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: HeaderLocationTableViewCell.identifier) as? HeaderLocationTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.configure(with: "บ้าน")
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
+            if indexPath.section == 1 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier) as? SearchTableViewCell else {
+                    return UITableViewCell()
+                }
+                return cell
+            }
+        }
+        
+        if tableView == self.restaurantListTableView {
+            guard let cell = restaurantListTableView.dequeueReusableCell(withIdentifier: RestaurantPreviewTableViewCell.identifier, for: indexPath) as? RestaurantPreviewTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: "บ้าน")
-            cell.accessoryType = .disclosureIndicator
+            cell.configure(with: "Meating Bandmod - หมูปลาร้า คอหมูย่าง เสือร้องไห้ ย่างเตาถ่าน", subtitle: "ลด 14 บาท เมื่อสั่งเมนู กะเพรา ไก่ย่าง จานด่วน")
             return cell
         }
-        if indexPath.section == 1 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier) as? SearchTableViewCell else {
-                return UITableViewCell()
-            }
-            return cell
-        }
-
+    
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        if tableView == self.tableView {
+            return 40
+        }
+        if tableView == self.restaurantListTableView {
+            return 300
+        }
+        return 44
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return ""
+        if tableView == self.tableView {
+            if section == 0 {
+                return ""
+            }
+            return " "
         }
-        return " "
+        if tableView == self.restaurantListTableView {
+            return " "
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if tableView == self.restaurantListTableView {
+            let view = UIView()
+            view.backgroundColor = .secondarySystemBackground
+            return view
+        }
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        if tableView == self.tableView {
+            return 10
+        }
+        if tableView == self.restaurantListTableView {
+            return 15
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -638,3 +777,4 @@ extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
     
     
 }
+

@@ -270,10 +270,15 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @objc func didTapTaxi() {
+        
+    }
+    
     // MARK: - Configure
     
     private func configureTargets() {
         deliveryButton.addTarget(self, action: #selector(didTapDelivery), for: .touchUpInside)
+        taxiIconButton.addTarget(self, action: #selector(didTapTaxi), for: .touchUpInside)
     }
     
     private func configurePhotoCollectionView() {

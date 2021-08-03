@@ -13,6 +13,9 @@
 		68319B4326B0300200525821 /* AdvertisementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68319B4226B0300200525821 /* AdvertisementViewModel.swift */; };
 		68319B4C26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68319B4B26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift */; };
 		68319B5A26B1825E00525821 /* TitleHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68319B5926B1825E00525821 /* TitleHeaderCollectionReusableView.swift */; };
+		684AD26B26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684AD26A26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift */; };
+		684AD27D26B92870006D0EF8 /* RestaurantPreviewTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684AD27C26B92870006D0EF8 /* RestaurantPreviewTitle.swift */; };
+		684AD2A626B93764006D0EF8 /* RestaurantPreviewSubTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684AD2A526B93764006D0EF8 /* RestaurantPreviewSubTitle.swift */; };
 		68888B3126AD3B260090745B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68888B3026AD3B260090745B /* LoginViewController.swift */; };
 		68CA5B3026ACA8E60022AEA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B2F26ACA8E60022AEA8 /* AppDelegate.swift */; };
 		68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B3126ACA8E60022AEA8 /* SceneDelegate.swift */; };
@@ -82,6 +85,9 @@
 		68319B4226B0300200525821 /* AdvertisementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementViewModel.swift; sourceTree = "<group>"; };
 		68319B4B26B161C700525821 /* HorizontalScrollCollectionRoundViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollCollectionRoundViewCell.swift; sourceTree = "<group>"; };
 		68319B5926B1825E00525821 /* TitleHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		684AD26A26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		684AD27C26B92870006D0EF8 /* RestaurantPreviewTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPreviewTitle.swift; sourceTree = "<group>"; };
+		684AD2A526B93764006D0EF8 /* RestaurantPreviewSubTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPreviewSubTitle.swift; sourceTree = "<group>"; };
 		68888B3026AD3B260090745B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		68CA5B2C26ACA8E60022AEA8 /* LineBoii.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineBoii.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CA5B2F26ACA8E60022AEA8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -216,6 +222,30 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		684AD25426B7B545006D0EF8 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		684AD27B26B92846006D0EF8 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				684AD29E26B9372B006D0EF8 /* RestaurantPreview */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		684AD29E26B9372B006D0EF8 /* RestaurantPreview */ = {
+			isa = PBXGroup;
+			children = (
+				684AD27C26B92870006D0EF8 /* RestaurantPreviewTitle.swift */,
+				684AD2A526B93764006D0EF8 /* RestaurantPreviewSubTitle.swift */,
+			);
+			path = RestaurantPreview;
+			sourceTree = "<group>";
+		};
 		68888B1926AD38430090745B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +336,8 @@
 		68E8078E26ADB1E4001F69CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				684AD27B26B92846006D0EF8 /* Others */,
+				684AD25426B7B545006D0EF8 /* HeaderView */,
 				68F511BA26B5433200BF1BAA /* TableView */,
 				68F511B626B5430D00BF1BAA /* CollectionView */,
 			);
@@ -357,6 +389,7 @@
 			children = (
 				68F5115926B41ED100BF1BAA /* HeaderLocationTableViewCell.swift */,
 				68F5116D26B4430F00BF1BAA /* SearchTableViewCell.swift */,
+				684AD26A26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -621,6 +654,7 @@
 				68F511A926B50D7B00BF1BAA /* PromotionCardViewModel.swift in Sources */,
 				68F511C426B57A7000BF1BAA /* HorizontalScrollSmallCardCollectionViewCell.swift in Sources */,
 				68319B3526B02EFA00525821 /* RestaurantListViewModel.swift in Sources */,
+				684AD2A626B93764006D0EF8 /* RestaurantPreviewSubTitle.swift in Sources */,
 				68CA5B3426ACA8E60022AEA8 /* ViewController.swift in Sources */,
 				68F5118026B4790E00BF1BAA /* _2x4CollectionViewCell.swift in Sources */,
 				68CA5B3026ACA8E60022AEA8 /* AppDelegate.swift in Sources */,
@@ -643,9 +677,11 @@
 				68E807A826ADB992001F69CD /* InboxViewController.swift in Sources */,
 				68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */,
 				68319B4326B0300200525821 /* AdvertisementViewModel.swift in Sources */,
+				684AD26B26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift in Sources */,
 				68F5119C26B50C1B00BF1BAA /* PopularCategoryViewModel.swift in Sources */,
 				68E8079E26ADB8E9001F69CD /* TabBarViewController.swift in Sources */,
 				68F5115526B41C3800BF1BAA /* OrderFoodViewController.swift in Sources */,
+				684AD27D26B92870006D0EF8 /* RestaurantPreviewTitle.swift in Sources */,
 				68E8077626AD9853001F69CD /* AuthManager.swift in Sources */,
 				68F5116426B43E5B00BF1BAA /* SearchResultsViewController.swift in Sources */,
 				68E8079626ADB294001F69CD /* HomeViewController.swift in Sources */,

@@ -8,6 +8,8 @@ target 'LineBoii' do
   # Pods for LineBoii
 	pod 'SDWebImage'
 	pod 'LineSDKSwift', '~> 5.0' 
+	pod "GSKStretchyHeaderView"
+
   target 'LineBoiiTests' do
     inherit! :search_paths
     # Pods for testing
