@@ -43,7 +43,19 @@ class RestaurantPreviewTitle: UIView {
     }
 
     func configure(with title: String) {
-        titleLabel.text = title
+        let attributedString = NSMutableAttributedString(string: title)
+
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+
+    
+        paragraphStyle.lineSpacing = 2
+
+        
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+
+        
+        titleLabel.attributedText = attributedString
     }
     
 

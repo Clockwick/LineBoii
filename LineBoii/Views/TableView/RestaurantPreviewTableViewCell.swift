@@ -15,6 +15,8 @@ class RestaurantPreviewTableViewCell: UITableViewCell {
     
     private let restaurantPreviewSubTitle = RestaurantPreviewSubTitle()
     
+    private let restaurantPreviewTertinaryTitle = RestaurantPreviewTertinaryTitle()
+    
     private let restaurantImageView: UIImageView = {
         
         let image = UIImage(systemName: "photo")
@@ -49,6 +51,7 @@ class RestaurantPreviewTableViewCell: UITableViewCell {
         addSubview(restaurantImageView)
         addSubview(restaurantPreviewTitle)
         addSubview(restaurantPreviewSubTitle)
+        addSubview(restaurantPreviewTertinaryTitle)
         
     }
     
@@ -61,15 +64,19 @@ class RestaurantPreviewTableViewCell: UITableViewCell {
         restaurantImageView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: (contentView.height * 0.55))
         restaurantPreviewTitle.frame = CGRect(x: 10, y: restaurantImageView.bottom + 10, width: contentView.width, height: 60)
         restaurantPreviewSubTitle.frame = CGRect(x: 10, y: restaurantPreviewTitle.bottom, width: contentView.width, height: 20)
+        restaurantPreviewTertinaryTitle.frame = CGRect(x: 10, y: restaurantPreviewSubTitle.bottom, width: contentView.width, height: 20)
+        
+        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
     }
     
-    func configure(with title: String, subtitle: String) {
-        restaurantPreviewTitle.configure(with: title)
-        restaurantPreviewSubTitle.configure(with: subtitle)
+    func configure(with viewModel: RestaurantListPreviewViewModel) {
+        restaurantPreviewTitle.configure(with: viewModel.name)
+        restaurantPreviewSubTitle.configure(with: viewModel.subtitle ?? "")
+        restaurantPreviewTertinaryTitle.configure(with: String(viewModel.deliveryPrice), distance: String(viewModel.distance), time: viewModel.time)
     }
 
 }

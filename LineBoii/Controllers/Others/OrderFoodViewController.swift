@@ -37,6 +37,8 @@ enum OrderFoodSection {
 
 class OrderFoodViewController: UIViewController {
     
+    
+    
     private var sections = [OrderFoodSection]()
     
     private var advertisementPhotos = [String]()
@@ -103,13 +105,7 @@ class OrderFoodViewController: UIViewController {
         return table
     }()
     
-    private let headerView: UIView = {
-        let header = UIView()
-        header.autoresizingMask = UIView.AutoresizingMask.flexibleTopMargin
-        header.backgroundColor = .red
-        header.layer.zPosition = 9999
-        return header
-    }()
+    private let headerView: RestaurantFilterHeaderView = RestaurantFilterHeaderView()
     
     private let imageView: UIImageView = {
         let image = UIImage(systemName: "photo")
@@ -134,6 +130,21 @@ class OrderFoodViewController: UIViewController {
         return label
     }()
     
+    private let linemanLogo: UIImageView = {
+        let image = UIImage(named: "lineman-logo.png")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    private let suggestionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "ร้านแนะนำ"
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        return label
+    }()
+    
     // MARK: - Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -146,6 +157,7 @@ class OrderFoodViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         scrollView.delegate = self
         view.addSubview(scrollView)
@@ -165,25 +177,25 @@ class OrderFoodViewController: UIViewController {
         contentView.addSubview(advertisementPageControl)
         contentView.addSubview(couponImageView)
         contentView.addSubview(couponLabel)
-        contentView.addSubview(headerView)
+        contentView.addSubview(linemanLogo)
+        contentView.addSubview(suggestionLabel)
         contentView.addSubview(restaurantListTableView)
+        contentView.addSubview(headerView)
         
         configureCollectionView()
         
-        configureTableView()
+        
         configureModels()
             
         Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(slideToNextAdvertisement), userInfo: nil, repeats: true)
+        
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(enableUserInteraction), userInfo: nil, repeats: true)
 
     }
     
-    func configureTableView() {
-        
-    }
     
     private var savedPosition: CGFloat = 9999;
 
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -195,9 +207,11 @@ class OrderFoodViewController: UIViewController {
         couponLabel.frame = CGRect(x: couponImageView.left + 100, y: couponImageView.top + 5, width: couponImageView.width / 2, height: 10)
         promotionCollectionView.frame = CGRect(x: 0, y: couponImageView.bottom + 20, width: contentView.width, height: 300)
         foodCollectionView.frame = CGRect(x: 10, y: promotionCollectionView.bottom + 10, width: contentView.width, height: 1500)
-        headerView.frame = CGRect(x: 0, y: foodCollectionView.bottom, width: contentView.width, height: 44)
-        self.savedPosition = foodCollectionView.bottom
-        restaurantListTableView.frame = CGRect(x: 10, y: foodCollectionView.bottom + headerView.height, width: contentView.width - 20, height: 2000)
+        linemanLogo.frame = CGRect(x: 10, y: foodCollectionView.bottom, width: 100, height: 80)
+        suggestionLabel.frame = CGRect(x: linemanLogo.right + 5, y: foodCollectionView.bottom, width: 100, height: 80)
+        headerView.frame = CGRect(x: 0, y: suggestionLabel.bottom, width: contentView.width, height: 50)
+        self.savedPosition = suggestionLabel.bottom
+        restaurantListTableView.frame = CGRect(x: 10, y: suggestionLabel.bottom + headerView.height, width: contentView.width - 20, height: 2000)
     }
     
     
@@ -381,6 +395,14 @@ class OrderFoodViewController: UIViewController {
         }
     }
     
+    func disableUserInteraction() {
+        restaurantListTableView.isUserInteractionEnabled = false
+    }
+    
+    @objc func enableUserInteraction() {
+        self.restaurantListTableView.isUserInteractionEnabled = true
+    }
+    
     private func configureModels() {
         advertisementPhotos.append("")
         advertisementPhotos.append("")
@@ -509,10 +531,14 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        print("\(self.scrollView.contentOffset.y + view.safeAreaInsets.top) : \(self.headerView.frame.origin.y)")
+        
         if self.scrollView.contentOffset.y + view.safeAreaInsets.top >= self.savedPosition {
+            
             self.headerView.frame.origin.y = self.scrollView.contentOffset.y + view.safeAreaInsets.top
+            
         }
         else {
+            
             self.headerView.frame.origin.y = self.savedPosition
         }
     }
@@ -666,7 +692,6 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
 }
 
 extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView {
@@ -713,7 +738,9 @@ extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = restaurantListTableView.dequeueReusableCell(withIdentifier: RestaurantPreviewTableViewCell.identifier, for: indexPath) as? RestaurantPreviewTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: "Meating Bandmod - หมูปลาร้า คอหมูย่าง เสือร้องไห้ ย่างเตาถ่าน", subtitle: "ลด 14 บาท เมื่อสั่งเมนู กะเพรา ไก่ย่าง จานด่วน")
+            
+            let viewModel = RestaurantListPreviewViewModel(name: "Meating Bandmod - หมูปลาร้า คอหมูย่าง เสือร้องไห้ ย่างเตาถ่าน", time: "45", deliveryPrice: 0, subtitle: "ลด 14 บาท เมื่อสั่งเมนู กะเพรา ไก่ย่าง จานด่วน", isOfficial: true, isPickUp: true, distance: 45.0, restaurantImageURL: nil, supportType: nil)
+            cell.configure(with: viewModel)
             return cell
         }
     
@@ -761,18 +788,39 @@ extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
+    
+    
+    
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 0 {
-            let vc = LocationSelectViewController()
-            vc.title = "เลือกที่อยู่จัดส่ง"
-            present(vc, animated: true, completion: nil)
+        if tableView == self.restaurantListTableView {
+            
+//            if let cell = restaurantListTableView.cellForRow(at: indexPath) {
+////                print(cell.top + savedPosition, cell.bottom + savedPosition, "current height : \(self.scrollView.contentOffset.y + view.safeAreaInsets.top)")
+//                if cell.top + savedPosition < self.scrollView.contentOffset.y + view.safeAreaInsets.top && cell.bottom + savedPosition > self.scrollView.contentOffset.y + view.safeAreaInsets.top {
+//                    cell.selectionStyle = .none
+//                }
+//                else {
+//                    cell.selectionStyle = .default
+//                }
+//            }
+            
         }
-        if indexPath.section == 1 {
-            let vc = SearchViewController()
-            navigationController?.pushViewController(vc, animated: true)
+        if tableView == self.tableView {
+            if indexPath.section == 0 {
+                let vc = LocationSelectViewController()
+                vc.title = "เลือกที่อยู่จัดส่ง"
+                present(vc, animated: true, completion: nil)
+            }
+            if indexPath.section == 1 {
+                let vc = SearchViewController()
+                navigationController?.pushViewController(vc, animated: true)
+            }
         }
+        
+        
     }
     
     
