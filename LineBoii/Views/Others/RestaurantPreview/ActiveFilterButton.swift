@@ -25,7 +25,6 @@ class ActiveFilterButton: UIView {
     
     private func refreshLabel() {
         currentFilterNumberLabel.text = String(currentFilterNumber)
-        print("Current number : \(currentFilterNumber)")
         if currentFilterNumber > 9 {
             currentFilterNumberLabel.text = "9+"
         }

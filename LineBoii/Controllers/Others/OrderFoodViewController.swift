@@ -37,8 +37,6 @@ enum OrderFoodSection {
 
 class OrderFoodViewController: UIViewController {
     
-    
-    
     private var sections = [OrderFoodSection]()
     
     private var advertisementPhotos = [String]()
@@ -181,9 +179,8 @@ class OrderFoodViewController: UIViewController {
         contentView.addSubview(suggestionLabel)
         contentView.addSubview(restaurantListTableView)
         contentView.addSubview(headerView)
-        
+        passVcToHeaderView(vc: self)
         configureCollectionView()
-        
         
         configureModels()
             
@@ -191,6 +188,10 @@ class OrderFoodViewController: UIViewController {
         
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(enableUserInteraction), userInfo: nil, repeats: true)
 
+    }
+    
+    func passVcToHeaderView(vc: OrderFoodViewController) {
+        headerView.passVcToHeaderView(vc: vc)
     }
     
     

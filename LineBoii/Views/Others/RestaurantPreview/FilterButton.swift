@@ -14,6 +14,8 @@ enum ButtonState {
 
 class FilterButton: UIView {
     
+    weak var orderFoodControllerVC: OrderFoodViewController?
+    
     var currentState: ButtonState = .none
     
     let activeButton: ActiveFilterButton = ActiveFilterButton()
@@ -47,11 +49,19 @@ class FilterButton: UIView {
     }
     
     @objc private func didTapButton() {
-        
+        let vc = RestaurantFilterViewController()
+        if let orderFoodControllerVC = orderFoodControllerVC {
+            let navVC = UINavigationController(rootViewController: vc)
+            orderFoodControllerVC.present(navVC, animated: true, completion: nil)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func passVcToHeaderView(vc: OrderFoodViewController) {
+        orderFoodControllerVC = vc
     }
     
     func checkForStatus() {

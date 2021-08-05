@@ -47,8 +47,7 @@ class RestaurantFilterHeaderView: UIView{
         super.init(frame: frame)
 
         
-        addSubview(filterControlButton)
-        
+        addSubview(filterControlButton)        
         configureCollectionView()
         
         configureModel()
@@ -57,6 +56,10 @@ class RestaurantFilterHeaderView: UIView{
         layer.zPosition = 9999
         
         
+    }
+    
+    func passVcToHeaderView(vc: OrderFoodViewController) {
+        filterControlButton.passVcToHeaderView(vc: vc)
     }
     
     private func configureCollectionView() {
