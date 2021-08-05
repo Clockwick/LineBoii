@@ -11,6 +11,8 @@ class FilterElementButton: UIView {
     
     private var currentState: ButtonState = .none
     
+    private var parentButton: FilterButton = FilterButton()
+    
     private let button: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
@@ -50,13 +52,18 @@ class FilterElementButton: UIView {
             activeButton.center = center
             button.frame = .zero
             currentState = .none
+            self.parentButton.activeButton.decrementCurrentFilterNumber()
             
         case .none:
             button.frame = CGRect(x: 3, y: 3, width: width, height: height)
             button.center = center
             activeButton.frame = .zero
             currentState = .active
+            self.parentButton.activeButton.incrementCurrentFilterNumber()
+            
+            
         }
+        self.parentButton.checkForStatus()
         setNeedsLayout()
     }
     
@@ -82,9 +89,12 @@ class FilterElementButton: UIView {
         
     }
     
-    func configure(with title: String) {
+    func configure(with title: String, parentButton: FilterButton) {
         button.setTitle(title, for: .normal)
         activeButton.setTitle(title, for: .normal)
+        self.parentButton = parentButton
     }
 
 }
+
+

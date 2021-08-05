@@ -14,11 +14,9 @@ enum ButtonState {
 
 class FilterButton: UIView {
     
-    private var currentState: ButtonState = .none
+    var currentState: ButtonState = .none
     
-    private let activeButton: ActiveFilterButton = ActiveFilterButton()
-    
-    
+    let activeButton: ActiveFilterButton = ActiveFilterButton()
     
     private let button: UIButton = {
         let button = UIButton()
@@ -49,23 +47,22 @@ class FilterButton: UIView {
     }
     
     @objc private func didTapButton() {
-        switch currentState {
-        case .active:
-            activeButton.frame = CGRect(x: 3, y: 3, width: width, height: height)
-            button.frame = .zero
-            currentState = .none
-            
-        case .none:
-            button.frame = CGRect(x: 3, y: 3, width: width, height: height)
-            activeButton.frame = .zero
-            currentState = .active
-        }
-        setNeedsLayout()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func checkForStatus() {
+        if activeButton.currentFilterNumber > 0 {
+            currentState = .active
+        }
+        else {
+            currentState = .none
+        }
+        setNeedsLayout()
+     }
     
     override func layoutSubviews() {
         super.layoutSubviews()

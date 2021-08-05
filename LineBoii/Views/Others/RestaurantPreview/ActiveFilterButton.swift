@@ -7,10 +7,29 @@
 
 import UIKit
 
-class ActiveFilterButton: UIView {
 
-    private var currentFilterNumber: Int = 0
+
+class ActiveFilterButton: UIView {
+        
+    var currentFilterNumber: Int = 0
     
+    func incrementCurrentFilterNumber() {
+        currentFilterNumber += 1
+        refreshLabel()
+    }
+    
+    func decrementCurrentFilterNumber() {
+        currentFilterNumber -= 1
+        refreshLabel()
+    }
+    
+    private func refreshLabel() {
+        currentFilterNumberLabel.text = String(currentFilterNumber)
+        print("Current number : \(currentFilterNumber)")
+        if currentFilterNumber > 9 {
+            currentFilterNumberLabel.text = "9+"
+        }
+    }
     private let filterLabel: UILabel = {
         let label = UILabel()
         label.text = "ตัวกรอง"
@@ -65,8 +84,10 @@ class ActiveFilterButton: UIView {
         currentFilterNumberLabel.frame = CGRect(x: 0, y: 0, width: 14, height: 14)
         currentFilterNumberLabel.center = circleView.center
 
-        
     }
+    
+
+    
     
     
     

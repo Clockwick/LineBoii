@@ -11,9 +11,6 @@ import UIKit
 
 class RestaurantFilterHeaderView: UIView{
     
-    
-    
-    
     private var buttons = [String]()
     private let filterControlButton: FilterButton = FilterButton()
     
@@ -117,7 +114,7 @@ extension RestaurantFilterHeaderView: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCell
         let buttonLabel = buttons[indexPath.item]
-        cell.configure(with: buttonLabel)
+        cell.configure(with: buttonLabel, parentButton: filterControlButton)
         return cell
     }
     
@@ -150,7 +147,7 @@ class MyCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with title: String) {
-        button.configure(with: title)
+    func configure(with title: String, parentButton: FilterButton) {
+        button.configure(with: title, parentButton: parentButton)
     }
 }
