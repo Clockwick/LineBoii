@@ -19,30 +19,86 @@ class LabelSwitchTableViewCell: UITableViewCell {
     
     private let sw: UISwitch = {
         let sw = UISwitch()
-        sw.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
-        sw.setOn(false, animated: false)
-        sw.isEnabled = true
         return sw
     }()
     
+    private var type: FilterType?
+    
+    private var observer: NSObjectProtocol?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         addSubview(label)
         addSubview(sw)
-    }
-    
-    @objc private func switchStateDidChange(_ sender:UISwitch!) {
-        if (sender.isOn) {
-            sender.isOn = false
-        }
-        else {
-            sender.isOn = true
-        }
+        sw.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc private func switchStateDidChange(_ sender: UISwitch) {
+        if sender.isOn {
+            switch type {
+            case .none:
+                break;
+            case .isOpen:
+                fatalError("WTF")
+            case .isAllowCreditCard:
+                print("allow")
+                RestaurantFilterManager.shared.isAllowCreditCard = true
+                NotificationCenter.default.post(name: .isAllowCreditCardNotification, object: nil)
+            case .isPromotion:
+                print("promotion")
+                RestaurantFilterManager.shared.isPromotion = true
+                NotificationCenter.default.post(name: .isPromotionNotification, object: nil)
+            case .isPickable:
+                print("ispickable")
+                RestaurantFilterManager.shared.isPickable = true
+                NotificationCenter.default.post(name: .isPickableNotification, object: nil)
+            case .priceLevel:
+                // Present interface
+                print("PriceLevel")
+            case .foodType:
+                // Present interface
+                print("FoodType")
+            
+            
+            }
+            
+        }
+        else {
+            switch type {
+            case .none:
+                break;
+            case .isOpen:
+                fatalError("WTF")
+            case .isAllowCreditCard:
+                RestaurantFilterManager.shared.isAllowCreditCard = false
+                NotificationCenter.default.post(name: .isAllowCreditCardNotification, object: nil)
+            case .isPromotion:
+                RestaurantFilterManager.shared.isPromotion = false
+                NotificationCenter.default.post(name: .isPromotionNotification, object: nil)
+            case .isPickable:
+                RestaurantFilterManager.shared.isPickable = false
+                NotificationCenter.default.post(name: .isPickableNotification, object: nil)
+            case .priceLevel:
+                // Present interface
+                print("PriceLevel")
+            case .foodType:
+                // Present interface
+                print("FoodType")
+            
+            
+            }
+        }
+        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+        NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
+        
+    }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,12 +109,18 @@ class LabelSwitchTableViewCell: UITableViewCell {
         
     }
     
-    func configure(with viewModel: LabelSwitchViewModel) {
+    func configure(with viewModel: LabelSwitchViewModel, type: FilterType) {
         label.text = viewModel.title
+        self.type = type
+    }
+    
+    func setSwitchStatus(status: Bool) {
+        sw.setOn(status, animated: false)
     }
     
     func turnOff() {
         sw.isOn = false
+        switchStateDidChange(_:sw)
     }
 
 }
@@ -76,9 +138,6 @@ class BoldLabelSwitchTableViewCell: UITableViewCell {
     
     private let sw: UISwitch = {
         let sw = UISwitch()
-        sw.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
-        sw.setOn(true, animated: false)
-        sw.isEnabled = true
         return sw
     }()
     
@@ -86,17 +145,23 @@ class BoldLabelSwitchTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(label)
         addSubview(sw)
-        
-        
+        sw.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
+
+            
     }
     
-    @objc private func switchStateDidChange(_ sender:UISwitch) {
-        if (sender.isOn) {
-            sender.isOn = false
+    @objc private func switchStateDidChange(_ sender: UISwitch) {
+        if sender.isOn {
+            RestaurantFilterManager.shared.isOpen = true
         }
         else {
-            sender.isOn = true
+            RestaurantFilterManager.shared.isOpen = false
         }
+        
+        NotificationCenter.default.post(name: .isOpenNotification, object: nil)
+        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+        NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -116,7 +181,11 @@ class BoldLabelSwitchTableViewCell: UITableViewCell {
     
     func turnOff() {
         sw.isOn = false
+        switchStateDidChange(_:sw)
     }
     
+    func setSwitchStatus(status: Bool) {
+        sw.setOn(status, animated: false)
+    }
 
 }

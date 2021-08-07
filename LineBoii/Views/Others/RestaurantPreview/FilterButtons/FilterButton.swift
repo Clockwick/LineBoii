@@ -14,6 +14,8 @@ enum ButtonState {
 
 class FilterButton: UIView {
     
+    private var observer: NSObjectProtocol?
+    
     weak var orderFoodControllerVC: OrderFoodViewController?
     
     var currentState: ButtonState = .none
@@ -36,6 +38,29 @@ class FilterButton: UIView {
         button.setImage(imageView.image, for: .normal)
         return button
     }()
+    
+    override func didMoveToWindow() {
+        if self.window != nil {
+            observer = NotificationCenter.default.addObserver(
+                forName: .filterChangeNotification,
+                object: nil,
+                queue: .main,
+                using: { [weak self] _ in
+                    guard let strongSelf = self else {return}
+                    if  RestaurantFilterManager.shared.currentSelectedItemsCount > 0 {
+                        let currentSelectedItemsCount = RestaurantFilterManager.shared.currentSelectedItemsCount
+                        strongSelf.currentState = .active
+                        strongSelf.activeButton.refreshLabel(currentSelectedItemsCount: currentSelectedItemsCount)
+                    }
+                    else {
+                        strongSelf.currentState = .none
+                    }
+                    strongSelf.setNeedsLayout()
+            })
+        }
+    }
+    
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,6 +71,7 @@ class FilterButton: UIView {
         gesture.numberOfTapsRequired = 1
         activeButton.isUserInteractionEnabled = true
         activeButton.addGestureRecognizer(gesture)
+        
     }
     
     @objc private func didTapButton() {
@@ -63,16 +89,6 @@ class FilterButton: UIView {
     func passVcToHeaderView(vc: OrderFoodViewController) {
         orderFoodControllerVC = vc
     }
-    
-    func checkForStatus() {
-        if activeButton.currentFilterNumber > 0 {
-            currentState = .active
-        }
-        else {
-            currentState = .none
-        }
-        setNeedsLayout()
-     }
     
     override func layoutSubviews() {
         super.layoutSubviews()

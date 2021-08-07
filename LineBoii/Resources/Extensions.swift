@@ -168,3 +168,15 @@ extension String {
         return DateFormatter.displayDateFormatter.string(from: date)
     }
 }
+
+
+extension Notification.Name {
+    static let filterChangeNotification = Notification.Name("filterChangeNotification")
+    static let isOpenNotification = Notification.Name("isOpenNotification")
+    static let isAllowCreditCardNotification = Notification.Name("isAllowCreditCardNotification")
+    static let isPromotionNotification = Notification.Name("isPromotionNotification")
+    static let isPickableNotification = Notification.Name("isPickableNotification")
+    static let priceLevelNotification = Notification.Name("priceLevelNotification")
+    static let foodTypeNotification = Notification.Name("foodTypeNotification")
+    static let clearFilterAllNotification = Notification.Name("clearFilterAllNotification")
+}

@@ -11,21 +11,9 @@ import UIKit
 
 class ActiveFilterButton: UIView {
         
-    var currentFilterNumber: Int = 0
-    
-    func incrementCurrentFilterNumber() {
-        currentFilterNumber += 1
-        refreshLabel()
-    }
-    
-    func decrementCurrentFilterNumber() {
-        currentFilterNumber -= 1
-        refreshLabel()
-    }
-    
-    private func refreshLabel() {
-        currentFilterNumberLabel.text = String(currentFilterNumber)
-        if currentFilterNumber > 9 {
+    func refreshLabel(currentSelectedItemsCount: Int) {
+        currentFilterNumberLabel.text = String(currentSelectedItemsCount)
+        if currentSelectedItemsCount > 9 {
             currentFilterNumberLabel.text = "9+"
         }
     }
@@ -41,7 +29,6 @@ class ActiveFilterButton: UIView {
         let label = UILabel()
         label.textColor = .darkGreen
         label.numberOfLines = 1
-        label.text = "9+"
         label.font = UIFont(name: "supermarket", size: 12)
         label.textAlignment = .center
         return label

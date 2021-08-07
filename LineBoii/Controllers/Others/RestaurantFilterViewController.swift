@@ -46,6 +46,9 @@ class RestaurantFilterViewController: UIViewController {
                 mycell.turnOff()
             }
         }
+        NotificationCenter.default.post(name: .clearFilterAllNotification, object: nil)
+        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+        NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
     }
 
 }
@@ -85,8 +88,10 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BoldLabelSwitchTableViewCell.identifier, for: indexPath) as? BoldLabelSwitchTableViewCell else {
                 return UITableViewCell()
             }
+            let switchStatus = RestaurantFilterManager.shared.isOpen
             cell.contentView.isUserInteractionEnabled = false
             cell.configure(with: LabelSwitchViewModel(title: "ร้านอาหารที่เปิดเท่านั้น"))
+            cell.setSwitchStatus(status: switchStatus)
             return cell
             
         case 1:
@@ -94,8 +99,10 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LabelSwitchTableViewCell.identifier, for: indexPath) as? LabelSwitchTableViewCell else {
                 return UITableViewCell()
             }
+            let switchStatus = RestaurantFilterManager.shared.isAllowCreditCard
             cell.contentView.isUserInteractionEnabled = false
-            cell.configure(with: LabelSwitchViewModel(title: "บัตรเครดิต"))
+            cell.configure(with: LabelSwitchViewModel(title: "บัตรเครดิต"), type: .isAllowCreditCard)
+            cell.setSwitchStatus(status: switchStatus)
             return cell
             
         case 2:
@@ -103,16 +110,20 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LabelSwitchTableViewCell.identifier, for: indexPath) as? LabelSwitchTableViewCell else {
                 return UITableViewCell()
             }
+            let switchStatus = RestaurantFilterManager.shared.isPromotion
             cell.contentView.isUserInteractionEnabled = false
-            cell.configure(with: LabelSwitchViewModel(title: "โปรโมชั่น"))
+            cell.configure(with: LabelSwitchViewModel(title: "โปรโมชั่น"), type: .isPromotion)
+            cell.setSwitchStatus(status: switchStatus)
             return cell
         case 3:
             // Label Switch
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LabelSwitchTableViewCell.identifier, for: indexPath) as? LabelSwitchTableViewCell else {
                 return UITableViewCell()
             }
+            let switchStatus = RestaurantFilterManager.shared.isPickable
             cell.contentView.isUserInteractionEnabled = false
-            cell.configure(with: LabelSwitchViewModel(title: "รับที่ร้าน"))
+            cell.configure(with: LabelSwitchViewModel(title: "รับที่ร้าน"), type: .isPickable)
+            cell.setSwitchStatus(status: switchStatus)
             return cell
 //        case 4:
 ////            return "ราคา"

@@ -48,7 +48,7 @@ class OrderFoodViewController: UIViewController {
     private var couponAmount = 0
     
     
-    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 3000)
+    lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 10000)
 
 
     // MARK: - Floor
@@ -212,7 +212,7 @@ class OrderFoodViewController: UIViewController {
         suggestionLabel.frame = CGRect(x: linemanLogo.right + 5, y: foodCollectionView.bottom, width: 100, height: 80)
         headerView.frame = CGRect(x: 0, y: suggestionLabel.bottom, width: contentView.width, height: 50)
         self.savedPosition = suggestionLabel.bottom
-        restaurantListTableView.frame = CGRect(x: 10, y: suggestionLabel.bottom + headerView.height, width: contentView.width - 20, height: 2000)
+        restaurantListTableView.frame = CGRect(x: 10, y: suggestionLabel.bottom + headerView.height, width: contentView.width - 20, height: 4000)
     }
     
     
@@ -649,11 +649,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 cell.configure(with: viewModel)
                 return cell
             }
-            
-            
         }
-        
-
         return UICollectionViewCell()
     }
     
@@ -711,7 +707,7 @@ extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
             return 2
         }
         if tableView == self.restaurantListTableView {
-            return 40
+            return 20
         }
         return 1
         
