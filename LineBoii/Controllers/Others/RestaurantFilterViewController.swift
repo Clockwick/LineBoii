@@ -15,6 +15,7 @@ class RestaurantFilterViewController: UIViewController {
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.register(LabelSwitchTableViewCell.self, forCellReuseIdentifier: LabelSwitchTableViewCell.identifier)
         table.register(BoldLabelSwitchTableViewCell.self, forCellReuseIdentifier: BoldLabelSwitchTableViewCell.identifier)
+        table.register(ButtonsTableViewCell.self, forCellReuseIdentifier: ButtonsTableViewCell.identifier)
         // Buttons
         return table
     }()
@@ -46,7 +47,9 @@ class RestaurantFilterViewController: UIViewController {
                 mycell.turnOff()
             }
         }
+        
         NotificationCenter.default.post(name: .clearFilterAllNotification, object: nil)
+        RestaurantFilterManager.shared.clearPriceLevel()
         RestaurantFilterManager.shared.calculateCurrentSelectedItems()
         NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
     }
@@ -58,24 +61,7 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
         return 6
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return ""
-        case 1:
-            return "ชำระเงิน"
-        case 2:
-            return "โปรโมชั่น"
-        case 3:
-            return "ประเภทออเดอร์"
-        case 4:
-            return "ราคา"
-        case 5:
-            return "ประเภทอาหาร"
-        default:
-            return ""
-        }
-    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -125,8 +111,10 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
             cell.configure(with: LabelSwitchViewModel(title: "รับที่ร้าน"), type: .isPickable)
             cell.setSwitchStatus(status: switchStatus)
             return cell
-//        case 4:
-////            return "ราคา"
+        case 4:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsTableViewCell.identifier, for: indexPath) as! ButtonsTableViewCell
+            cell.selectionStyle = .none
+            return cell
 //        case 5:
 ////            return "ประเภทอาหาร"
         default:
@@ -138,5 +126,59 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        
+        case 1:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))
+            headerView.backgroundColor = .systemBackground
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: headerView.width, height: headerView.height))
+            label.text = "ชำระเงิน"
+            label.textColor = .label
+            label.font = .systemFont(ofSize: 16, weight: .bold)
+            headerView.addSubview(label)
+            return headerView
+        case 2:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))
+            headerView.backgroundColor = .systemBackground
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: headerView.width, height: headerView.height))
+            label.text = "โปรโมชั่น"
+            label.textColor = .label
+            label.font = .systemFont(ofSize: 16, weight: .bold)
+            headerView.addSubview(label)
+            return headerView
+        case 3:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))
+            headerView.backgroundColor = .systemBackground
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: headerView.width, height: headerView.height))
+            label.text = "ประเภทออเดอร์"
+            label.textColor = .label
+            label.font = .systemFont(ofSize: 16, weight: .bold)
+            headerView.addSubview(label)
+            return headerView
+        case 4:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))
+            headerView.backgroundColor = .systemBackground
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: headerView.width, height: headerView.height))
+            label.text = "ราคา"
+            label.textColor = .label
+            label.font = .systemFont(ofSize: 16, weight: .bold)
+            headerView.addSubview(label)
+            return headerView
+        case 5:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))
+            headerView.backgroundColor = .systemBackground
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: headerView.width, height: headerView.height))
+            label.text = "ประเภทอาหาร"
+            label.textColor = .label
+            label.font = .systemFont(ofSize: 16, weight: .bold)
+            headerView.addSubview(label)
+            return headerView
+        default:
+            return UIView(frame: .zero)
+        }
+        
     }
 }

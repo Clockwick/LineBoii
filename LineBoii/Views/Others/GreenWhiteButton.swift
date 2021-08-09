@@ -12,6 +12,10 @@ class GreenWhiteButton: UIView {
     var currentState: ButtonState = .none
     
     private var buttonSize: CGSize?
+    
+    private var priceLevel: PriceLevel?
+    
+    private var clearObserver: NSObjectProtocol?
 
     let button: UIButton = {
         let button = UIButton()
@@ -63,15 +67,15 @@ class GreenWhiteButton: UIView {
 //                }
 //                strongSelf.setNeedsLayout()
 //        })
-//        clearObserver = NotificationCenter.default.addObserver(
-//            forName: .clearFilterAllNotification,
-//            object: nil,
-//            queue: .main,
-//            using: { [weak self] _ in
-//                guard let strongSelf = self else {return}
-//                strongSelf.showNonActiveButton()
-//                strongSelf.setNeedsLayout()
-//        })
+        clearObserver = NotificationCenter.default.addObserver(
+            forName: .clearFilterAllNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let strongSelf = self else {return}
+                strongSelf.showNonActiveButton()
+                strongSelf.setNeedsLayout()
+        })
         
     }
     
@@ -79,11 +83,11 @@ class GreenWhiteButton: UIView {
 //        guard let observer = observer else {
 //            return
 //        }
-//        guard let clearObserver = clearObserver else {
-//            return
-//        }
-//        NotificationCenter.default.removeObserver(observer)
-//        NotificationCenter.default.removeObserver(clearObserver)
+        guard let clearObserver = clearObserver else {
+            return
+        }
+        
+        NotificationCenter.default.removeObserver(clearObserver)
     }
     
     func showActiveButton() {
@@ -109,16 +113,29 @@ class GreenWhiteButton: UIView {
         switch currentState {
         // Update UI
         case .active:
+            guard let priceLevel = priceLevel else {
+                return
+            }
+            RestaurantFilterManager.shared.popPriceLevel(priceLevel: priceLevel)
             showNonActiveButton()
         case .none:
+            guard let priceLevel = priceLevel else {
+                return
+            }
+            RestaurantFilterManager.shared.pushPriceLevel(priceLevel: priceLevel)
+            showNonActiveButton()
             showActiveButton()
         }
         setNeedsLayout()
+        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+        NotificationCenter.default.post(name: .priceLevelNotification, object: nil)
     }
     
-    func configure(with title: String, size: CGSize) {
-        print("\(title) : width = \(size.width) , height = \(size.height)")
+    func configure(with title: String, size: CGSize, priceLevel: PriceLevel, status: ButtonState) {
+//        print("\(title) : width = \(size.width) , height = \(size.height)")
         self.buttonSize = size
+        self.priceLevel = priceLevel
+        self.currentState = status
         button.setTitle(title, for: .normal)
         activeButton.setTitle(title, for: .normal)
         activeButton.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)

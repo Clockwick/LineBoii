@@ -59,7 +59,7 @@ class PriceSelectorViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int { 
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
@@ -67,7 +67,7 @@ class PriceSelectorViewController: UIViewController, UITableViewDelegate, UITabl
         if section == 0 {
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 60))
             headerView.backgroundColor = .systemBackground
-            let label = UILabel(frame: CGRect(x: 15, y: 0, width: headerView.width, height: headerView.height))
+            let label = UILabel(frame: CGRect(x: 15, y: 0, width: headerView.width, height: 30))
             label.text = "ราคา"
             label.textColor = .label
             label.font = UIFont(name: "supermarket", size: 20)
@@ -124,14 +124,36 @@ class ButtonsTableViewCell: UITableViewCell {
         let highclassButtonSize = highclassString.size(withAttributes: [.font: UIFont(name: "supermarket", size: 16) as Any])
         
         // Bad programming SRY origin don't do its duty
-        pricelessButton.frame = CGRect(x: 20, y: 25, width: pricelessButtonSize.width + 20, height: height - 10)
-        cheapButton.frame = CGRect(x: 20 + pricelessButton.width + xOffset, y: 25, width: cheapButtonSize.width + 20, height: contentView.height - 10)
-        mediumButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + xOffset + xOffset, y: 25, width: mediumButtonSize.width + 20, height: contentView.height - 10)
-        expensiveButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + xOffset + xOffset + xOffset, y: 25, width: expensiveButtonSize.width + 20, height: contentView.height - 10)
-        highclassButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + expensiveButton.width + xOffset + xOffset + xOffset + xOffset, y: 25, width: highclassButtonSize.width + 20, height: contentView.height - 10)
+        pricelessButton.frame = CGRect(x: 20, y: 5, width: pricelessButtonSize.width + 20, height: height - 10)
+        cheapButton.frame = CGRect(x: 20 + pricelessButton.width + xOffset, y: 5, width: cheapButtonSize.width + 20, height: contentView.height - 10)
+        mediumButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + xOffset + xOffset, y: 5, width: mediumButtonSize.width + 20, height: contentView.height - 10)
+        expensiveButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + xOffset + xOffset + xOffset, y: 5, width: expensiveButtonSize.width + 20, height: contentView.height - 10)
+        highclassButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + expensiveButton.width + xOffset + xOffset + xOffset + xOffset, y: 5, width: highclassButtonSize.width + 20, height: contentView.height - 10)
     }
     
     private func configureButtons() {
+        var pricelessStatus: ButtonState = .none
+        var cheapStatus: ButtonState = .none
+        var mediumStatus: ButtonState = .none
+        var expensiveStatus: ButtonState = .none
+        var highclassStatus: ButtonState = .none
+        
+        let priceLevelArray = RestaurantFilterManager.shared.priceLevelArray
+        
+        for priceLevel in priceLevelArray {
+            switch priceLevel {
+            case .priceless:
+                pricelessStatus = .active
+            case .cheap:
+                cheapStatus = .active
+            case .medium:
+                mediumStatus = .active
+            case .expensive:
+                expensiveStatus = .active
+            case .highclass:
+                highclassStatus = .active
+            }
+        }
         
         let pricelessString = "฿"
         let cheapString = "฿฿"
@@ -151,11 +173,11 @@ class ButtonsTableViewCell: UITableViewCell {
         contentView.addSubview(expensiveButton)
         contentView.addSubview(highclassButton)
         
-        pricelessButton.configure(with: pricelessString, size: CGSize(width: pricelessButtonSize.width + 20, height: contentView.height - 10))
-        cheapButton.configure(with: cheapString, size: CGSize(width: cheapButtonSize.width + 20, height: contentView.height - 10))
-        mediumButton.configure(with: mediumString, size: CGSize(width: mediumButtonSize.width + 20, height: contentView.height - 10))
-        expensiveButton.configure(with: expensiveString, size: CGSize(width: expensiveButtonSize.width + 20, height: contentView.height - 10))
-        highclassButton.configure(with: highclassString, size: CGSize(width: highclassButtonSize.width + 20, height: contentView.height - 10))
+        pricelessButton.configure(with: pricelessString, size: CGSize(width: pricelessButtonSize.width + 20, height: contentView.height - 10), priceLevel: .priceless, status: pricelessStatus)
+        cheapButton.configure(with: cheapString, size: CGSize(width: cheapButtonSize.width + 20, height: contentView.height - 10), priceLevel: .cheap, status: cheapStatus)
+        mediumButton.configure(with: mediumString, size: CGSize(width: mediumButtonSize.width + 20, height: contentView.height - 10), priceLevel: .medium, status: mediumStatus)
+        expensiveButton.configure(with: expensiveString, size: CGSize(width: expensiveButtonSize.width + 20, height: contentView.height - 10), priceLevel: .expensive, status: expensiveStatus)
+        highclassButton.configure(with: highclassString, size: CGSize(width: highclassButtonSize.width + 20, height: contentView.height - 10), priceLevel: .highclass, status: highclassStatus)
         
         let xOffset = CGFloat(20)
         
@@ -165,6 +187,8 @@ class ButtonsTableViewCell: UITableViewCell {
         mediumButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + xOffset + xOffset, y: 5, width: mediumButtonSize.width + 20, height: contentView.height - 10)
         expensiveButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + xOffset + xOffset + xOffset, y: 5, width: expensiveButtonSize.width + 20, height: contentView.height - 10)
         highclassButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + expensiveButton.width + xOffset + xOffset + xOffset + xOffset, y: 5, width: highclassButtonSize.width + 20, height: contentView.height - 10)
+        
+        
         
     }
     

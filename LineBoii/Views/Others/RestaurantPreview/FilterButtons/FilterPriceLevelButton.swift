@@ -65,6 +65,9 @@ class FilterPriceLevelButton: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
+        
         addSubview(button)
         addSubview(activeButton)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -75,6 +78,10 @@ class FilterPriceLevelButton: UIView {
             queue: .main,
             using: { [weak self] _ in
                 guard let strongSelf = self else {return}
+                let isActive = RestaurantFilterManager.shared.priceLevelArray.count != 0
+                if isActive {
+                    strongSelf.currentState = .none
+                }
                 switch strongSelf.currentState {
                 // Update UI
                 case .active:
@@ -82,6 +89,7 @@ class FilterPriceLevelButton: UIView {
                 case .none:
                     strongSelf.showActiveButton()
                 }
+                
                 strongSelf.setNeedsLayout()
         })
         clearObserver = NotificationCenter.default.addObserver(
@@ -93,6 +101,8 @@ class FilterPriceLevelButton: UIView {
                 strongSelf.showNonActiveButton()
                 strongSelf.setNeedsLayout()
         })
+       
+        
     }
     
     deinit {

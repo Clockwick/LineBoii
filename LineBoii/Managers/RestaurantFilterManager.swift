@@ -8,7 +8,7 @@
 import Foundation
 
 enum PriceLevel {
-    case nonSelect
+    case priceless
     case cheap
     case medium
     case expensive
@@ -16,16 +16,16 @@ enum PriceLevel {
         
     var title: String {
         switch self {
-        case .nonSelect:
-            return ""
-        case .cheap:
+        case .priceless:
             return "฿"
-        case .medium:
+        case .cheap:
             return "฿฿"
-        case .expensive:
+        case .medium:
             return "฿฿฿"
-        case .highclass:
+        case .expensive:
             return "฿฿฿฿"
+        case .highclass:
+            return "฿฿฿฿฿"
         }
     }
 }
@@ -40,12 +40,13 @@ class RestaurantFilterManager {
     var isAllowCreditCard = false
     var isPromotion = false
     var isPickable = false
-    var priceLevel: PriceLevel = .nonSelect
+    var priceLevel: PriceLevel = .priceless
+    var priceLevelArray = [PriceLevel]()
     var foodType = [FoodType]()
     
     func calculateCurrentSelectedItems() {
         var count = 0
-        let priceLevelToBoolean = priceLevel != .nonSelect
+        let priceLevelToBoolean = priceLevelArray.count != 0
         let foodTypeToBoolean = foodType.count != 0
         let booleanArray = [isOpen, isAllowCreditCard, isPromotion, isPickable, priceLevelToBoolean, foodTypeToBoolean]
         for item in booleanArray {
@@ -53,8 +54,32 @@ class RestaurantFilterManager {
                 count += 1
             }
         }
+        if priceLevelToBoolean {
+            print("Price level array : \(priceLevelArray)")
+        }
         print("Current Selected Items : \(count)")
         currentSelectedItemsCount = count
     }
+    
+    func pushPriceLevel(priceLevel: PriceLevel) {
+        priceLevelArray.append(priceLevel)
+    }
+    
+    func popPriceLevel(priceLevel: PriceLevel) {
+        var index = -1
+        for (i, item) in priceLevelArray.enumerated() {
+            if item == priceLevel {
+                index = i
+                break
+            }
+        }
+        if index != -1 {
+            priceLevelArray.remove(at: index)
+        }
+        
+    }
 
+    func clearPriceLevel() {
+        priceLevelArray.removeAll()
+    }
 }
