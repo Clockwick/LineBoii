@@ -15,6 +15,7 @@ class RestaurantFilterHeaderView: UIView{
     private let filterAllowCreditCardButton = FilterAllowCreditCardButton()
     private let filterPromotionButton = FilterPromotionButton()
     private let filterPickableButton = FilterPickableButton()
+    private let filterPriceLevelButton = FilterPriceLevelButton()
     
     private let filterControlButton: FilterButton = FilterButton()
     
@@ -41,6 +42,7 @@ class RestaurantFilterHeaderView: UIView{
     
     func passVcToHeaderView(vc: OrderFoodViewController) {
         filterControlButton.passVcToHeaderView(vc: vc)
+        filterPriceLevelButton.passVcToHeaderView(vc: vc)
     }
     
     private func configureCollectionView() {
@@ -87,8 +89,7 @@ extension RestaurantFilterHeaderView: UICollectionViewDelegate, UICollectionView
         case 3:
             cell.configure(with: filterPickableButton)
         case 4:
-//            cell.configure(with: buttonLabel, type: .priceLevel)
-            break
+            cell.configure(with: filterPriceLevelButton)
         case 5:
 //            cell.configure(with: buttonLabel, type: .foodType)
             break
@@ -111,6 +112,7 @@ extension RestaurantFilterHeaderView: UICollectionViewDelegate, UICollectionView
 class RestaurantFilterCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RestaurantFilterCollectionViewCell"
+    
     var filterButton: UIView?
         
     override init(frame: CGRect) {
@@ -140,7 +142,6 @@ class RestaurantFilterCollectionViewCell: UICollectionViewCell {
             return
         }
         contentView.addSubview(button)
-        
     }
     
 }

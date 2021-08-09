@@ -78,6 +78,7 @@ class FilterButton: UIView {
         let vc = RestaurantFilterViewController()
         if let orderFoodControllerVC = orderFoodControllerVC {
             let navVC = UINavigationController(rootViewController: vc)
+            navVC.modalPresentationStyle = .formSheet
             orderFoodControllerVC.present(navVC, animated: true, completion: nil)
         }
     }

@@ -1,0 +1,153 @@
+//
+//  GreenWhiteButton.swift
+//  LineBoii
+//
+//  Created by Paratthakorn Sribunyong on 7/8/2564 BE.
+//
+
+import UIKit
+
+class GreenWhiteButton: UIView {
+    
+    var currentState: ButtonState = .none
+    
+    private var buttonSize: CGSize?
+
+    let button: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.label, for: .normal)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 15
+        button.layer.borderColor = UIColor.label.cgColor
+        button.layer.borderWidth = 0.25
+        button.titleLabel?.font = UIFont(name: "supermarket", size: 16)
+        button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return button
+    }()
+    
+    private let activeButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.systemBackground, for: .normal)
+        button.backgroundColor = .darkGreen
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 15
+        button.layer.borderColor = UIColor.darkGreen.cgColor
+        button.layer.borderWidth = 0.25
+        button.titleLabel?.font = UIFont(name: "supermarket", size: 16)
+        button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return button
+    }()
+
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(activeButton)
+        addSubview(button)
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        activeButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
+//        observer = NotificationCenter.default.addObserver(
+//            forName: .isOpenNotification,
+//            object: nil,
+//            queue: .main,
+//            using: { [weak self] _ in
+//                guard let strongSelf = self else {return}
+//                print("isOpen current state : \(strongSelf.currentState)")
+//                switch strongSelf.currentState {
+//                // Update UI
+//                case .active:
+//                    strongSelf.showNonActiveButton()
+//                case .none:
+//                    strongSelf.showActiveButton()
+//                }
+//                strongSelf.setNeedsLayout()
+//        })
+//        clearObserver = NotificationCenter.default.addObserver(
+//            forName: .clearFilterAllNotification,
+//            object: nil,
+//            queue: .main,
+//            using: { [weak self] _ in
+//                guard let strongSelf = self else {return}
+//                strongSelf.showNonActiveButton()
+//                strongSelf.setNeedsLayout()
+//        })
+        
+    }
+    
+    deinit {
+//        guard let observer = observer else {
+//            return
+//        }
+//        guard let clearObserver = clearObserver else {
+//            return
+//        }
+//        NotificationCenter.default.removeObserver(observer)
+//        NotificationCenter.default.removeObserver(clearObserver)
+    }
+    
+    func showActiveButton() {
+        guard let buttonSize = buttonSize else {
+            return
+        }
+        activeButton.frame = CGRect(x: 0, y: 0, width: buttonSize.width, height: buttonSize.height)
+        button.frame = .zero
+        currentState = .active
+        
+    }
+    func showNonActiveButton() {
+        guard let buttonSize = buttonSize else {
+            return
+        }
+        button.frame = CGRect(x: 0, y: 0, width: buttonSize.width, height: buttonSize.height)
+        activeButton.frame = .zero
+        currentState = .none
+    }
+
+    @objc private func didTapButton() {
+        
+        switch currentState {
+        // Update UI
+        case .active:
+            showNonActiveButton()
+        case .none:
+            showActiveButton()
+        }
+        setNeedsLayout()
+    }
+    
+    func configure(with title: String, size: CGSize) {
+        print("\(title) : width = \(size.width) , height = \(size.height)")
+        self.buttonSize = size
+        button.setTitle(title, for: .normal)
+        activeButton.setTitle(title, for: .normal)
+        activeButton.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        button.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        switch currentState {
+        // Update UI
+        case .active:
+            showActiveButton()
+        case .none:
+            showNonActiveButton()
+        }
+        
+        setNeedsLayout()
+            
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        switch currentState {
+        case .active:
+            showActiveButton()
+        case .none:
+            showNonActiveButton()
+        }
+        
+    }
+
+}
