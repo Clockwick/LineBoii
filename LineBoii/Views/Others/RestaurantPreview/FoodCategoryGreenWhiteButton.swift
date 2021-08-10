@@ -1,19 +1,21 @@
 //
-//  GreenWhiteButton.swift
+//  FoodCategoryGreenWhiteButton.swift
 //  LineBoii
 //
-//  Created by Paratthakorn Sribunyong on 7/8/2564 BE.
+//  Created by Paratthakorn Sribunyong on 9/8/2564 BE.
 //
 
 import UIKit
 
-class GreenWhiteButton: UIView {
+class FoodCategoryCollectionViewCell: UICollectionViewCell {
+    
+    static let identifier = "FoodCategoryCollectionViewCell"
     
     var currentState: ButtonState = .none
     
     private var buttonSize: CGSize?
     
-    private var priceLevel: PriceLevel?
+    private var foodCategory: FoodCategoryEnum?
     
     private var clearObserver: NSObjectProtocol?
 
@@ -45,7 +47,6 @@ class GreenWhiteButton: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubview(activeButton)
         addSubview(button)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -113,28 +114,21 @@ class GreenWhiteButton: UIView {
         switch currentState {
         // Update UI
         case .active:
-            guard let priceLevel = priceLevel else {
-                return
-            }
-            RestaurantFilterManager.shared.popPriceLevel(priceLevel: priceLevel)
+            // POP
             showNonActiveButton()
         case .none:
-            guard let priceLevel = priceLevel else {
-                return
-            }
-            RestaurantFilterManager.shared.pushPriceLevel(priceLevel: priceLevel)
-            showNonActiveButton()
+            // PUSH
             showActiveButton()
         }
         setNeedsLayout()
-        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
-        NotificationCenter.default.post(name: .priceLevelNotification, object: nil)
+//        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+//        NotificationCenter.default.post(name: .foodCategoryNotification, object: nil)
     }
     
-    func configure(with title: String, size: CGSize, priceLevel: PriceLevel, status: ButtonState) {
+    func configure(with title: String, size: CGSize, foodCategory: FoodCategoryEnum, status: ButtonState) {
 //        print("\(title) : width = \(size.width) , height = \(size.height)")
         self.buttonSize = size
-        self.priceLevel = priceLevel
+        self.foodCategory = foodCategory
         self.currentState = status
         button.setTitle(title, for: .normal)
         activeButton.setTitle(title, for: .normal)
@@ -147,7 +141,6 @@ class GreenWhiteButton: UIView {
         case .none:
             showNonActiveButton()
         }
-        
         setNeedsLayout()
             
     }

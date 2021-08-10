@@ -16,10 +16,8 @@ struct Restaurant {
     let isPickUp: Bool
     let distance: Float
     let restaurantImageURL: String
-    let foodCategories: [FoodCategory]
+//    let foodCategories: [FoodCategory]
     
 }
 
-struct FoodCategory {
-    
-}
+

@@ -30,6 +30,8 @@ enum PriceLevel {
     }
 }
 
+
+
 class RestaurantFilterManager {
     static let shared = RestaurantFilterManager()
     
@@ -42,12 +44,12 @@ class RestaurantFilterManager {
     var isPickable = false
     var priceLevel: PriceLevel = .priceless
     var priceLevelArray = [PriceLevel]()
-    var foodType = [FoodType]()
+    var foodCategory = [FoodCategoryEnum]()
     
     func calculateCurrentSelectedItems() {
         var count = 0
         let priceLevelToBoolean = priceLevelArray.count != 0
-        let foodTypeToBoolean = foodType.count != 0
+        let foodTypeToBoolean = foodCategory.count != 0
         let booleanArray = [isOpen, isAllowCreditCard, isPromotion, isPickable, priceLevelToBoolean, foodTypeToBoolean]
         for item in booleanArray {
             if item {

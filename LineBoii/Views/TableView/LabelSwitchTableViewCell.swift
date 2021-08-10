@@ -61,9 +61,9 @@ class LabelSwitchTableViewCell: UITableViewCell {
             case .priceLevel:
                 // Present interface
                 print("PriceLevel")
-            case .foodType:
+            case .foodCategory:
                 // Present interface
-                print("FoodType")
+                print("foodCategory")
             
             
             }
@@ -87,9 +87,9 @@ class LabelSwitchTableViewCell: UITableViewCell {
             case .priceLevel:
                 // Present interface
                 print("PriceLevel")
-            case .foodType:
+            case .foodCategory:
                 // Present interface
-                print("FoodType")
+                print("foodCategory")
             
             
             }

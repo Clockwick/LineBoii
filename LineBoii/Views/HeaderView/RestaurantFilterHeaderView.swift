@@ -16,6 +16,7 @@ class RestaurantFilterHeaderView: UIView{
     private let filterPromotionButton = FilterPromotionButton()
     private let filterPickableButton = FilterPickableButton()
     private let filterPriceLevelButton = FilterPriceLevelButton()
+    private let filterFoodCategoryButton = FilterFoodCategoryButton()
     
     private let filterControlButton: FilterButton = FilterButton()
     
@@ -43,6 +44,7 @@ class RestaurantFilterHeaderView: UIView{
     func passVcToHeaderView(vc: OrderFoodViewController) {
         filterControlButton.passVcToHeaderView(vc: vc)
         filterPriceLevelButton.passVcToHeaderView(vc: vc)
+        filterFoodCategoryButton.passVcToHeaderView(vc: vc)
     }
     
     private func configureCollectionView() {
@@ -73,7 +75,7 @@ class RestaurantFilterHeaderView: UIView{
 
 extension RestaurantFilterHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,8 +93,7 @@ extension RestaurantFilterHeaderView: UICollectionViewDelegate, UICollectionView
         case 4:
             cell.configure(with: filterPriceLevelButton)
         case 5:
-//            cell.configure(with: buttonLabel, type: .foodType)
-            break
+            cell.configure(with: filterFoodCategoryButton)
         default:
             print("Case default")
             break

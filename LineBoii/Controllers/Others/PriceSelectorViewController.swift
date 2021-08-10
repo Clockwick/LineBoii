@@ -91,11 +91,11 @@ class ButtonsTableViewCell: UITableViewCell {
     
     static let identifier = "ButtonsTableViewCell"
     
-    private let pricelessButton = GreenWhiteButton()
-    private let cheapButton = GreenWhiteButton()
-    private let mediumButton = GreenWhiteButton()
-    private let expensiveButton = GreenWhiteButton()
-    private let highclassButton = GreenWhiteButton()
+    private let pricelessButton = PriceLevelGreenWhiteButton()
+    private let cheapButton = PriceLevelGreenWhiteButton()
+    private let mediumButton = PriceLevelGreenWhiteButton()
+    private let expensiveButton = PriceLevelGreenWhiteButton()
+    private let highclassButton = PriceLevelGreenWhiteButton()
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -227,7 +227,7 @@ class SearchButtonTableViewCell: UITableViewCell {
 
 extension PriceSelectorViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting)
+        PriceSelectorPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

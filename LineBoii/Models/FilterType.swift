@@ -13,5 +13,5 @@ enum FilterType {
     case isPromotion
     case isPickable
     case priceLevel
-    case foodType
+    case foodCategory
 }
