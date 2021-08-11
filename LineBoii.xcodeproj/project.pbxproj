@@ -15,6 +15,7 @@
 		681B532C26C22A6E0035363F /* FoodCategorySelectorPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B532B26C22A6E0035363F /* FoodCategorySelectorPresentationController.swift */; };
 		681B533126C22CBB0035363F /* FoodCategoryHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B533026C22CBB0035363F /* FoodCategoryHeaderCollectionReusableView.swift */; };
 		681B534126C2439E0035363F /* FoodCategorySearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B534026C2439E0035363F /* FoodCategorySearchViewCell.swift */; };
+		681B534626C25A250035363F /* FoodCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B534526C25A250035363F /* FoodCategoryTableViewCell.swift */; };
 		68319B2926AF96B200525821 /* supermarket.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68319B2826AF96B200525821 /* supermarket.ttf */; };
 		68319B3526B02EFA00525821 /* RestaurantListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68319B3426B02EFA00525821 /* RestaurantListViewModel.swift */; };
 		68319B4326B0300200525821 /* AdvertisementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68319B4226B0300200525821 /* AdvertisementViewModel.swift */; };
@@ -113,6 +114,7 @@
 		681B532B26C22A6E0035363F /* FoodCategorySelectorPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategorySelectorPresentationController.swift; sourceTree = "<group>"; };
 		681B533026C22CBB0035363F /* FoodCategoryHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		681B534026C2439E0035363F /* FoodCategorySearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategorySearchViewCell.swift; sourceTree = "<group>"; };
+		681B534526C25A250035363F /* FoodCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		68319B2826AF96B200525821 /* supermarket.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = supermarket.ttf; sourceTree = "<group>"; };
 		68319B3426B02EFA00525821 /* RestaurantListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListViewModel.swift; sourceTree = "<group>"; };
 		68319B4226B0300200525821 /* AdvertisementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementViewModel.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				68F5116D26B4430F00BF1BAA /* SearchTableViewCell.swift */,
 				684AD26A26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift */,
 				685899D126BBBEF3001CE1D3 /* LabelSwitchTableViewCell.swift */,
+				681B534526C25A250035363F /* FoodCategoryTableViewCell.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				68319B4326B0300200525821 /* AdvertisementViewModel.swift in Sources */,
 				684AD26B26B92569006D0EF8 /* RestaurantPreviewTableViewCell.swift in Sources */,
 				68F5119C26B50C1B00BF1BAA /* PopularCategoryViewModel.swift in Sources */,
+				681B534626C25A250035363F /* FoodCategoryTableViewCell.swift in Sources */,
 				685899E726BE76E6001CE1D3 /* FilterOpenButton.swift in Sources */,
 				68E8079E26ADB8E9001F69CD /* TabBarViewController.swift in Sources */,
 				68F5115526B41C3800BF1BAA /* OrderFoodViewController.swift in Sources */,

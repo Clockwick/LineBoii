@@ -16,6 +16,7 @@ class RestaurantFilterViewController: UIViewController {
         table.register(LabelSwitchTableViewCell.self, forCellReuseIdentifier: LabelSwitchTableViewCell.identifier)
         table.register(BoldLabelSwitchTableViewCell.self, forCellReuseIdentifier: BoldLabelSwitchTableViewCell.identifier)
         table.register(ButtonsTableViewCell.self, forCellReuseIdentifier: ButtonsTableViewCell.identifier)
+        table.register(FoodCategoryTableViewCell.self, forCellReuseIdentifier: FoodCategoryTableViewCell.identifier)
         // Buttons
         return table
     }()
@@ -50,6 +51,7 @@ class RestaurantFilterViewController: UIViewController {
         
         NotificationCenter.default.post(name: .clearFilterAllNotification, object: nil)
         RestaurantFilterManager.shared.clearPriceLevel()
+        RestaurantFilterManager.shared.clearFoodCategory()
         RestaurantFilterManager.shared.calculateCurrentSelectedItems()
         NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
     }
@@ -57,6 +59,13 @@ class RestaurantFilterViewController: UIViewController {
 }
 
 extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 5 {
+            return CGFloat(300)
+        }
+        return CGFloat(44)
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 6
     }
@@ -115,8 +124,10 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
             let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsTableViewCell.identifier, for: indexPath) as! ButtonsTableViewCell
             cell.selectionStyle = .none
             return cell
-//        case 5:
-////            return "ประเภทอาหาร"
+        case 5:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FoodCategoryTableViewCell.identifier, for: indexPath) as! FoodCategoryTableViewCell
+            cell.selectionStyle = .none
+            return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.contentView.isUserInteractionEnabled = false
@@ -130,6 +141,8 @@ extension RestaurantFilterViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
+        case 0:
+            return UIView(frame: .zero)
         
         case 1:
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 35))

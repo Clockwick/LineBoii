@@ -17,6 +17,7 @@ class FoodCategoryCollectionViewCell: UICollectionViewCell {
     
     private var foodCategory: FoodCategoryEnum?
     
+    private var observer: NSObjectProtocol?
     private var clearObserver: NSObjectProtocol?
 
     let button: UIButton = {
@@ -52,22 +53,23 @@ class FoodCategoryCollectionViewCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         activeButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         
-//        observer = NotificationCenter.default.addObserver(
-//            forName: .isOpenNotification,
-//            object: nil,
-//            queue: .main,
-//            using: { [weak self] _ in
-//                guard let strongSelf = self else {return}
-//                print("isOpen current state : \(strongSelf.currentState)")
-//                switch strongSelf.currentState {
-//                // Update UI
-//                case .active:
-//                    strongSelf.showNonActiveButton()
-//                case .none:
-//                    strongSelf.showActiveButton()
-//                }
-//                strongSelf.setNeedsLayout()
-//        })
+        observer = NotificationCenter.default.addObserver(
+            forName: .foodCategoryNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let strongSelf = self else {return}
+                
+                switch strongSelf.currentState {
+                // Update UI
+                case .active:
+                    strongSelf.showActiveButton()
+                case .none:
+                    strongSelf.showNonActiveButton()
+                }
+                strongSelf.setNeedsLayout()
+        })
+        
         clearObserver = NotificationCenter.default.addObserver(
             forName: .clearFilterAllNotification,
             object: nil,
@@ -81,13 +83,13 @@ class FoodCategoryCollectionViewCell: UICollectionViewCell {
     }
     
     deinit {
-//        guard let observer = observer else {
-//            return
-//        }
+        guard let observer = observer else {
+            return
+        }
         guard let clearObserver = clearObserver else {
             return
         }
-        
+        NotificationCenter.default.removeObserver(observer)
         NotificationCenter.default.removeObserver(clearObserver)
     }
     
@@ -110,19 +112,24 @@ class FoodCategoryCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func didTapButton() {
-        
         switch currentState {
-        // Update UI
+        
         case .active:
-            // POP
+            guard let foodCategory = foodCategory else {
+                return
+            }
+            RestaurantFilterManager.shared.popFoodCategory(foodCategory: foodCategory)
             showNonActiveButton()
         case .none:
-            // PUSH
+            guard let foodCategory = foodCategory else {
+                return
+            }
+            RestaurantFilterManager.shared.pushFoodCategory(foodCategory: foodCategory)
             showActiveButton()
         }
         setNeedsLayout()
-//        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
-//        NotificationCenter.default.post(name: .foodCategoryNotification, object: nil)
+        RestaurantFilterManager.shared.calculateCurrentSelectedItems()
+        NotificationCenter.default.post(name: .foodCategoryNotification, object: nil)
     }
     
     func configure(with title: String, size: CGSize, foodCategory: FoodCategoryEnum, status: ButtonState) {

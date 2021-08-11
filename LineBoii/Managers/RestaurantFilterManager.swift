@@ -44,12 +44,12 @@ class RestaurantFilterManager {
     var isPickable = false
     var priceLevel: PriceLevel = .priceless
     var priceLevelArray = [PriceLevel]()
-    var foodCategory = [FoodCategoryEnum]()
+    var foodCategoryArray = [FoodCategoryEnum]()
     
     func calculateCurrentSelectedItems() {
         var count = 0
         let priceLevelToBoolean = priceLevelArray.count != 0
-        let foodTypeToBoolean = foodCategory.count != 0
+        let foodTypeToBoolean = foodCategoryArray.count != 0
         let booleanArray = [isOpen, isAllowCreditCard, isPromotion, isPickable, priceLevelToBoolean, foodTypeToBoolean]
         for item in booleanArray {
             if item {
@@ -58,6 +58,9 @@ class RestaurantFilterManager {
         }
         if priceLevelToBoolean {
             print("Price level array : \(priceLevelArray)")
+        }
+        if foodTypeToBoolean {
+            print("Food category array : \(foodCategoryArray)")
         }
         print("Current Selected Items : \(count)")
         currentSelectedItemsCount = count
@@ -83,5 +86,36 @@ class RestaurantFilterManager {
 
     func clearPriceLevel() {
         priceLevelArray.removeAll()
+    }
+    
+    func pushFoodCategory(foodCategory: FoodCategoryEnum) {
+        self.foodCategoryArray.append(foodCategory)
+    }
+    
+    func popFoodCategory(foodCategory: FoodCategoryEnum) {
+        var index = -1
+        for (i, item) in self.foodCategoryArray.enumerated() {
+            if item == foodCategory {
+                index = i
+                break
+            }
+        }
+        if index != -1 {
+            self.foodCategoryArray.remove(at: index)
+        }
+        
+    }
+
+    func clearFoodCategory() {
+        self.foodCategoryArray.removeAll()
+    }
+    
+    func getStatus(from foodCategory: FoodCategoryEnum) -> ButtonState {
+        for i in foodCategoryArray {
+            if foodCategory == i {
+                return .active
+            }
+        }
+        return .none
     }
 }

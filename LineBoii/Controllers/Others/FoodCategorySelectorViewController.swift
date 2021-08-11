@@ -77,9 +77,10 @@ extension FoodCategorySelectorViewController: UICollectionViewDelegate, UICollec
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodCategoryCollectionViewCell.identifier, for: indexPath) as! FoodCategoryCollectionViewCell
             let foodCategory = Array(foodCategories.keys)[indexPath.row]
             let foodCategoryText = Array(foodCategories.values)[indexPath.row]
+            let currentStatus = RestaurantFilterManager.shared.getStatus(from: foodCategory)
             let buttonTextSize = foodCategoryText.size(withAttributes: [.font: UIFont(name: "supermarket", size: 16) as Any])
             let size = CGSize(width: 20 + buttonTextSize.width, height: buttonTextSize.height + 20)
-            cell.configure(with: foodCategoryText, size: size, foodCategory: foodCategory, status: .none)
+            cell.configure(with: foodCategoryText, size: size, foodCategory: foodCategory, status: currentStatus)
             return cell
         }
         if indexPath.section == 1 {
