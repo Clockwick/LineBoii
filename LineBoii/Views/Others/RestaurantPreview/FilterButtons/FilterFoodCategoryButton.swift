@@ -70,35 +70,36 @@ class FilterFoodCategoryButton: UIView {
         addSubview(activeButton)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         activeButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-//        observer = NotificationCenter.default.addObserver(
-//            forName: .priceLevelNotification,
-//            object: nil,
-//            queue: .main,
-//            using: { [weak self] _ in
-//                guard let strongSelf = self else {return}
-//                let isActive = RestaurantFilterManager.shared.priceLevelArray.count != 0
-//                if isActive {
-//                    strongSelf.currentState = .none
-//                }
-//                switch strongSelf.currentState {
-//                // Update UI
-//                case .active:
-//                    strongSelf.showNonActiveButton()
-//                case .none:
-//                    strongSelf.showActiveButton()
-//                }
-//
-//                strongSelf.setNeedsLayout()
-//        })
-//        clearObserver = NotificationCenter.default.addObserver(
-//            forName: .clearFilterAllNotification,
-//            object: nil,
-//            queue: .main,
-//            using: { [weak self] _ in
-//                guard let strongSelf = self else {return}
-//                strongSelf.showNonActiveButton()
-//                strongSelf.setNeedsLayout()
-//        })
+        observer = NotificationCenter.default.addObserver(
+            forName: .foodCategoryNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let strongSelf = self else {return}
+                let isActive = RestaurantFilterManager.shared.foodCategoryArray.count != 0
+                if isActive {
+                    strongSelf.currentState = .none
+                }
+                switch strongSelf.currentState {
+                // Update UI
+                case .active:
+                    strongSelf.showNonActiveButton()
+                case .none:
+                    strongSelf.showActiveButton()
+                }
+
+                strongSelf.setNeedsLayout()
+                NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
+        })
+        clearObserver = NotificationCenter.default.addObserver(
+            forName: .clearFilterAllNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let strongSelf = self else {return}
+                strongSelf.showNonActiveButton()
+                strongSelf.setNeedsLayout()
+        })
        
         
     }

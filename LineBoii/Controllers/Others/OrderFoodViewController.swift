@@ -47,7 +47,6 @@ class OrderFoodViewController: UIViewController {
     
     private var couponAmount = 0
     
-    
     lazy var contentViewSize = CGSize(width: self.view.width, height: self.view.height + 10000)
 
 
@@ -678,10 +677,22 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             header.configure(with: title)
             return header
         }
-        
-
-        
         return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        if collectionView == self.foodCollectionView {
+            let type = sections[indexPath.section]
+            switch type {
+            case .brand(viewModels: let viewModels):
+                let vc = BrandViewController()
+                vc.title = viewModels[indexPath.row].title
+                navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
+        }
     }
     
     

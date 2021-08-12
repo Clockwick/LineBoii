@@ -47,7 +47,7 @@ class FilterPickableButton: UIView {
         addSubview(activeButton)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         activeButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        let isActive = RestaurantFilterManager.shared.priceLevelArray.count != 0
+        
         
         observer = NotificationCenter.default.addObserver(
             forName: .isPickableNotification,

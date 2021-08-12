@@ -79,6 +79,7 @@ class FilterPriceLevelButton: UIView {
             using: { [weak self] _ in
                 guard let strongSelf = self else {return}
                 let isActive = RestaurantFilterManager.shared.priceLevelArray.count != 0
+                
                 if isActive {
                     strongSelf.currentState = .none
                 }
@@ -89,7 +90,7 @@ class FilterPriceLevelButton: UIView {
                 case .none:
                     strongSelf.showActiveButton()
                 }
-                
+                NotificationCenter.default.post(name: .filterChangeNotification, object: nil)
                 strongSelf.setNeedsLayout()
         })
         clearObserver = NotificationCenter.default.addObserver(
