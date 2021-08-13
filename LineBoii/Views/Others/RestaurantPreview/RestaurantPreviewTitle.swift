@@ -39,7 +39,9 @@ class RestaurantPreviewTitle: UIView {
         super.layoutSubviews()
 
         fireImageView.frame = CGRect(x: 0, y: height / 8, width: 25, height: 25)
+        fireImageView.frame.origin.y = CGFloat(-5)
         titleLabel.frame = CGRect(x: fireImageView.right + 2, y: 0, width: width - fireImageView.width, height: height * 0.7)
+        
     }
 
     func configure(with title: String) {

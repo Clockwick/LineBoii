@@ -137,7 +137,11 @@ extension BrandViewController: UITableViewDataSource, UITableViewDelegate, UIScr
             guard let cell = brandTableView.dequeueReusableCell(withIdentifier: BrandRestaurantTableViewCell.identifier, for: indexPath) as? BrandRestaurantTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: BrandRestaurantViewModel(brandImageURL: nil, title: "ซัสโก้ประชาอุทิศ", deliveryPrice: 0, time: "20", isOfficial: true, distance: 2.7, restaurantImageURL: nil, supportType: nil))
+            let supportedType: [SupportType] = [
+                .credit,
+                .deliveryCharge(price: 100),
+            ]
+            cell.configure(with: BrandRestaurantViewModel(brandImageURL: nil, isOpen: false, title: "ซัสโก้ประชาอุทิศ", deliveryPrice: 0, time: "20", isOfficial: true, distance: 2.7, restaurantImageURL: nil, supportType: supportedType))
             return cell
 
         }

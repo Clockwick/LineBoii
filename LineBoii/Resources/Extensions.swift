@@ -305,3 +305,32 @@ extension Notification.Name {
     static let foodCategoryNotification = Notification.Name("foodCategoryNotification")
     static let clearFilterAllNotification = Notification.Name("clearFilterAllNotification")
 }
+
+func addButtonElevation(button: UIButton) -> UIButton {
+    button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+    button.layer.shadowOffset = CGSize(width: 1, height: 1)
+    button.layer.shadowOpacity = 1.0
+    button.layer.shadowRadius = 2.0
+    return button
+}
+
+
+extension UIViewController {
+    
+    func setupNavigationMultilineTitle() {
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        for sview in navigationBar.subviews {
+            for ssview in sview.subviews {
+                guard let label = ssview as? UILabel else { break }
+                if label.text == self.title {
+                    label.numberOfLines = 0
+                    label.lineBreakMode = .byWordWrapping
+                    label.sizeToFit()
+                    UIView.animate(withDuration: 0.3, animations: {
+                        navigationBar.frame.size.height = 57 + label.frame.height
+                    })
+                }
+            }
+        }
+    }
+}

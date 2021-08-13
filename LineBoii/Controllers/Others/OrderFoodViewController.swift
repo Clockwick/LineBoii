@@ -685,6 +685,11 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
         if collectionView == self.foodCollectionView {
             let type = sections[indexPath.section]
             switch type {
+            case .promotion(viewModels: let viewModels):
+                let vc = RestaurantViewController()
+                vc.restaurantName = viewModels[indexPath.row].title
+                navigationController?.pushViewController(vc, animated: true)
+                
             case .brand(viewModels: let viewModels):
                 let vc = BrandViewController()
                 vc.title = viewModels[indexPath.row].title
@@ -693,6 +698,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
                 break
             }
         }
+        
     }
     
     
@@ -796,7 +802,6 @@ extension OrderFoodViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
-    
     
     
 

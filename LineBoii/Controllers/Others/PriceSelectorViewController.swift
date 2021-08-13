@@ -188,8 +188,6 @@ class ButtonsTableViewCell: UITableViewCell {
         expensiveButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + xOffset + xOffset + xOffset, y: 5, width: expensiveButtonSize.width + 20, height: contentView.height - 10)
         highclassButton.frame = CGRect(x: 20 + pricelessButton.width + cheapButton.width + mediumButton.width + expensiveButton.width + xOffset + xOffset + xOffset + xOffset, y: 5, width: highclassButtonSize.width + 20, height: contentView.height - 10)
         
-        
-        
     }
     
 }

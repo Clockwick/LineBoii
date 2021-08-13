@@ -9,6 +9,7 @@ import Foundation
 
 struct BrandRestaurantViewModel {
     let brandImageURL: String?
+    let isOpen: Bool
     let title: String
     let deliveryPrice: Int
     let time: String
