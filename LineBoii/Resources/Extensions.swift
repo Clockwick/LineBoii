@@ -187,6 +187,12 @@ extension DateFormatter {
         return dateFormatter
     }()
     
+    static let timeFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter
+    }()
+    
     static let displayDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium

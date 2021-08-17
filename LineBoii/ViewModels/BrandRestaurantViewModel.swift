@@ -12,7 +12,7 @@ struct BrandRestaurantViewModel {
     let isOpen: Bool
     let title: String
     let deliveryPrice: Int
-    let time: String
+    let deliveryTime: Int
     let isOfficial: Bool
     let distance: Float
     let restaurantImageURL: URL?

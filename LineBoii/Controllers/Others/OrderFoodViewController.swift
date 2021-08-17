@@ -444,9 +444,9 @@ class OrderFoodViewController: UIViewController {
         let trueOrFalse: [Bool] = [true, false]
         let badgeType: [BadgeType] = [.free, .discount]
         
-        let promotionCell1 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
-        let promotionCell2 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
-        let promotionCell3 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell1 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ (ZabPakse) แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell2 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ (ZabPakse) แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
+        let promotionCell3 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ (ZabPakse) แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
         let promotionCell4 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
         let promotionCell5 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
         let promotionCell6 = PromotionCardViewModel(title: "แถมฟรี! ข้ามเหนียว + ส้มตำ เมื่อสั่งปิ้งไก่นาปง1ตัว ฟรี!!", restaurantName: "แซ่บปากเซ", realPrice: "295", discountPrice: "245", isFree: trueOrFalse.randomElement()!, badge: badgeType.randomElement()!)
@@ -687,7 +687,7 @@ extension OrderFoodViewController: UICollectionViewDelegate, UICollectionViewDat
             switch type {
             case .promotion(viewModels: let viewModels):
                 let vc = RestaurantViewController()
-                vc.restaurantName = viewModels[indexPath.row].title
+                vc.restaurantName = viewModels[indexPath.row].restaurantName
                 navigationController?.pushViewController(vc, animated: true)
                 
             case .brand(viewModels: let viewModels):

@@ -141,7 +141,7 @@ extension BrandViewController: UITableViewDataSource, UITableViewDelegate, UIScr
                 .credit,
                 .deliveryCharge(price: 100),
             ]
-            cell.configure(with: BrandRestaurantViewModel(brandImageURL: nil, isOpen: false, title: "ซัสโก้ประชาอุทิศ", deliveryPrice: 0, time: "20", isOfficial: true, distance: 2.7, restaurantImageURL: nil, supportType: supportedType))
+            cell.configure(with: BrandRestaurantViewModel(brandImageURL: nil, isOpen: false, title: "ซัสโก้ประชาอุทิศ", deliveryPrice: 0, deliveryTime: 20, isOfficial: true, distance: 2.7, restaurantImageURL: nil, supportType: supportedType))
             return cell
 
         }

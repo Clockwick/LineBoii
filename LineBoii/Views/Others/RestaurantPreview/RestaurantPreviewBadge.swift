@@ -102,7 +102,7 @@ class RestaurantPreviewBadge: UIView {
     func configure(with viewModel: [SupportType]) {
         
         for type in viewModel {
-            print("Type: \(type)")
+//            print("Type: \(type)")
             switch type {
             case .credit:
                 creditButton.isHidden = false

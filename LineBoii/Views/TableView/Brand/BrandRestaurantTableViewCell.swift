@@ -73,7 +73,7 @@ class BrandRestaurantTableViewCell: UITableViewCell {
     
     func configure(with viewModel: BrandRestaurantViewModel) {
         restaurantPreviewTitle.configure(with: viewModel.title)
-        restaurantPreviewTertinaryTitle.configure(with: String(viewModel.deliveryPrice), distance: String(viewModel.distance), time: String(viewModel.time))
+        restaurantPreviewTertinaryTitle.configure(with: String(viewModel.deliveryPrice), distance: String(viewModel.distance), time: String(viewModel.deliveryTime))
         if let supportType = viewModel.supportType {
             restaurantPreviewBadges.configure(with: supportType)
         }

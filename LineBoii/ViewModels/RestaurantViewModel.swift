@@ -1,32 +1,24 @@
 //
-//  Restaurant.swift
+//  RestaurantViewModel.swift
 //  LineBoii
 //
-//  Created by Paratthakorn Sribunyong on 3/8/2564 BE.
+//  Created by Paratthakorn Sribunyong on 14/8/2564 BE.
 //
 
 import Foundation
 
 
-struct Restaurant {
+struct RestaurantViewModel {
     let name: String
     let timeDelivery: String
     let deliveryPrice: Int
-    let announcement: String
     let supportedTypes: [SupportType]
     let isOfficial: Bool
     let dailyOpenTime: Date
     let dailyClosedTime: Date
     let isPickUp: Bool
     let distance: Float
-    let restaurantImageURL: String
-    let foodCategoriesId: [RestaurantCategory]
-    let myScore: Int
-    let overrallScore: Int
+    let restaurantImageURL: String?
+    let foodCategories: [FoodCategory]?
+    
 }
-
-
-
-
-
-
