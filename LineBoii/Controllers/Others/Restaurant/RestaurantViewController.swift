@@ -39,7 +39,8 @@ class RestaurantViewController: UIViewController {
     
     private let foodTableView: UITableView = {
         let table = UITableView()
-        table.register(FoodTableViewCell.self, forCellReuseIdentifier: FoodTableViewCell.identifier)
+//        table.register(FoodTableViewCell.self, forCellReuseIdentifier: FoodTableViewCell.identifier)
+        table.isScrollEnabled = true
         return table
     }()
     
@@ -87,7 +88,15 @@ class RestaurantViewController: UIViewController {
         return cv
     }()
     
-    
+    func findHeightForText(text: NSString, width: CGFloat, font: UIFont) -> CGFloat{
+        var result = font.pointSize + 1
+        var size: CGSize
+        
+        let frame = text.boundingRect(with: CGSize(width: width, height: .greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        size = CGSize(width: frame.width, height: frame.height + 1)
+        result = max(size.height, result)
+        return result
+    }
     
     
     override func viewDidLoad() {
@@ -103,6 +112,9 @@ class RestaurantViewController: UIViewController {
         headerCollectionView.dataSource = self
         foodTableView.delegate = self
         foodTableView.dataSource = self
+        foodTableView.register(UINib(nibName: String(describing: NibFoodTableViewCell.self), bundle: nil), forCellReuseIdentifier: NibFoodTableViewCell.identifier)
+        foodTableView.estimatedRowHeight = 150
+        foodTableView.rowHeight = UITableView.automaticDimension
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -140,7 +152,7 @@ class RestaurantViewController: UIViewController {
             .promotion
         ]
         
-        self.headerRestaurantViewModel = RestaurantViewModel(name: self.restaurantName, timeDelivery: "30", deliveryPrice: 20, supportedTypes: supportTypes, isOfficial: true, dailyOpenTime: dailyOpenTimeDate, dailyClosedTime: dailyCloseTimeDate, isPickUp: true, distance: 2.5, restaurantImageURL: nil, foodCategories: nil)
+        self.headerRestaurantViewModel = RestaurantViewModel(name: self.restaurantName, timeDelivery: "30", deliveryPrice: 20, supportedTypes: supportTypes, isOfficial: true, dailyOpenTime: dailyOpenTimeDate, dailyClosedTime: dailyCloseTimeDate, isPickUp: true, distance: 2.5, restaurantImageURL: nil, foodCategories: nil, restaurantLocationDetail: "389/14 ซอยประชาอุทิศ 97/4 ทุ่งครุ กรุงเทพมหานคร 10140, ประเทศไทย", contactPhoneNumber: "0968882222",reviewRestaurantPhotoURL: [nil, nil, nil], priceLevel: .cheap)
         
         // Menus
         
@@ -160,10 +172,9 @@ class RestaurantViewController: UIViewController {
         let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1]
         let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1]
         
-        
         // Food
-        let c1_f1 = Food(foodImageURL: nil, title: "แถมฟรี! ส้มตำ 1 ครก เมื่อสั่งเมี่ยงปลาเผา 1 ชุด", subtitle: nil, foodAdditionId: foodAddtionalsC1)
-        let c2_f1 = Food(foodImageURL: nil, title: "โปรพิเศษ สั่งปิ้งไก่นาปง 1 ตัว ฟรี!! ข้าวเหนียว+ส้มตำ", subtitle: "เลือกฟรี!! ตำไทย ตำปู ตำลาว ระบุให้พ่อค่าหน่อยนะครับ ขอบพระคุณมากนะครับผม", foodAdditionId: foodAddtionalsC2)
+        let c1_f1 = Food(foodImageURL: nil, title: "แถมฟรี! ส้มตำ 1 ครก เมื่อสั่งเมี่ยงปลาเผา 1 ชุด", subtitle: "", foodAdditionId: foodAddtionalsC1, price: 10)
+        let c2_f1 = Food(foodImageURL: nil, title: "โปรพิเศษ สั่งปิ้งไก่นาปง 1 ตัว ฟรี!! ข้าวเหนียว+ส้มตำ", subtitle: "เลือกฟรี!! ตำไทย ตำปู ตำลาว ระบุให้พ่อค้าหน่อยนะครับ ขอบพระคุณมากนะครับผม", foodAdditionId: foodAddtionalsC2, price: 20)
         
         let foodsC1: [Food] = [c1_f1]
         let foodsC2: [Food] = [c2_f1]
@@ -236,7 +247,7 @@ extension RestaurantViewController: RestaurantHeaderCollectionViewCellDelegate {
         }
         
         for (index, item) in self.restaurantCategories.enumerated() {
-            let indexPath = IndexPath(row: index, section: 0)
+            var indexPath = IndexPath(row: index, section: 0)
             if item.id == id {
                 guard let cell = headerCollectionView.cellForItem(at: indexPath) as? RestaurantHeaderCollectionViewCell else {
                     return
@@ -244,6 +255,11 @@ extension RestaurantViewController: RestaurantHeaderCollectionViewCellDelegate {
                 self.restaurantCategories[index].status = .active
                 cell.configure(with: self.restaurantCategories[indexPath.row])
                 self.headerCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                indexPath.swapAt(0, 1)
+                guard let tableCell = foodTableView.cellForRow(at: indexPath) as? NibFoodTableViewCell else {
+                    return
+                }
+                scrollView.frame.origin.y = tableCell.frame.origin.y
             }
         }
     }
@@ -277,7 +293,17 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let cell = restaurantInfoTableView.dequeueReusableCell(withIdentifier: OfficialAndInformationTableViewCell.identifier, for: indexPath) as? OfficialAndInformationTableViewCell else {
                     return UITableViewCell()
                 }
+                
                 cell.selectionStyle = .none
+                
+                let dateFormatterHourMinute = DateFormatter()
+                dateFormatterHourMinute.dateFormat = "HH:mm"
+                let openTime = dateFormatterHourMinute.string(from: self.headerRestaurantViewModel!.dailyOpenTime)
+                let closeTime = dateFormatterHourMinute.string(from: self.headerRestaurantViewModel!.dailyClosedTime)
+                
+                let viewModel = RestaurantReviewViewModel(restaurantName: self.restaurantName, priceLevel: self.headerRestaurantViewModel!.priceLevel.title, locationDetail: "เชียงใหม่", phoneNumber: "0842244312", availiableDetail: "เปิดช่วง \(openTime)น. ถึง \(closeTime) น.", reviewRestaurantPhotoURL: self.headerRestaurantViewModel!.reviewRestaurantPhotoURL)
+                
+                cell.configure(with: self.navigationController!, viewModel: viewModel)
                 return cell
             case 1:
                 guard let cell = restaurantInfoTableView.dequeueReusableCell(withIdentifier: TimeShareLoveTableViewCell.identifier, for: indexPath) as? TimeShareLoveTableViewCell, let headerRestaurantViewModel = headerRestaurantViewModel else {
@@ -307,15 +333,15 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         if tableView == self.foodTableView {
+            
             let section = indexPath.section
             let row = indexPath.row
-            guard let cell = foodTableView.dequeueReusableCell(withIdentifier: FoodTableViewCell.identifier, for: indexPath) as? FoodTableViewCell else {
+            guard let cell = foodTableView.dequeueReusableCell(withIdentifier: NibFoodTableViewCell.identifier, for: indexPath) as? NibFoodTableViewCell else {
                 return UITableViewCell()
             }
             let foods = self.restaurantCategories.compactMap({ $0.foodId })[section][row]
             cell.configure(with: foods)
             return cell
-            
         }
         return UITableViewCell()
     }
@@ -331,14 +357,20 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == self.restaurantInfoTableView {
             let row = indexPath.row
             switch row {
-            
             case 3:
                 return CGFloat(250)
             default:
                 return tableView.estimatedRowHeight
             }
         }
-        return tableView.estimatedRowHeight
+        return tableView.rowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == self.foodTableView {
+            self.foodTableView.deselectRow(at: indexPath, animated: true)
+            print("Index path : \(indexPath)")
+        }
     }
     
     

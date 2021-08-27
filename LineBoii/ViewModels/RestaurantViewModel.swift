@@ -20,5 +20,8 @@ struct RestaurantViewModel {
     let distance: Float
     let restaurantImageURL: String?
     let foodCategories: [FoodCategory]?
-    
+    let restaurantLocationDetail: String
+    let contactPhoneNumber: String
+    let reviewRestaurantPhotoURL: [String?]
+    let priceLevel: PriceLevel
 }

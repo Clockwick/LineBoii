@@ -11,6 +11,10 @@ class OfficialAndInformationTableViewCell: UITableViewCell {
     
     static let identifier = "OfficialAndInformationTableViewCell"
     
+    private var restaurantNavVC: UINavigationController?
+    
+    private var restaurantReviewViewModel: RestaurantReviewViewModel?
+    
     private let fireImageView: UIImageView = {
         let image = UIImage(systemName: "flame.fill")
         let imageView = UIImageView(image: image)
@@ -48,6 +52,8 @@ class OfficialAndInformationTableViewCell: UITableViewCell {
         contentView.addSubview(fireImageView)
         contentView.addSubview(officialLabel)
         contentView.addSubview(infoButton)
+        
+        infoButton.addTarget(self, action: #selector(didTapInfoButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -66,8 +72,19 @@ class OfficialAndInformationTableViewCell: UITableViewCell {
         
     }
     
-    func configure() {
-        
+    @objc private func didTapInfoButton() {
+        guard let restaurantNavVC = self.restaurantNavVC, let restaurantReviewViewModel = self.restaurantReviewViewModel else {
+            return
+        }
+        let vc = RestaurantLocationViewController()
+        vc.title = "รายละเอียดร้านอาหาร"
+        vc.initialize(with: restaurantReviewViewModel)
+        restaurantNavVC.pushViewController(vc, animated: true)
+    }
+    
+    func configure(with restaurantNavVC: UINavigationController, viewModel: RestaurantReviewViewModel) {
+        self.restaurantNavVC = restaurantNavVC
+        self.restaurantReviewViewModel = viewModel
     }
 
 }

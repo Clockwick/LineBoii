@@ -23,6 +23,10 @@ struct Restaurant {
     let foodCategoriesId: [RestaurantCategory]
     let myScore: Int
     let overrallScore: Int
+    let restaurantLocationDetail: String
+    let contactPhoneNumber: String
+    let reviewRestaurantPhotoURL: [String]
+    let priceLevel: PriceLevel
 }
 
 
