@@ -74,6 +74,8 @@
 		68CA5B3C26ACA8ED0022AEA8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68CA5B3A26ACA8ED0022AEA8 /* LaunchScreen.storyboard */; };
 		68CA5B4726ACA8ED0022AEA8 /* LineBoiiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B4626ACA8ED0022AEA8 /* LineBoiiTests.swift */; };
 		68CA5B5226ACA8ED0022AEA8 /* LineBoiiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B5126ACA8ED0022AEA8 /* LineBoiiUITests.swift */; };
+		68D6220226D8BD2000623032 /* StretchyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6220126D8BD2000623032 /* StretchyFoodViewController.swift */; };
+		68D6220E26D8C53900623032 /* StretchyFoodHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */; };
 		68E8076B26AD819D001F69CD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 68E8076A26AD819D001F69CD /* Config.xcconfig */; };
 		68E8077026AD97EF001F69CD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E8076F26AD97EF001F69CD /* Extensions.swift */; };
 		68E8077626AD9853001F69CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E8077526AD9853001F69CD /* AuthManager.swift */; };
@@ -203,6 +205,8 @@
 		68CA5B4D26ACA8ED0022AEA8 /* LineBoiiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineBoiiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CA5B5126ACA8ED0022AEA8 /* LineBoiiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineBoiiUITests.swift; sourceTree = "<group>"; };
 		68CA5B5326ACA8ED0022AEA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68D6220126D8BD2000623032 /* StretchyFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodViewController.swift; sourceTree = "<group>"; };
+		68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodHeaderView.swift; sourceTree = "<group>"; };
 		68E8076A26AD819D001F69CD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		68E8076F26AD97EF001F69CD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		68E8077526AD9853001F69CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -486,6 +490,7 @@
 			children = (
 				68F5B5C126CE54F0009923E5 /* NibFoodTableViewCell.swift */,
 				68F5B5C226CE54F0009923E5 /* NibFoodTableViewCell.xib */,
+				68D6220126D8BD2000623032 /* StretchyFoodViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -546,6 +551,14 @@
 			path = LineBoiiUITests;
 			sourceTree = "<group>";
 		};
+		68D6220C26D8C50900623032 /* StretchyView */ = {
+			isa = PBXGroup;
+			children = (
+				68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */,
+			);
+			path = StretchyView;
+			sourceTree = "<group>";
+		};
 		68E8077426AD983D001F69CD /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +571,7 @@
 		68E8078E26ADB1E4001F69CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				68D6220C26D8C50900623032 /* StretchyView */,
 				684AD27B26B92846006D0EF8 /* Others */,
 				684AD25426B7B545006D0EF8 /* HeaderView */,
 				68F511BA26B5433200BF1BAA /* TableView */,
@@ -948,6 +962,7 @@
 				68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */,
 				68A35AF526CBE48800DB5B1B /* FoodViewModel.swift in Sources */,
 				683DFF0C26B9673D009368AB /* RestaurantFilterHeaderView.swift in Sources */,
+				68D6220E26D8C53900623032 /* StretchyFoodHeaderView.swift in Sources */,
 				683DFF1126B96A7D009368AB /* FilterButton.swift in Sources */,
 				68526B4126BEA1A600B2A818 /* FilterPriceLevelButton.swift in Sources */,
 				68319B4326B0300200525821 /* AdvertisementViewModel.swift in Sources */,
@@ -962,6 +977,7 @@
 				68A35AD826C9277100DB5B1B /* FoodAdditionType.swift in Sources */,
 				68A35AC426C7E79700DB5B1B /* RestaurantViewModel.swift in Sources */,
 				684AD27D26B92870006D0EF8 /* RestaurantPreviewTitle.swift in Sources */,
+				68D6220226D8BD2000623032 /* StretchyFoodViewController.swift in Sources */,
 				68A35AD326C9276900DB5B1B /* FoodAddition.swift in Sources */,
 				68E8077626AD9853001F69CD /* AuthManager.swift in Sources */,
 				68315C5826D7B70500632D3E /* RestaurantReviewViewModel.swift in Sources */,

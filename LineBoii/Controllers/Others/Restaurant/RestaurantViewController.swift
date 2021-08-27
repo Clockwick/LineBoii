@@ -369,7 +369,12 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.foodTableView {
             self.foodTableView.deselectRow(at: indexPath, animated: true)
-            print("Index path : \(indexPath)")
+            let vc = StretchyFoodViewController()
+            let viewModel = self.restaurantCategories[indexPath.section].foodId.compactMap{
+                FoodViewModel(foodImageURL: $0.foodImageURL, title: $0.title, subtitle: $0.subtitle, foodAdditionId: $0.foodAdditionId)
+            }[indexPath.row]
+            vc.configure(with: viewModel)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     
