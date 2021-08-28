@@ -158,19 +158,31 @@ class RestaurantViewController: UIViewController {
         
         let c1_f1_a1_m1 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
         let c1_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
+        let c1_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
+        let c1_f1_a1_m4 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
+        let c1_f1_a1_m5 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
         
         let c2_f1_a1_m1 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
         let c2_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
+        let c2_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
         
-        let menusC1: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2]
-        let menusC2: [Menu] = [c2_f1_a1_m1, c2_f1_a1_m2]
+        
+        let menusC1: [Menu] = [c1_f1_a1_m1]
+        let menusC2: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3, c1_f1_a1_m4, c1_f1_a1_m5]
+        
+        let menusC3: [Menu] = [c2_f1_a1_m1]
+        let menusC4: [Menu] = [c2_f1_a1_m1, c2_f1_a1_m2, c2_f1_a1_m3]
         
         // Food Addition
         let c1_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 1 ข้อ", type: .checkbox, menuId: menusC1)
-        let c2_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 1 ข้อ", type: .checkbox, menuId: menusC2)
+        let c1_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 5 ข้อ", type: .choice, menuId: menusC2)
         
-        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1]
-        let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1]
+        let c2_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 1 ข้อ", type: .checkbox, menuId: menusC3)
+        
+        let c2_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 3 ข้อ", type: .choice, menuId: menusC4)
+        
+        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a2]
+        let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1, c2_f1_a2]
         
         // Food
         let c1_f1 = Food(foodImageURL: nil, title: "แถมฟรี! ส้มตำ 1 ครก เมื่อสั่งเมี่ยงปลาเผา 1 ชุด", subtitle: "", foodAdditionId: foodAddtionalsC1, price: 10)
