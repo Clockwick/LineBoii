@@ -28,7 +28,7 @@ class MenuCheckboxTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        checkboxButton.setBackgroundImage(square.image?.maskWithColor(color: .secondaryLabel), for: .normal)
+        checkboxButton.setBackgroundImage(square.image, for: .normal)
         
         checkboxButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
@@ -36,9 +36,9 @@ class MenuCheckboxTableViewCell: UITableViewCell {
     @objc private func didTapButton() {
         switch currentButtonState {
         case true:
-            checkboxButton.setBackgroundImage(square.image?.maskWithColor(color: .secondaryLabel), for: .normal)
+            checkboxButton.setBackgroundImage(square.image, for: .normal)
         case false:
-            checkboxButton.setBackgroundImage(checkbox.image?.maskWithColor(color: .darkGreen), for: .normal)
+            checkboxButton.setBackgroundImage(checkbox.image, for: .normal)
         }
         self.currentButtonState = !self.currentButtonState
         delegate?.menuCheckboxTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
