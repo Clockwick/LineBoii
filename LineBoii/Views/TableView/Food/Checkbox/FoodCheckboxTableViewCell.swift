@@ -122,14 +122,13 @@ extension FoodCheckboxTableViewCell: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.menuTableView {
             self.menuTableView.deselectRow(at: indexPath, animated: true)
-            
         }
     }
 }
 
 
 extension FoodCheckboxTableViewCell: MenuCheckboxTableViewCellDelegate {
-    func menuCheckboxTableViewCellDidTap(at indexPath: IndexPath, status: Bool) {
+    func menuCheckboxTableViewCellDidTap(at indexPath: IndexPath,status: Bool) {
         checkboxDict[indexPath] = status
     }
 }

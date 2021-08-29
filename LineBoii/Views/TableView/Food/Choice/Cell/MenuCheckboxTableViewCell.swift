@@ -48,11 +48,6 @@ class MenuCheckboxTableViewCell: UITableViewCell {
         self.indexPath = indexPath
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-    
     func configure(viewModel: Menu) {
         guard let menuNameLabel = self.menuNameLabel,
               let priceLabel = self.priceLabel else {

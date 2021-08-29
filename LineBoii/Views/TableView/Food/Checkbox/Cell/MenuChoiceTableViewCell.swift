@@ -7,17 +7,63 @@
 
 import UIKit
 
-class MenuChoiceTableViewCell: UITableViewCell {
+protocol MenuChoiceTableViewCellDelegate: AnyObject {
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool)
+}
 
+class MenuChoiceTableViewCell: UITableViewCell {
+    
+    static let identifier = "MenuChoiceTableViewCell"
+    
+    weak var delegate: MenuChoiceTableViewCellDelegate?
+
+    private var currentButtonState: Bool = false
+    private var indexPath: IndexPath = IndexPath.init(row: -1, section: -1)
+    
+    @IBOutlet var choiceButton: UIButton!
+    @IBOutlet var circle: UIImageView!
+    @IBOutlet var circleFill: UIImageView!
+    @IBOutlet var menuNameLabel: UILabel!
+    @IBOutlet var bahtLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        choiceButton.setBackgroundImage(circleFill.image, for: .normal)
+        
+        choiceButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    @objc private func didTapButton() {
+        switch currentButtonState {
+        case true:
+            circleFill.isHidden = true
+            circle.isHidden = true
+            choiceButton.setBackgroundImage(nil, for: .normal)
+        case false:
+            circleFill.isHidden = false
+            circle.isHidden = false
+            choiceButton.setBackgroundImage(circleFill.image, for: .normal)
+        }
+        self.currentButtonState = !self.currentButtonState
+        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
+    }
+    
+    func initialize(with indexPath: IndexPath) {
+        self.indexPath = indexPath
+    }
+    
+    func configure(viewModel: Menu) {
+        guard let menuNameLabel = self.menuNameLabel,
+              let bahtLabel = self.bahtLabel else {
+            return
+        }
+        menuNameLabel.text = viewModel.name
+        bahtLabel.text = "\(viewModel.price)฿"
+        
+        self.menuNameLabel = menuNameLabel
+        self.bahtLabel = bahtLabel
     }
     
 }
