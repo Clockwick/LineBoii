@@ -19,6 +19,7 @@ class FoodChoiceTableViewCell: UITableViewCell {
     
     private var chevronStatus: Bool = true
     private var menus = [Menu]()
+    private var checkboxDict = [IndexPath: Bool]()
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
@@ -111,8 +112,10 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
         guard let cell = self.menuTableView.dequeueReusableCell(withIdentifier: MenuChoiceTableViewCell.identifier, for: indexPath) as? MenuChoiceTableViewCell else {
             return UITableViewCell()
         }
+        cell.initialize(with: indexPath)
         cell.configure(viewModel: menus[indexPath.row])
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.delegate = self
         return cell
     }
     
@@ -121,5 +124,12 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
             self.menuTableView.deselectRow(at: indexPath, animated: true)
             
         }
+    }
+}
+
+
+extension FoodChoiceTableViewCell: MenuChoiceTableViewCellDelegate {
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool) {
+        checkboxDict[indexPath] = status
     }
 }

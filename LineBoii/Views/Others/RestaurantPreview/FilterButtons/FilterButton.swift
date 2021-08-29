@@ -7,10 +7,7 @@
 
 import UIKit
 
-enum ButtonState {
-    case active
-    case none
-}
+
 
 class FilterButton: UIView {
     

@@ -69,7 +69,7 @@ class StretchyFoodHeaderView: GSKStretchyHeaderView {
         
         
         if self.contentView.height > self.minimumContentHeight {
-            self.parentVC?.title = ""
+            self.parentVC?.title = "สั่งอาหาร"
         }
         else {
             self.parentVC?.title = self.viewModel?.title
