@@ -1,5 +1,5 @@
 //
-//  MenuChoiceTableViewCell.swift
+//  MenuCheckboxTableViewCell.swift
 //  LineBoii
 //
 //  Created by Paratthakorn Sribunyong on 28/8/2564 BE.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol MenuChoiceTableViewCellDelegate: AnyObject {
-    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool)
+protocol MenuCheckboxTableViewCellDelegate: AnyObject {
+    func menuCheckboxTableViewCellDidTap(at indexPath: IndexPath, status: Bool)
 }
 
-class MenuChoiceTableViewCell: UITableViewCell {
-    static let identifier = "MenuChoiceTableViewCell"
+class MenuCheckboxTableViewCell: UITableViewCell {
+    static let identifier = "MenuCheckboxTableViewCell"
     
-    weak var delegate: MenuChoiceTableViewCellDelegate?
+    weak var delegate: MenuCheckboxTableViewCellDelegate?
     
     private var currentButtonState: Bool = false
     private var indexPath: IndexPath = IndexPath.init(row: -1, section: -1)
@@ -41,7 +41,7 @@ class MenuChoiceTableViewCell: UITableViewCell {
             checkboxButton.setBackgroundImage(checkbox.image?.maskWithColor(color: .darkGreen), for: .normal)
         }
         self.currentButtonState = !self.currentButtonState
-        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
+        delegate?.menuCheckboxTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
     }
     
     func initialize(with indexPath: IndexPath) {

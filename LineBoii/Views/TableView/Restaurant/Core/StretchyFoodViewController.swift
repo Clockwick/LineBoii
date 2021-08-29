@@ -21,7 +21,7 @@ class StretchyFoodViewController: UIViewController{
         let tv = UITableView()
         tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tv.register(UINib(nibName: String(describing: FoodHeaderTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodHeaderTableViewCell.identifier)
-        tv.register(UINib(nibName: String(describing: FoodChoiceTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodChoiceTableViewCell.identifier)
+        tv.register(UINib(nibName: String(describing: FoodCheckboxTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodCheckboxTableViewCell.identifier)
         return tv
     }()
 
@@ -111,7 +111,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             return cell
         
         default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodChoiceTableViewCell.identifier, for: indexPath) as? FoodChoiceTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodCheckboxTableViewCell.identifier, for: indexPath) as? FoodCheckboxTableViewCell else {
                 return UITableViewCell()
             }
             cell.configure(with: self.foodAdditions[indexPath.section - 1])
@@ -150,7 +150,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
         case 0:
             break
         default:
-            let cell = tableView.cellForRow(at: indexPath) as? FoodChoiceTableViewCell
+            let cell = tableView.cellForRow(at: indexPath) as? FoodCheckboxTableViewCell
             cell?.toggleChevron(indexPath: indexPath)
         }
         
@@ -159,8 +159,8 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 
-extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
-    func foodChoiceTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
+extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
+    func foodCheckboxTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
         self.sectionsStatusForRow[indexPath.section] = status
         DispatchQueue.main.async {
             self.tableView.reloadData()

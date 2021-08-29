@@ -54,6 +54,10 @@
 		68888B3126AD3B260090745B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68888B3026AD3B260090745B /* LoginViewController.swift */; };
 		6895465026DB82F800EA6FED /* FoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895464F26DB82F800EA6FED /* FoodManager.swift */; };
 		6895465526DB887E00EA6FED /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895465426DB887E00EA6FED /* ButtonState.swift */; };
+		6895466726DB920100EA6FED /* FoodChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895466526DB920100EA6FED /* FoodChoiceTableViewCell.swift */; };
+		6895466826DB920100EA6FED /* FoodChoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895466626DB920100EA6FED /* FoodChoiceTableViewCell.xib */; };
+		6895467A26DB924800EA6FED /* MenuChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895467826DB924800EA6FED /* MenuChoiceTableViewCell.swift */; };
+		6895467B26DB924800EA6FED /* MenuChoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895467926DB924800EA6FED /* MenuChoiceTableViewCell.xib */; };
 		68A35A9726C61A9B00DB5B1B /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A35A9626C61A9B00DB5B1B /* RestaurantViewController.swift */; };
 		68A35AA026C634C700DB5B1B /* OfficialAndInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A35A9F26C634C700DB5B1B /* OfficialAndInformationTableViewCell.swift */; };
 		68A35AA826C6352F00DB5B1B /* TimeShareLoveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A35AA726C6352F00DB5B1B /* TimeShareLoveTableViewCell.swift */; };
@@ -80,10 +84,10 @@
 		68D6220E26D8C53900623032 /* StretchyFoodHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */; };
 		68D6222D26D9208200623032 /* FoodHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6222B26D9208200623032 /* FoodHeaderTableViewCell.swift */; };
 		68D6222E26D9208200623032 /* FoodHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6222C26D9208200623032 /* FoodHeaderTableViewCell.xib */; };
-		68D6223726D9209200623032 /* FoodChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6223526D9209200623032 /* FoodChoiceTableViewCell.swift */; };
-		68D6223826D9209200623032 /* FoodChoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6223626D9209200623032 /* FoodChoiceTableViewCell.xib */; };
-		68D6223F26DA07F300623032 /* MenuChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6223D26DA07F300623032 /* MenuChoiceTableViewCell.swift */; };
-		68D6224026DA07F300623032 /* MenuChoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6223E26DA07F300623032 /* MenuChoiceTableViewCell.xib */; };
+		68D6223726D9209200623032 /* FoodCheckboxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6223526D9209200623032 /* FoodCheckboxTableViewCell.swift */; };
+		68D6223826D9209200623032 /* FoodCheckboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6223626D9209200623032 /* FoodCheckboxTableViewCell.xib */; };
+		68D6223F26DA07F300623032 /* MenuCheckboxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6223D26DA07F300623032 /* MenuCheckboxTableViewCell.swift */; };
+		68D6224026DA07F300623032 /* MenuCheckboxTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6223E26DA07F300623032 /* MenuCheckboxTableViewCell.xib */; };
 		68E8076B26AD819D001F69CD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 68E8076A26AD819D001F69CD /* Config.xcconfig */; };
 		68E8077026AD97EF001F69CD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E8076F26AD97EF001F69CD /* Extensions.swift */; };
 		68E8077626AD9853001F69CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E8077526AD9853001F69CD /* AuthManager.swift */; };
@@ -187,6 +191,10 @@
 		68888B3026AD3B260090745B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6895464F26DB82F800EA6FED /* FoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodManager.swift; sourceTree = "<group>"; };
 		6895465426DB887E00EA6FED /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
+		6895466526DB920100EA6FED /* FoodChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		6895466626DB920100EA6FED /* FoodChoiceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodChoiceTableViewCell.xib; sourceTree = "<group>"; };
+		6895467826DB924800EA6FED /* MenuChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		6895467926DB924800EA6FED /* MenuChoiceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuChoiceTableViewCell.xib; sourceTree = "<group>"; };
 		68A35A9626C61A9B00DB5B1B /* RestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewController.swift; sourceTree = "<group>"; };
 		68A35A9F26C634C700DB5B1B /* OfficialAndInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficialAndInformationTableViewCell.swift; sourceTree = "<group>"; };
 		68A35AA726C6352F00DB5B1B /* TimeShareLoveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeShareLoveTableViewCell.swift; sourceTree = "<group>"; };
@@ -219,10 +227,10 @@
 		68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodHeaderView.swift; sourceTree = "<group>"; };
 		68D6222B26D9208200623032 /* FoodHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		68D6222C26D9208200623032 /* FoodHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		68D6223526D9209200623032 /* FoodChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodChoiceTableViewCell.swift; sourceTree = "<group>"; };
-		68D6223626D9209200623032 /* FoodChoiceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodChoiceTableViewCell.xib; sourceTree = "<group>"; };
-		68D6223D26DA07F300623032 /* MenuChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuChoiceTableViewCell.swift; sourceTree = "<group>"; };
-		68D6223E26DA07F300623032 /* MenuChoiceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuChoiceTableViewCell.xib; sourceTree = "<group>"; };
+		68D6223526D9209200623032 /* FoodCheckboxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCheckboxTableViewCell.swift; sourceTree = "<group>"; };
+		68D6223626D9209200623032 /* FoodCheckboxTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodCheckboxTableViewCell.xib; sourceTree = "<group>"; };
+		68D6223D26DA07F300623032 /* MenuCheckboxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCheckboxTableViewCell.swift; sourceTree = "<group>"; };
+		68D6223E26DA07F300623032 /* MenuCheckboxTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCheckboxTableViewCell.xib; sourceTree = "<group>"; };
 		68E8076A26AD819D001F69CD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		68E8076F26AD97EF001F69CD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		68E8077526AD9853001F69CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -465,6 +473,16 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		6895466C26DB920800EA6FED /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6895467826DB924800EA6FED /* MenuChoiceTableViewCell.swift */,
+				6895467926DB924800EA6FED /* MenuChoiceTableViewCell.xib */,
+			);
+			name = Cell;
+			path = ../Checkbox/Cell;
+			sourceTree = "<group>";
+		};
 		68A35A9526C61A0200DB5B1B /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,9 +619,9 @@
 		68D6222626D91F6800623032 /* Choice */ = {
 			isa = PBXGroup;
 			children = (
-				68D6223C26DA07DA00623032 /* Cell */,
-				68D6223526D9209200623032 /* FoodChoiceTableViewCell.swift */,
-				68D6223626D9209200623032 /* FoodChoiceTableViewCell.xib */,
+				6895466C26DB920800EA6FED /* Cell */,
+				6895466526DB920100EA6FED /* FoodChoiceTableViewCell.swift */,
+				6895466626DB920100EA6FED /* FoodChoiceTableViewCell.xib */,
 			);
 			path = Choice;
 			sourceTree = "<group>";
@@ -611,6 +629,9 @@
 		68D6222726D91F6C00623032 /* Checkbox */ = {
 			isa = PBXGroup;
 			children = (
+				68D6223C26DA07DA00623032 /* Cell */,
+				68D6223526D9209200623032 /* FoodCheckboxTableViewCell.swift */,
+				68D6223626D9209200623032 /* FoodCheckboxTableViewCell.xib */,
 			);
 			path = Checkbox;
 			sourceTree = "<group>";
@@ -639,10 +660,11 @@
 		68D6223C26DA07DA00623032 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				68D6223D26DA07F300623032 /* MenuChoiceTableViewCell.swift */,
-				68D6223E26DA07F300623032 /* MenuChoiceTableViewCell.xib */,
+				68D6223D26DA07F300623032 /* MenuCheckboxTableViewCell.swift */,
+				68D6223E26DA07F300623032 /* MenuCheckboxTableViewCell.xib */,
 			);
-			path = Cell;
+			name = Cell;
+			path = ../Choice/Cell;
 			sourceTree = "<group>";
 		};
 		68E8077426AD983D001F69CD /* Managers */ = {
@@ -851,11 +873,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				68D6222E26D9208200623032 /* FoodHeaderTableViewCell.xib in Resources */,
-				68D6223826D9209200623032 /* FoodChoiceTableViewCell.xib in Resources */,
+				68D6223826D9209200623032 /* FoodCheckboxTableViewCell.xib in Resources */,
+				6895466826DB920100EA6FED /* FoodChoiceTableViewCell.xib in Resources */,
 				68315C4826D691E100632D3E /* RestaurantLocationViewController.xib in Resources */,
 				68E8076B26AD819D001F69CD /* Config.xcconfig in Resources */,
 				68CA5B3C26ACA8ED0022AEA8 /* LaunchScreen.storyboard in Resources */,
-				68D6224026DA07F300623032 /* MenuChoiceTableViewCell.xib in Resources */,
+				68D6224026DA07F300623032 /* MenuCheckboxTableViewCell.xib in Resources */,
+				6895467B26DB924800EA6FED /* MenuChoiceTableViewCell.xib in Resources */,
 				68CA5B3926ACA8ED0022AEA8 /* Assets.xcassets in Resources */,
 				68319B2926AF96B200525821 /* supermarket.ttf in Resources */,
 				68CA5B3726ACA8E60022AEA8 /* Main.storyboard in Resources */,
@@ -1014,6 +1038,7 @@
 				685899E126BC4315001CE1D3 /* FoodCategory.swift in Sources */,
 				68CA5B3026ACA8E60022AEA8 /* AppDelegate.swift in Sources */,
 				68A35AE326CA557C00DB5B1B /* RestaurantHeaderCollectionViewCell.swift in Sources */,
+				6895467A26DB924800EA6FED /* MenuChoiceTableViewCell.swift in Sources */,
 				681B535D26C515110035363F /* BrandRestaurantTableViewCell.swift in Sources */,
 				68F511BF26B5644800BF1BAA /* HorizontalScrollBrandCollectionViewCell.swift in Sources */,
 				68F5117326B450D200BF1BAA /* CollectionView.swift in Sources */,
@@ -1024,10 +1049,11 @@
 				68A35AC926C9273D00DB5B1B /* RestaurantCategory.swift in Sources */,
 				68A35AAD26C6354600DB5B1B /* PickableBannerTableViewCell.swift in Sources */,
 				68319B5A26B1825E00525821 /* TitleHeaderCollectionReusableView.swift in Sources */,
-				68D6223726D9209200623032 /* FoodChoiceTableViewCell.swift in Sources */,
+				68D6223726D9209200623032 /* FoodCheckboxTableViewCell.swift in Sources */,
 				681B534C26C3B3750035363F /* BrandViewController.swift in Sources */,
 				681B530426C0CE920035363F /* PriceSelectorPresentationController.swift in Sources */,
 				68F5B5C326CE54F0009923E5 /* NibFoodTableViewCell.swift in Sources */,
+				6895466726DB920100EA6FED /* FoodChoiceTableViewCell.swift in Sources */,
 				68A35ACE26C9275B00DB5B1B /* Food.swift in Sources */,
 				68F5115F26B4378800BF1BAA /* LocationSelectViewController.swift in Sources */,
 				68F511AE26B510AD00BF1BAA /* HorizontalRestaurantPromotionCardCollectionViewCell.swift in Sources */,
@@ -1051,7 +1077,7 @@
 				68F511A426B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift in Sources */,
 				683DFF1626B9749E009368AB /* ActiveFilterButton.swift in Sources */,
 				68F5119226B50B8800BF1BAA /* FavoriteCardViewModel.swift in Sources */,
-				68D6223F26DA07F300623032 /* MenuChoiceTableViewCell.swift in Sources */,
+				68D6223F26DA07F300623032 /* MenuCheckboxTableViewCell.swift in Sources */,
 				68E807A826ADB992001F69CD /* InboxViewController.swift in Sources */,
 				68A35A9726C61A9B00DB5B1B /* RestaurantViewController.swift in Sources */,
 				68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */,

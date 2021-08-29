@@ -1,5 +1,5 @@
 //
-//  FoodChoiceTableViewCell.swift
+//  MenuChoiceTableViewCell.swift
 //  LineBoii
 //
 //  Created by Paratthakorn Sribunyong on 29/8/2564 BE.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FoodChoiceTableViewCell: UITableViewCell {
+class MenuChoiceTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
