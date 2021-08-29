@@ -10,10 +10,12 @@ import GSKStretchyHeaderView
 
 class StretchyFoodViewController: UIViewController{
     
-    
     private var stretchyFoodHeaderView: StretchyFoodHeaderView?
     private var viewModel: FoodViewModel?
     private var foodAdditions = [FoodAddition]()
+    
+    private var sectionsHeightForRow = [Int: CGFloat]()
+    private var sectionsStatusForRow = [Int: Bool]()
     
     private let tableView: UITableView = {
         let tv = UITableView()
@@ -29,7 +31,7 @@ class StretchyFoodViewController: UIViewController{
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         setupStretchyHeader()
         
     }
@@ -62,6 +64,23 @@ class StretchyFoodViewController: UIViewController{
     func configure(with viewModel: FoodViewModel) {
         self.viewModel = viewModel
         self.foodAdditions = viewModel.foodAdditionId
+        for (index, foodAddition) in self.foodAdditions.enumerated() {
+            // SKIP Header
+            let index = index + 1
+            self.sectionsHeightForRow[index] = calcHeight(from: foodAddition.menuId)
+        }
+        
+    }
+    
+    private func calcHeight(from menus: [Menu]) -> CGFloat {
+        var result = 0
+        let heightForRowOfMenuChoice = 44
+        let spacing = 110
+        for _ in menus {
+            result += heightForRowOfMenuChoice
+        }
+        result += spacing
+        return CGFloat(result)
     }
     
 }
@@ -96,6 +115,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
                 return UITableViewCell()
             }
             cell.configure(with: self.foodAdditions[indexPath.section - 1])
+            cell.delegate = self
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         }
@@ -104,22 +124,24 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         if indexPath.section == 0 {
-            return tableView.rowHeight
+            return tableView.estimatedRowHeight
         }
+        
         else {
-//            guard let cell = tableView.cellForRow(at: indexPath) as? FoodChoiceTableViewCell else {
-//                return tableView.rowHeight
-//            }
-//            let currentChevronStatus: Bool = cell.getChevronStatus()
-            let heightForRowOfMenuChoice = 44
-//            if currentChevronStatus {
-//                // Showing, return menu choice height * menu.count + (60)
-//                return CGFloat((self.foodAdditions[indexPath.section - 1].menuId.count * heightForRowOfMenuChoice) + 40)
-//            }
-            // If Hiding, return dynamic
-            return CGFloat((self.foodAdditions[indexPath.section - 1].menuId.count * heightForRowOfMenuChoice) + 110)
+            guard let status = self.sectionsStatusForRow[indexPath.section] else {
+                // First Appearance
+                return sectionsHeightForRow[indexPath.section]!
+            }
+            if status {
+                // Dynamic Height for Row
+                return sectionsHeightForRow[indexPath.section]!
+            }
+            // Default Height for Row of inactive Menu bar
+            return 100
         }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -129,10 +151,19 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             break
         default:
             let cell = tableView.cellForRow(at: indexPath) as? FoodChoiceTableViewCell
-            cell?.toggleChevron()
+            cell?.toggleChevron(indexPath: indexPath)
         }
         
     }
     
-    
+}
+
+
+extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
+    func foodChoiceTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
+        self.sectionsStatusForRow[indexPath.section] = status
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 }

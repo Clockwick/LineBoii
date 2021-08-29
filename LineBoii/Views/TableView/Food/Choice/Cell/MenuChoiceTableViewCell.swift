@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-@IBDesignable
 class MenuChoiceTableViewCell: UITableViewCell {
     static let identifier = "MenuChoiceTableViewCell"
     

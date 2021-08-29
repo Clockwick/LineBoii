@@ -8,8 +8,14 @@
 import UIKit
 
 
+protocol FoodChoiceTableViewCellDelegate: AnyObject {
+    func foodChoiceTableViewCellDidTap(_ status: Bool, indexPath: IndexPath)
+}
+
 class FoodChoiceTableViewCell: UITableViewCell {
     static let identifier = "FoodChoiceTableViewCell"
+    
+    weak var delegate: FoodChoiceTableViewCellDelegate?
     
     private var chevronStatus: Bool = true
     private var menus = [Menu]()
@@ -23,8 +29,6 @@ class FoodChoiceTableViewCell: UITableViewCell {
             menuTableView.register(UINib(nibName: String(describing: MenuChoiceTableViewCell.self), bundle: nil), forCellReuseIdentifier: MenuChoiceTableViewCell.identifier)
         }
     }
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,26 +72,28 @@ class FoodChoiceTableViewCell: UITableViewCell {
         self.subtitleLabel = subtitleLabel
         
         self.menus = viewModel.menuId
-        print("Menu count : \(menus.count)")
     }
     
-    func toggleChevron() {
+    func toggleChevron(indexPath: IndexPath) {
         self.chevronStatus = !self.chevronStatus
         
         // Display Menu
         if self.chevronStatus {
             self.chevronUp.isHidden = false
             self.chevronDown.isHidden = true
-            
-//            self.menuTableView.isHidden = false
+            self.menuTableView.isHidden = false
+            contentView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: contentView.height)
+            delegate?.foodChoiceTableViewCellDidTap(true, indexPath: indexPath)
         }
         // Hide Menu
         else {
             self.chevronUp.isHidden = true
             self.chevronDown.isHidden = false
-            
-//            self.menuTableView.isHidden = true
+            self.menuTableView.isHidden = true
+            contentView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: contentView.height - self.menuTableView.height)
+            delegate?.foodChoiceTableViewCellDidTap(false, indexPath: indexPath)
         }
+//        setNeedsLayout()
     }
     
     func getChevronStatus() -> Bool {
