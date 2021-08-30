@@ -18,7 +18,8 @@ class FoodChoiceTableViewCell: UITableViewCell {
     weak var delegate: FoodChoiceTableViewCellDelegate?
     private var chevronStatus: Bool = true
     private var menus = [Menu]()
-    private var choiceDict = [IndexPath: Bool]()
+    private var currentIndexPath: IndexPath = IndexPath.init(row: -1, section: -1)
+    private var currentChoice = [IndexPath: Bool]()
     
     @IBOutlet var menuTableView: UITableView! {
         didSet {
@@ -28,6 +29,11 @@ class FoodChoiceTableViewCell: UITableViewCell {
     @IBOutlet var chevronUp: UIImageView!
     @IBOutlet var chevronDown: UIImageView!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var requiredMark: UILabel! {
+        didSet {
+            requiredMark.textColor = .darkGreen
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -100,7 +106,7 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
         guard let cell = self.menuTableView.dequeueReusableCell(withIdentifier: MenuChoiceTableViewCell.identifier, for: indexPath) as? MenuChoiceTableViewCell else {
             return UITableViewCell()
         }
-        cell.initialize(with: indexPath)
+        cell.initialize(with: indexPath, currentIndexPath: currentIndexPath)
         cell.configure(viewModel: menus[indexPath.row])
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
@@ -116,7 +122,11 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension FoodChoiceTableViewCell: MenuChoiceTableViewCellDelegate {
-    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool) {
-        choiceDict[indexPath] = status
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath) {
+        self.currentIndexPath = indexPath
+        DispatchQueue.main.async {
+            self.menuTableView.reloadData()
+        }
+        
     }
 }

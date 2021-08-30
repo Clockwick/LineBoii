@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MenuChoiceTableViewCellDelegate: AnyObject {
-    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool)
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath)
 }
 
 class MenuChoiceTableViewCell: UITableViewCell {
@@ -30,7 +30,9 @@ class MenuChoiceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        choiceButton.setBackgroundImage(circleFill.image, for: .normal)
+        circleFill.isHidden = true
+        circle.isHidden = true
+        choiceButton.setBackgroundImage(nil, for: .normal)
         
         choiceButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
@@ -47,10 +49,24 @@ class MenuChoiceTableViewCell: UITableViewCell {
             choiceButton.setBackgroundImage(circleFill.image, for: .normal)
         }
         self.currentButtonState = !self.currentButtonState
-        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
+        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath)
     }
     
-    func initialize(with indexPath: IndexPath) {
+    func initialize(with indexPath: IndexPath, currentIndexPath: IndexPath) {
+        
+        if indexPath != currentIndexPath {
+            self.currentButtonState = false
+            circleFill.isHidden = true
+            circle.isHidden = true
+            choiceButton.setBackgroundImage(nil, for: .normal)
+        }
+        else {
+            self.currentButtonState = true
+            circleFill.isHidden = false
+            circle.isHidden = false
+            choiceButton.setBackgroundImage(circleFill.image, for: .normal)
+        }
+        
         self.indexPath = indexPath
     }
     

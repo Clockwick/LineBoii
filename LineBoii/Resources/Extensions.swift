@@ -312,6 +312,7 @@ extension Notification.Name {
     static let priceLevelNotification = Notification.Name("priceLevelNotification")
     static let foodCategoryNotification = Notification.Name("foodCategoryNotification")
     static let clearFilterAllNotification = Notification.Name("clearFilterAllNotification")
+    static let foodChoiceNotification = Notification.Name("foodChoiceNotification")
 }
 
 func addButtonElevation(button: UIButton) -> UIButton {
