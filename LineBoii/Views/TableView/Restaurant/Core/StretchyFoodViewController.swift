@@ -23,6 +23,7 @@ class StretchyFoodViewController: UIViewController{
         tv.register(UINib(nibName: String(describing: FoodHeaderTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodHeaderTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodCheckboxTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodCheckboxTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodChoiceTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodChoiceTableViewCell.identifier)
+        tv.register(UINib(nibName: String(describing: FoodAdditionalDetailTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodAdditionalDetailTableViewCell.identifier)
         return tv
     }()
 
@@ -43,7 +44,6 @@ class StretchyFoodViewController: UIViewController{
         guard let stretchyFoodHeaderView = self.stretchyFoodHeaderView, let viewModel = self.viewModel else {
             return
         }
-        stretchyFoodHeaderView.expansionMode = .immediate
         stretchyFoodHeaderView.maximumContentHeight = CGFloat(400)
         stretchyFoodHeaderView.minimumContentHeight = CGFloat(75)
         stretchyFoodHeaderView.initialize(with: viewModel, vc: self)
@@ -67,9 +67,11 @@ class StretchyFoodViewController: UIViewController{
         self.foodAdditions = viewModel.foodAdditionId
         for (index, foodAddition) in self.foodAdditions.enumerated() {
             // SKIP Header
+            print("Food addition #\(index) : \(foodAddition)")
             let index = index + 1
             self.sectionsHeightForRow[index] = calcHeight(from: foodAddition.menuId)
         }
+        
         
     }
     
@@ -89,17 +91,20 @@ class StretchyFoodViewController: UIViewController{
 
 extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        // + 1 Because Header
-        return self.foodAdditions.count + 1
+        // + 3 Because Header, Additional Detail, Add to cart
+        print("***Food additional***")
+        dump(self.foodAdditions)
+        return self.foodAdditions.count + 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfFoodAdditions = self.foodAdditions.count - 1
-        return numberOfFoodAdditions
+        return 1
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let textFieldSection = tableView.numberOfSections - 2
+        let addToCartSection = tableView.numberOfSections - 1
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodHeaderTableViewCell.identifier, for: indexPath) as? FoodHeaderTableViewCell,
@@ -110,7 +115,15 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             cell.configure(title: title, subtitle: subtitle)
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
-        
+            
+        case textFieldSection:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodAdditionalDetailTableViewCell.identifier, for: indexPath) as? FoodAdditionalDetailTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            return cell
+        case addToCartSection:
+            return UITableViewCell()
         default:
             let type = self.foodAdditions[indexPath.section - 1].type
             switch type {
@@ -137,11 +150,19 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+        let textFieldSection = tableView.numberOfSections - 2
+        let addToCartSection = tableView.numberOfSections - 1
         if indexPath.section == 0 {
             return tableView.estimatedRowHeight
         }
         
+        if indexPath.section == textFieldSection {
+            return 120
+        }
+        
+        if indexPath.section == addToCartSection {
+            return 150
+        }
         else {
             guard let status = self.sectionsStatusForRow[indexPath.section] else {
                 // First Appearance
@@ -167,8 +188,14 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let textFieldSection = tableView.numberOfSections - 2
+        let addToCartSection = tableView.numberOfSections - 1
         switch indexPath.section {
         case 0:
+            break
+        case textFieldSection:
+            break
+        case addToCartSection:
             break
         default:
             let type = self.foodAdditions[indexPath.section - 1].type

@@ -169,19 +169,21 @@ class RestaurantViewController: UIViewController {
         
         let menusC1: [Menu] = [c1_f1_a1_m1]
         let menusC2: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3, c1_f1_a1_m4, c1_f1_a1_m5]
+        let menusC5: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3, c1_f1_a1_m4]
         
         let menusC3: [Menu] = [c2_f1_a1_m1]
         let menusC4: [Menu] = [c2_f1_a1_m1, c2_f1_a1_m2, c2_f1_a1_m3]
         
         // Food Addition
         let c1_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 1 ข้อ", type: .checkbox, menuId: menusC1)
-        let c1_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 5 ข้อ", type: .choice, menuId: menusC2)
+        let c1_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC2)
+        let c1_f1_a3 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC5)
         
         let c2_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 1 ข้อ", type: .checkbox, menuId: menusC3)
         
         let c2_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 3 ข้อ", type: .choice, menuId: menusC4)
         
-        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a2]
+        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a2, c1_f1_a3]
         let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1, c2_f1_a2]
         
         // Food
