@@ -24,7 +24,7 @@ class StretchyFoodViewController: UIViewController{
         tv.register(UINib(nibName: String(describing: FoodCheckboxTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodCheckboxTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodChoiceTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodChoiceTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodAdditionalDetailTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodAdditionalDetailTableViewCell.identifier)
-        tv.register(UINib(nibName: String(describing: BucketTableViewCell.self), bundle: nil), forCellReuseIdentifier: BucketTableViewCell.identifier)
+        tv.register(UINib(nibName: String(describing: AddToCartTableViewCell.self), bundle: nil), forCellReuseIdentifier: AddToCartTableViewCell.identifier)
         return tv
     }()
 
@@ -121,7 +121,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case addToCartSection:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: BucketTableViewCell.identifier, for: indexPath) as? BucketTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AddToCartTableViewCell.identifier, for: indexPath) as? AddToCartTableViewCell else {
                 return UITableViewCell()
             }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none

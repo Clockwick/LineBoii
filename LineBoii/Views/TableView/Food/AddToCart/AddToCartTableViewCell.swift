@@ -1,5 +1,5 @@
 //
-//  BucketTableViewCell.swift
+//  AddToCartTableViewCell.swift
 //  LineBoii
 //
 //  Created by Paratthakorn Sribunyong on 31/8/2564 BE.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class BucketTableViewCell: UITableViewCell {
-    static let identifier = "BucketTableViewCell"
+class AddToCartTableViewCell: UITableViewCell {
+    static let identifier = "AddToCartTableViewCell"
     
     
     @IBOutlet var decreaseButton: UIButton!

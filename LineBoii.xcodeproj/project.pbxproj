@@ -53,8 +53,8 @@
 		68589A0126BE926B001CE1D3 /* FilterPickableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68589A0026BE926B001CE1D3 /* FilterPickableButton.swift */; };
 		6871C95C26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871C95A26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.swift */; };
 		6871C95D26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6871C95B26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib */; };
-		6871C96326DE579400ACAB7C /* BucketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871C96126DE579400ACAB7C /* BucketTableViewCell.swift */; };
-		6871C96426DE579400ACAB7C /* BucketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6871C96226DE579400ACAB7C /* BucketTableViewCell.xib */; };
+		6871C96326DE579400ACAB7C /* AddToCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871C96126DE579400ACAB7C /* AddToCartTableViewCell.swift */; };
+		6871C96426DE579400ACAB7C /* AddToCartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */; };
 		68888B3126AD3B260090745B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68888B3026AD3B260090745B /* LoginViewController.swift */; };
 		6895465026DB82F800EA6FED /* FoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895464F26DB82F800EA6FED /* FoodManager.swift */; };
 		6895465526DB887E00EA6FED /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895465426DB887E00EA6FED /* ButtonState.swift */; };
@@ -194,8 +194,8 @@
 		68589A0026BE926B001CE1D3 /* FilterPickableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickableButton.swift; sourceTree = "<group>"; };
 		6871C95A26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAdditionalDetailTableViewCell.swift; sourceTree = "<group>"; };
 		6871C95B26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodAdditionalDetailTableViewCell.xib; sourceTree = "<group>"; };
-		6871C96126DE579400ACAB7C /* BucketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketTableViewCell.swift; sourceTree = "<group>"; };
-		6871C96226DE579400ACAB7C /* BucketTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BucketTableViewCell.xib; sourceTree = "<group>"; };
+		6871C96126DE579400ACAB7C /* AddToCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartTableViewCell.swift; sourceTree = "<group>"; };
+		6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToCartTableViewCell.xib; sourceTree = "<group>"; };
 		68888B3026AD3B260090745B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6895464F26DB82F800EA6FED /* FoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodManager.swift; sourceTree = "<group>"; };
 		6895465426DB887E00EA6FED /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
@@ -606,7 +606,7 @@
 			isa = PBXGroup;
 			children = (
 				68D6222A26D91F9800623032 /* Bucket */,
-				68D6222926D91F7F00623032 /* AddFoodAmount */,
+				68D6222926D91F7F00623032 /* AddToCart */,
 				68D6222826D91F7700623032 /* AdditionalDetail */,
 				68D6222726D91F6C00623032 /* Checkbox */,
 				68D6222626D91F6800623032 /* Choice */,
@@ -653,18 +653,18 @@
 			path = AdditionalDetail;
 			sourceTree = "<group>";
 		};
-		68D6222926D91F7F00623032 /* AddFoodAmount */ = {
+		68D6222926D91F7F00623032 /* AddToCart */ = {
 			isa = PBXGroup;
 			children = (
+				6871C96126DE579400ACAB7C /* AddToCartTableViewCell.swift */,
+				6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */,
 			);
-			path = AddFoodAmount;
+			path = AddToCart;
 			sourceTree = "<group>";
 		};
 		68D6222A26D91F9800623032 /* Bucket */ = {
 			isa = PBXGroup;
 			children = (
-				6871C96126DE579400ACAB7C /* BucketTableViewCell.swift */,
-				6871C96226DE579400ACAB7C /* BucketTableViewCell.xib */,
 			);
 			path = Bucket;
 			sourceTree = "<group>";
@@ -895,7 +895,7 @@
 				6895467B26DB924800EA6FED /* MenuChoiceTableViewCell.xib in Resources */,
 				68CA5B3926ACA8ED0022AEA8 /* Assets.xcassets in Resources */,
 				68319B2926AF96B200525821 /* supermarket.ttf in Resources */,
-				6871C96426DE579400ACAB7C /* BucketTableViewCell.xib in Resources */,
+				6871C96426DE579400ACAB7C /* AddToCartTableViewCell.xib in Resources */,
 				68CA5B3726ACA8E60022AEA8 /* Main.storyboard in Resources */,
 				68F5B5C426CE54F0009923E5 /* NibFoodTableViewCell.xib in Resources */,
 			);
@@ -1088,7 +1088,7 @@
 				685899DC26BBE61E001CE1D3 /* RestaurantFilterManager.swift in Sources */,
 				68409F5C26BEE6C300B04362 /* PriceSelectorViewController.swift in Sources */,
 				681B533126C22CBB0035363F /* FoodCategoryHeaderCollectionReusableView.swift in Sources */,
-				6871C96326DE579400ACAB7C /* BucketTableViewCell.swift in Sources */,
+				6871C96326DE579400ACAB7C /* AddToCartTableViewCell.swift in Sources */,
 				68F511A426B50CF000BF1BAA /* HorizontalScrollTitleCardCollectionViewCell.swift in Sources */,
 				683DFF1626B9749E009368AB /* ActiveFilterButton.swift in Sources */,
 				68F5119226B50B8800BF1BAA /* FavoriteCardViewModel.swift in Sources */,
