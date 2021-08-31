@@ -26,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="เช่น ไม่เอาผัก" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vo6-DN-Ntn">
-                        <rect key="frame" x="20" y="51" width="284" height="34"/>
+                        <rect key="frame" x="20" y="51" width="284" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="284" id="9Mp-2s-bxG"/>
                         </constraints>
@@ -41,7 +41,7 @@
                     <constraint firstItem="vo6-DN-Ntn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="SyF-8h-4g6"/>
                     <constraint firstAttribute="trailing" secondItem="vo6-DN-Ntn" secondAttribute="trailing" constant="20" id="Utg-15-QxD"/>
                     <constraint firstItem="2eF-T3-VT0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="b5Q-aK-Fua"/>
-                    <constraint firstAttribute="bottom" secondItem="vo6-DN-Ntn" secondAttribute="bottom" constant="35" id="c8c-Ht-or3"/>
+                    <constraint firstAttribute="bottom" secondItem="vo6-DN-Ntn" secondAttribute="bottom" constant="25" id="dkg-AX-zlM"/>
                     <constraint firstItem="vo6-DN-Ntn" firstAttribute="top" secondItem="2eF-T3-VT0" secondAttribute="bottom" constant="10" id="g6t-W1-qhf"/>
                 </constraints>
             </tableViewCellContentView>

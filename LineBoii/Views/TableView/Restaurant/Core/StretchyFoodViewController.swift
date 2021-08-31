@@ -24,6 +24,7 @@ class StretchyFoodViewController: UIViewController{
         tv.register(UINib(nibName: String(describing: FoodCheckboxTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodCheckboxTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodChoiceTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodChoiceTableViewCell.identifier)
         tv.register(UINib(nibName: String(describing: FoodAdditionalDetailTableViewCell.self), bundle: nil), forCellReuseIdentifier: FoodAdditionalDetailTableViewCell.identifier)
+        tv.register(UINib(nibName: String(describing: BucketTableViewCell.self), bundle: nil), forCellReuseIdentifier: BucketTableViewCell.identifier)
         return tv
     }()
 
@@ -67,7 +68,6 @@ class StretchyFoodViewController: UIViewController{
         self.foodAdditions = viewModel.foodAdditionId
         for (index, foodAddition) in self.foodAdditions.enumerated() {
             // SKIP Header
-            print("Food addition #\(index) : \(foodAddition)")
             let index = index + 1
             self.sectionsHeightForRow[index] = calcHeight(from: foodAddition.menuId)
         }
@@ -92,8 +92,6 @@ class StretchyFoodViewController: UIViewController{
 extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         // + 3 Because Header, Additional Detail, Add to cart
-        print("***Food additional***")
-        dump(self.foodAdditions)
         return self.foodAdditions.count + 3
     }
     
@@ -123,7 +121,11 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case addToCartSection:
-            return UITableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: BucketTableViewCell.identifier, for: indexPath) as? BucketTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            return cell
         default:
             let type = self.foodAdditions[indexPath.section - 1].type
             switch type {
