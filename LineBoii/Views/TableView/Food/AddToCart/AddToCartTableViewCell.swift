@@ -7,14 +7,17 @@
 
 import UIKit
 
+protocol AddToCartTableViewCellDelegate: AnyObject {
+    func currentSelectedItems(_ numberOfItems: Int)
+}
 class AddToCartTableViewCell: UITableViewCell {
     static let identifier = "AddToCartTableViewCell"
-    
     
     @IBOutlet var decreaseButton: UIButton!
     @IBOutlet var increaseButton: UIButton!
     @IBOutlet var numberLabel: UILabel!
     
+    weak var delegate: AddToCartTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,6 +38,7 @@ class AddToCartTableViewCell: UITableViewCell {
         
         number -= 1
         numberLabel.text = String(number)
+        delegate?.currentSelectedItems(number)
 
     }
     
@@ -51,6 +55,7 @@ class AddToCartTableViewCell: UITableViewCell {
         }
         number += 1
         numberLabel.text = String(number)
+        delegate?.currentSelectedItems(number)
         
     }
 

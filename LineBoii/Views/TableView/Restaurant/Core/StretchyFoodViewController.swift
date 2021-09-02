@@ -11,7 +11,7 @@ import GSKStretchyHeaderView
 class StretchyFoodViewController: UIViewController{
     
     private var totalPrice = 0
-    
+    private var totalItems = 1
     
     private var stretchyFoodHeaderView: StretchyFoodHeaderView?
     private var viewModel: FoodViewModel?
@@ -97,6 +97,11 @@ class StretchyFoodViewController: UIViewController{
         return CGFloat(result)
     }
     
+    private func triggerBucket() {
+        let price = self.totalPrice * self.totalItems
+        bucketView.configure(with: price)
+    }
+    
 }
 
 
@@ -144,6 +149,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
                 return UITableViewCell()
             }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            cell.delegate = self
             return cell
         default:
             let type = self.foodAdditions[indexPath.section - 1].type
@@ -252,7 +258,14 @@ extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
                 self.totalPrice += Int(menu.price)
             }
         }
-        bucketView.configure(with: self.totalPrice)
+        triggerBucket()
+    }
+}
+
+extension StretchyFoodViewController: AddToCartTableViewCellDelegate {
+    func currentSelectedItems(_ numberOfItems: Int) {
+        self.totalItems = numberOfItems
+        triggerBucket()
     }
 }
 

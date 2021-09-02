@@ -615,7 +615,6 @@
 		68D6222426D91F4E00623032 /* Food */ = {
 			isa = PBXGroup;
 			children = (
-				68D6222A26D91F9800623032 /* Bucket */,
 				68D6222926D91F7F00623032 /* AddToCart */,
 				68D6222826D91F7700623032 /* AdditionalDetail */,
 				68D6222726D91F6C00623032 /* Checkbox */,
@@ -670,13 +669,6 @@
 				6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */,
 			);
 			path = AddToCart;
-			sourceTree = "<group>";
-		};
-		68D6222A26D91F9800623032 /* Bucket */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Bucket;
 			sourceTree = "<group>";
 		};
 		68D6223C26DA07DA00623032 /* Cell */ = {

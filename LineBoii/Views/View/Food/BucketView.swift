@@ -25,6 +25,7 @@ class BucketView: UIView {
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "0฿"
+        label.textAlignment = .right
         return label
     }()
     
@@ -46,7 +47,7 @@ class BucketView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         addToBucketLabel.frame = CGRect(x: 20, y: 10, width: frame.width / 3, height: frame.height - 20)
-        sumPriceLabel.frame = CGRect(x: frame.width - 60, y: 10, width: 50, height: frame.height - 20)
+        sumPriceLabel.frame = CGRect(x: frame.width - 120, y: 10, width: 100, height: frame.height - 20)
         
     }
     
