@@ -10,12 +10,17 @@ import GSKStretchyHeaderView
 
 class StretchyFoodViewController: UIViewController{
     
+    private var totalPrice = 0
+    
+    
     private var stretchyFoodHeaderView: StretchyFoodHeaderView?
     private var viewModel: FoodViewModel?
     private var foodAdditions = [FoodAddition]()
     
     private var sectionsHeightForRow = [Int: CGFloat]()
     private var sectionsStatusForRow = [Int: Bool]()
+    
+    private let bucketView: BucketView = BucketView()
     
     private let tableView: UITableView = {
         let tv = UITableView()
@@ -32,12 +37,15 @@ class StretchyFoodViewController: UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
+        view.addSubview(bucketView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         setupStretchyHeader()
         
     }
+    
+
     
     private func setupStretchyHeader() {
         let headerSize = CGSize(width: self.view.width, height: 400)
@@ -59,6 +67,9 @@ class StretchyFoodViewController: UIViewController{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        bucketView.frame = CGRect(x: 20, y: view.safeAreaInsets.bottom - 80, width: view.width - 40, height: 60)
+        
         tableView.frame = view.bounds
         
     }
@@ -86,6 +97,14 @@ class StretchyFoodViewController: UIViewController{
         return CGFloat(result)
     }
     
+}
+
+
+
+extension StretchyFoodViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        bucketView.frame.origin.y = 770
+    }
 }
 
 
@@ -218,11 +237,22 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
 
 
 extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
+    
     func foodCheckboxTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
         self.sectionsStatusForRow[indexPath.section] = status
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func currentSelectedCheckbox(_ menus: [Menu]) {
+        self.totalPrice = 0
+        menus.forEach { (menu) in
+            if menu.status {
+                self.totalPrice += Int(menu.price)
+            }
+        }
+        bucketView.configure(with: self.totalPrice)
     }
 }
 
@@ -234,3 +264,6 @@ extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
         }
     }
 }
+
+
+

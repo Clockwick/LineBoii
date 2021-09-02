@@ -55,6 +55,7 @@
 		6871C95D26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6871C95B26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib */; };
 		6871C96326DE579400ACAB7C /* AddToCartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871C96126DE579400ACAB7C /* AddToCartTableViewCell.swift */; };
 		6871C96426DE579400ACAB7C /* AddToCartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */; };
+		6871C97826DFCE0900ACAB7C /* BucketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6871C97726DFCE0900ACAB7C /* BucketView.swift */; };
 		68888B3126AD3B260090745B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68888B3026AD3B260090745B /* LoginViewController.swift */; };
 		6895465026DB82F800EA6FED /* FoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895464F26DB82F800EA6FED /* FoodManager.swift */; };
 		6895465526DB887E00EA6FED /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895465426DB887E00EA6FED /* ButtonState.swift */; };
@@ -85,7 +86,6 @@
 		68CA5B4726ACA8ED0022AEA8 /* LineBoiiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B4626ACA8ED0022AEA8 /* LineBoiiTests.swift */; };
 		68CA5B5226ACA8ED0022AEA8 /* LineBoiiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA5B5126ACA8ED0022AEA8 /* LineBoiiUITests.swift */; };
 		68D6220226D8BD2000623032 /* StretchyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6220126D8BD2000623032 /* StretchyFoodViewController.swift */; };
-		68D6220E26D8C53900623032 /* StretchyFoodHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */; };
 		68D6222D26D9208200623032 /* FoodHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6222B26D9208200623032 /* FoodHeaderTableViewCell.swift */; };
 		68D6222E26D9208200623032 /* FoodHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68D6222C26D9208200623032 /* FoodHeaderTableViewCell.xib */; };
 		68D6223726D9209200623032 /* FoodCheckboxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D6223526D9209200623032 /* FoodCheckboxTableViewCell.swift */; };
@@ -101,6 +101,7 @@
 		68E807A326ADB98B001F69CD /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E807A226ADB98B001F69CD /* OrderViewController.swift */; };
 		68E807A826ADB992001F69CD /* InboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E807A726ADB992001F69CD /* InboxViewController.swift */; };
 		68E807AD26ADB998001F69CD /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E807AC26ADB998001F69CD /* OthersViewController.swift */; };
+		68EFD20626E0B4060091C901 /* StretchyFoodHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EFD20526E0B4060091C901 /* StretchyFoodHeaderView.swift */; };
 		68F5112826B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5112726B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift */; };
 		68F5115526B41C3800BF1BAA /* OrderFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5115426B41C3800BF1BAA /* OrderFoodViewController.swift */; };
 		68F5115A26B41ED100BF1BAA /* HeaderLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F5115926B41ED100BF1BAA /* HeaderLocationTableViewCell.swift */; };
@@ -196,6 +197,7 @@
 		6871C95B26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodAdditionalDetailTableViewCell.xib; sourceTree = "<group>"; };
 		6871C96126DE579400ACAB7C /* AddToCartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartTableViewCell.swift; sourceTree = "<group>"; };
 		6871C96226DE579400ACAB7C /* AddToCartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToCartTableViewCell.xib; sourceTree = "<group>"; };
+		6871C97726DFCE0900ACAB7C /* BucketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketView.swift; sourceTree = "<group>"; };
 		68888B3026AD3B260090745B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6895464F26DB82F800EA6FED /* FoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodManager.swift; sourceTree = "<group>"; };
 		6895465426DB887E00EA6FED /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
@@ -232,7 +234,6 @@
 		68CA5B5126ACA8ED0022AEA8 /* LineBoiiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineBoiiUITests.swift; sourceTree = "<group>"; };
 		68CA5B5326ACA8ED0022AEA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68D6220126D8BD2000623032 /* StretchyFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodViewController.swift; sourceTree = "<group>"; };
-		68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodHeaderView.swift; sourceTree = "<group>"; };
 		68D6222B26D9208200623032 /* FoodHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		68D6222C26D9208200623032 /* FoodHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		68D6223526D9209200623032 /* FoodCheckboxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCheckboxTableViewCell.swift; sourceTree = "<group>"; };
@@ -248,6 +249,7 @@
 		68E807A226ADB98B001F69CD /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		68E807A726ADB992001F69CD /* InboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewController.swift; sourceTree = "<group>"; };
 		68E807AC26ADB998001F69CD /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
+		68EFD20526E0B4060091C901 /* StretchyFoodHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyFoodHeaderView.swift; sourceTree = "<group>"; };
 		68F5112726B283A600BF1BAA /* HorizontalScrollCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		68F5115426B41C3800BF1BAA /* OrderFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFoodViewController.swift; sourceTree = "<group>"; };
 		68F5115926B41ED100BF1BAA /* HeaderLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLocationTableViewCell.swift; sourceTree = "<group>"; };
@@ -458,6 +460,22 @@
 			path = FilterButtons;
 			sourceTree = "<group>";
 		};
+		6871C97526DFCDAE00ACAB7C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6871C97626DFCDB300ACAB7C /* Food */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6871C97626DFCDB300ACAB7C /* Food */ = {
+			isa = PBXGroup;
+			children = (
+				6871C97726DFCE0900ACAB7C /* BucketView.swift */,
+			);
+			path = Food;
+			sourceTree = "<group>";
+		};
 		68888B1926AD38430090745B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -594,14 +612,6 @@
 			path = LineBoiiUITests;
 			sourceTree = "<group>";
 		};
-		68D6220C26D8C50900623032 /* StretchyView */ = {
-			isa = PBXGroup;
-			children = (
-				68D6220D26D8C53900623032 /* StretchyFoodHeaderView.swift */,
-			);
-			path = StretchyView;
-			sourceTree = "<group>";
-		};
 		68D6222426D91F4E00623032 /* Food */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,7 +702,8 @@
 		68E8078E26ADB1E4001F69CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				68D6220C26D8C50900623032 /* StretchyView */,
+				68EFD20426E0B3F20091C901 /* Stretch */,
+				6871C97526DFCDAE00ACAB7C /* View */,
 				684AD27B26B92846006D0EF8 /* Others */,
 				684AD25426B7B545006D0EF8 /* HeaderView */,
 				68F511BA26B5433200BF1BAA /* TableView */,
@@ -728,6 +739,14 @@
 				681B531126C13B520035363F /* FoodCategorySelectorViewController.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		68EFD20426E0B3F20091C901 /* Stretch */ = {
+			isa = PBXGroup;
+			children = (
+				68EFD20526E0B4060091C901 /* StretchyFoodHeaderView.swift */,
+			);
+			path = Stretch;
 			sourceTree = "<group>";
 		};
 		68F511B626B5430D00BF1BAA /* CollectionView */ = {
@@ -1097,8 +1116,9 @@
 				68A35A9726C61A9B00DB5B1B /* RestaurantViewController.swift in Sources */,
 				68CA5B3226ACA8E60022AEA8 /* SceneDelegate.swift in Sources */,
 				68A35AF526CBE48800DB5B1B /* FoodViewModel.swift in Sources */,
+				68EFD20626E0B4060091C901 /* StretchyFoodHeaderView.swift in Sources */,
 				683DFF0C26B9673D009368AB /* RestaurantFilterHeaderView.swift in Sources */,
-				68D6220E26D8C53900623032 /* StretchyFoodHeaderView.swift in Sources */,
+				6871C97826DFCE0900ACAB7C /* BucketView.swift in Sources */,
 				683DFF1126B96A7D009368AB /* FilterButton.swift in Sources */,
 				68526B4126BEA1A600B2A818 /* FilterPriceLevelButton.swift in Sources */,
 				6871C95C26DCBBCA00ACAB7C /* FoodAdditionalDetailTableViewCell.swift in Sources */,

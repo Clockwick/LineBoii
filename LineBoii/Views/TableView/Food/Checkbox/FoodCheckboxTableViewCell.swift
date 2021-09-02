@@ -10,6 +10,7 @@ import UIKit
 
 protocol FoodCheckboxTableViewCellDelegate: AnyObject {
     func foodCheckboxTableViewCellDidTap(_ status: Bool, indexPath: IndexPath)
+    func currentSelectedCheckbox(_ menus: [Menu])
 }
 
 class FoodCheckboxTableViewCell: UITableViewCell {
@@ -130,5 +131,7 @@ extension FoodCheckboxTableViewCell: UITableViewDelegate, UITableViewDataSource 
 extension FoodCheckboxTableViewCell: MenuCheckboxTableViewCellDelegate {
     func menuCheckboxTableViewCellDidTap(at indexPath: IndexPath,status: Bool) {
         checkboxDict[indexPath] = status
+        menus[indexPath.row].status = status
+        delegate?.currentSelectedCheckbox(menus)
     }
 }

@@ -10,5 +10,5 @@ import Foundation
 struct Menu {
     let name: String
     let price: Int
-    let status: Bool = false
+    var status: Bool = false
 }
