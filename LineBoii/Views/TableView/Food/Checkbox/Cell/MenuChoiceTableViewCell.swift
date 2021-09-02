@@ -38,22 +38,16 @@ class MenuChoiceTableViewCell: UITableViewCell {
     }
     
     @objc func didTapButton() {
-        switch currentButtonState {
-        case true:
-            circleFill.isHidden = true
-            circle.isHidden = true
-            choiceButton.setBackgroundImage(nil, for: .normal)
-        case false:
+        if !currentButtonState {
             circleFill.isHidden = false
             circle.isHidden = false
             choiceButton.setBackgroundImage(circleFill.image, for: .normal)
+            self.currentButtonState = !self.currentButtonState
+            delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
         }
-        self.currentButtonState = !self.currentButtonState
-        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
     }
     
     func initialize(with indexPath: IndexPath, currentIndexPath: IndexPath) {
-        
         if indexPath != currentIndexPath {
             self.currentButtonState = false
             circleFill.isHidden = true
@@ -66,7 +60,6 @@ class MenuChoiceTableViewCell: UITableViewCell {
             circle.isHidden = false
             choiceButton.setBackgroundImage(circleFill.image, for: .normal)
         }
-        
         self.indexPath = indexPath
     }
     
@@ -80,6 +73,7 @@ class MenuChoiceTableViewCell: UITableViewCell {
         
         self.menuNameLabel = menuNameLabel
         self.bahtLabel = bahtLabel
+        self.currentButtonState = viewModel.status
     }
     
 }

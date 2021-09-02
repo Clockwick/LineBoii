@@ -107,15 +107,7 @@ class FoodChoiceTableViewCell: UITableViewCell {
         return self.chevronStatus
     }
     
-    func showDefaultChoice() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            let firstIndexPath = IndexPath(item: 0, section: 0)
-            guard let firstCell = self.menuTableView.dequeueReusableCell(withIdentifier: MenuChoiceTableViewCell.identifier, for: firstIndexPath) as? MenuChoiceTableViewCell else {
-                return 
-            }
-            firstCell.didTapButton()
-        }
-    }
+    
 }
 
 
@@ -128,10 +120,16 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
         guard let cell = self.menuTableView.dequeueReusableCell(withIdentifier: MenuChoiceTableViewCell.identifier, for: indexPath) as? MenuChoiceTableViewCell else {
             return UITableViewCell()
         }
+        
         cell.initialize(with: indexPath, currentIndexPath: currentIndexPath)
         cell.configure(viewModel: menus[indexPath.row])
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
+        
+        if isFirstTime {
+            cell.didTapButton()
+            isFirstTime = false
+        }
         return cell
     }
     

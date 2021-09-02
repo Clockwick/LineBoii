@@ -179,12 +179,6 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
                 cell.configure(with: self.foodAdditions[indexPath.section - 1])
                 cell.delegate = self
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
-                
-                if isFirstTime {
-                    cell.showDefaultChoice()
-                    isFirstTime = false
-                }
-                
                 return cell
             }
         }
