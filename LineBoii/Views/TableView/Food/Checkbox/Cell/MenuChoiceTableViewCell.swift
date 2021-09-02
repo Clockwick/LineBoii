@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MenuChoiceTableViewCellDelegate: AnyObject {
-    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath)
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool)
 }
 
 class MenuChoiceTableViewCell: UITableViewCell {
@@ -37,7 +37,7 @@ class MenuChoiceTableViewCell: UITableViewCell {
         choiceButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
-    @objc private func didTapButton() {
+    @objc func didTapButton() {
         switch currentButtonState {
         case true:
             circleFill.isHidden = true
@@ -49,7 +49,7 @@ class MenuChoiceTableViewCell: UITableViewCell {
             choiceButton.setBackgroundImage(circleFill.image, for: .normal)
         }
         self.currentButtonState = !self.currentButtonState
-        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath)
+        delegate?.menuChoiceTableViewCellDidTap(at: self.indexPath, status: self.currentButtonState)
     }
     
     func initialize(with indexPath: IndexPath, currentIndexPath: IndexPath) {

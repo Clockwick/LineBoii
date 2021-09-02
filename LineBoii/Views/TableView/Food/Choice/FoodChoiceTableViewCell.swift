@@ -9,6 +9,7 @@ import UIKit
 
 protocol FoodChoiceTableViewCellDelegate: AnyObject {
     func foodChoiceTableViewCellDidTap(_ status: Bool, indexPath: IndexPath)
+    func currentSelectedChoice(_ menus: [Menu], indexPath: IndexPath)
 }
 
 class FoodChoiceTableViewCell: UITableViewCell {
@@ -20,6 +21,9 @@ class FoodChoiceTableViewCell: UITableViewCell {
     private var menus = [Menu]()
     private var currentIndexPath: IndexPath = IndexPath.init(row: -1, section: -1)
     private var currentChoice = [IndexPath: Bool]()
+    private var passedIndexPath: IndexPath = IndexPath.init(row: -1, section: -1)
+    private var isFirstTime: Bool = true
+    
     
     @IBOutlet var menuTableView: UITableView! {
         didSet {
@@ -41,6 +45,8 @@ class FoodChoiceTableViewCell: UITableViewCell {
         
         chevronSetup()
         menuTableViewSetup()
+        
+        
     }
 
     // MARK: - Set up
@@ -66,6 +72,14 @@ class FoodChoiceTableViewCell: UITableViewCell {
         self.titleLabel = titleLabel
         
         self.menus = viewModel.menuId
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.menuTableView.reloadDataWithAutoSizingCellWorkAround()
+        }
+    }
+    
+    func initialize(with indexPath: IndexPath) {
+        self.passedIndexPath = indexPath
     }
     
     func toggleChevron(indexPath: IndexPath) {
@@ -87,13 +101,21 @@ class FoodChoiceTableViewCell: UITableViewCell {
             contentView.frame = CGRect(x: 0, y: 0, width: contentView.width, height: contentView.height - self.menuTableView.height)
             delegate?.foodChoiceTableViewCellDidTap(false, indexPath: indexPath)
         }
-//        setNeedsLayout()
     }
     
     func getChevronStatus() -> Bool {
         return self.chevronStatus
     }
     
+    func showDefaultChoice() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let firstIndexPath = IndexPath(item: 0, section: 0)
+            guard let firstCell = self.menuTableView.dequeueReusableCell(withIdentifier: MenuChoiceTableViewCell.identifier, for: firstIndexPath) as? MenuChoiceTableViewCell else {
+                return 
+            }
+            firstCell.didTapButton()
+        }
+    }
 }
 
 
@@ -116,16 +138,24 @@ extension FoodChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.menuTableView {
             self.menuTableView.deselectRow(at: indexPath, animated: true)
-            
         }
     }
 }
 
 extension FoodChoiceTableViewCell: MenuChoiceTableViewCellDelegate {
-    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath) {
+    func menuChoiceTableViewCellDidTap(at indexPath: IndexPath, status: Bool) {
         self.currentIndexPath = indexPath
+        var newMenus = [Menu]()
+        self.menus.forEach { (menu) in
+            var newMenu = menu
+            newMenu.status = false
+            newMenus.append(newMenu)
+        }
+        self.menus = newMenus
+        menus[indexPath.row].status = status
+        delegate?.currentSelectedChoice(menus, indexPath: passedIndexPath)
         DispatchQueue.main.async {
-            self.menuTableView.reloadData()
+            self.menuTableView.reloadDataWithAutoSizingCellWorkAround()
         }
         
     }

@@ -10,7 +10,7 @@ import UIKit
 
 protocol FoodCheckboxTableViewCellDelegate: AnyObject {
     func foodCheckboxTableViewCellDidTap(_ status: Bool, indexPath: IndexPath)
-    func currentSelectedCheckbox(_ menus: [Menu])
+    func currentSelectedCheckbox(_ menus: [Menu], indexPath: IndexPath)
 }
 
 class FoodCheckboxTableViewCell: UITableViewCell {
@@ -21,6 +21,7 @@ class FoodCheckboxTableViewCell: UITableViewCell {
     private var chevronStatus: Bool = true
     private var menus = [Menu]()
     private var checkboxDict = [IndexPath: Bool]()
+    private var currentIndexPath = IndexPath.init(row: -1, section: -1)
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
@@ -74,6 +75,10 @@ class FoodCheckboxTableViewCell: UITableViewCell {
         self.subtitleLabel = subtitleLabel
         
         self.menus = viewModel.menuId
+    }
+    
+    func initialize(with indexPath: IndexPath) {
+        self.currentIndexPath = indexPath
     }
     
     func toggleChevron(indexPath: IndexPath) {
@@ -132,6 +137,6 @@ extension FoodCheckboxTableViewCell: MenuCheckboxTableViewCellDelegate {
     func menuCheckboxTableViewCellDidTap(at indexPath: IndexPath,status: Bool) {
         checkboxDict[indexPath] = status
         menus[indexPath.row].status = status
-        delegate?.currentSelectedCheckbox(menus)
+        delegate?.currentSelectedCheckbox(menus, indexPath: self.currentIndexPath)
     }
 }

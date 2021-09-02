@@ -157,25 +157,26 @@ class RestaurantViewController: UIViewController {
         // Menus
         
         let c1_f1_a1_m1 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
-        let c1_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
-        let c1_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
-        let c1_f1_a1_m4 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
-        let c1_f1_a1_m5 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
+        let c1_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 40)
+        let c1_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 45)
+        let c1_f1_a1_m4 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 50)
+        let c1_f1_a1_m5 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 55)
         
-        let c2_f1_a1_m1 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
-        let c2_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 35)
-        let c2_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 35)
+        let c2_f1_a1_m1 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 60)
+        let c2_f1_a1_m2 = Menu(name: "แจ่วบองปลาร้าสูตรปากเซ", price: 65)
+        let c2_f1_a1_m3 = Menu(name: "แจ่วหมากแหล่นสูตรปากเซ", price: 70)
         
         
         let menusC1: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2]
         let menusC2: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3, c1_f1_a1_m4, c1_f1_a1_m5]
-        let menusC5: [Menu] = [c1_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3, c1_f1_a1_m4]
+        let menusC5: [Menu] = [c1_f1_a1_m4, c1_f1_a1_m5]
         
         let menusC3: [Menu] = [c2_f1_a1_m1, c1_f1_a1_m2, c1_f1_a1_m3]
         let menusC4: [Menu] = [c2_f1_a1_m1, c2_f1_a1_m2, c2_f1_a1_m3]
         
         // Food Addition
         let c1_f1_a1 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 2 ข้อ", type: .checkbox, menuId: menusC1)
+        let c1_f1_a5 = FoodAddition(title: "เพิ่ม", subtitle: "เลือกสูงสุด 5 ข้อ", type: .checkbox, menuId: menusC2)
         let c1_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC2)
         let c1_f1_a3 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC5)
         
@@ -183,7 +184,7 @@ class RestaurantViewController: UIViewController {
         
         let c2_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC4)
         
-        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a2, c1_f1_a3]
+        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a5 ,c1_f1_a2, c1_f1_a3]
         let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1, c2_f1_a2]
         
         // Food

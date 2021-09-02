@@ -343,3 +343,13 @@ extension UIViewController {
         }
     }
 }
+
+
+extension UITableView {
+    func reloadDataWithAutoSizingCellWorkAround() {
+        self.reloadData()
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        self.reloadData()
+    }
+}

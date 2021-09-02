@@ -19,8 +19,11 @@ class StretchyFoodViewController: UIViewController{
     
     private var sectionsHeightForRow = [Int: CGFloat]()
     private var sectionsStatusForRow = [Int: Bool]()
+    private var priceForSection = [Int: Int]()
     
     private let bucketView: BucketView = BucketView()
+    
+    private var isFirstTime: Bool = true
     
     private let tableView: UITableView = {
         let tv = UITableView()
@@ -98,8 +101,12 @@ class StretchyFoodViewController: UIViewController{
     }
     
     private func triggerBucket() {
-        let price = self.totalPrice * self.totalItems
-        bucketView.configure(with: price)
+        self.totalPrice = 0
+        priceForSection.values.forEach { (price) in
+            self.totalPrice += price
+        }
+        let resultPrice = self.totalPrice * self.totalItems
+        bucketView.configure(with: resultPrice)
     }
     
 }
@@ -121,7 +128,6 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,11 +159,13 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             return cell
         default:
             let type = self.foodAdditions[indexPath.section - 1].type
+            priceForSection[indexPath.section - 1] = 0
             switch type {
             case .checkbox:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodCheckboxTableViewCell.identifier, for: indexPath) as? FoodCheckboxTableViewCell else {
                     return UITableViewCell()
                 }
+                cell.initialize(with: indexPath)
                 cell.configure(with: self.foodAdditions[indexPath.section - 1])
                 cell.delegate = self
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
@@ -166,9 +174,17 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodChoiceTableViewCell.identifier, for: indexPath) as? FoodChoiceTableViewCell else {
                     return UITableViewCell()
                 }
+                
+                cell.initialize(with: indexPath)
                 cell.configure(with: self.foodAdditions[indexPath.section - 1])
                 cell.delegate = self
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
+                
+                if isFirstTime {
+                    cell.showDefaultChoice()
+                    isFirstTime = false
+                }
+                
                 return cell
             }
         }
@@ -207,10 +223,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             case .checkbox:
                 return 100
             }
-            
-            
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -247,15 +260,15 @@ extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
     func foodCheckboxTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
         self.sectionsStatusForRow[indexPath.section] = status
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.tableView.reloadDataWithAutoSizingCellWorkAround()
         }
     }
     
-    func currentSelectedCheckbox(_ menus: [Menu]) {
-        self.totalPrice = 0
+    func currentSelectedCheckbox(_ menus: [Menu], indexPath: IndexPath) {
+        priceForSection[indexPath.section - 1]! = 0
         menus.forEach { (menu) in
             if menu.status {
-                self.totalPrice += Int(menu.price)
+                priceForSection[indexPath.section - 1]! += menu.price
             }
         }
         triggerBucket()
@@ -273,8 +286,18 @@ extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
     func foodChoiceTableViewCellDidTap(_ status: Bool, indexPath: IndexPath) {
         self.sectionsStatusForRow[indexPath.section] = status
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.tableView.reloadDataWithAutoSizingCellWorkAround()
         }
+    }
+    
+    func currentSelectedChoice(_ menus: [Menu], indexPath: IndexPath) {
+        priceForSection[indexPath.section - 1]! = 0
+        menus.forEach { (menu) in
+            if menu.status {
+                priceForSection[indexPath.section - 1]! += menu.price
+            }
+        }
+        triggerBucket()
     }
 }
 
