@@ -29,8 +29,11 @@
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJ8-XK-PMP">
-                        <rect key="frame" x="170" y="67" width="167" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJ8-XK-PMP">
+                        <rect key="frame" x="170" y="61" width="167" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="n8L-cI-KZ8"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -38,7 +41,9 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="R2C-Pi-5iV">
                         <rect key="frame" x="0.0" y="1" width="165" height="84.5"/>
                         <constraints>
+                            <constraint firstAttribute="width" secondItem="R2C-Pi-5iV" secondAttribute="height" multiplier="55:29" id="Bcj-f0-Gqx"/>
                             <constraint firstAttribute="width" constant="165" id="SkC-kY-Bxp"/>
+                            <constraint firstAttribute="height" constant="87" id="csH-2B-8nU"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -56,12 +61,8 @@
                     <constraint firstItem="dWY-4S-pu1" firstAttribute="top" secondItem="LPV-yc-nvl" secondAttribute="bottom" constant="5" id="cdR-Vv-6Qn"/>
                     <constraint firstItem="LPV-yc-nvl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="js3-Yt-iyb"/>
                     <constraint firstAttribute="bottom" secondItem="CJ8-XK-PMP" secondAttribute="bottom" constant="5" id="kU3-FR-MF6"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="CJ8-XK-PMP" secondAttribute="trailing" constant="5" id="oJc-o9-4UW"/>
                     <constraint firstItem="CJ8-XK-PMP" firstAttribute="top" secondItem="dWY-4S-pu1" secondAttribute="bottom" constant="5" id="pQV-N7-ICb"/>
                     <constraint firstItem="R2C-Pi-5iV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qL5-v6-yPF"/>
-                    <constraint firstAttribute="bottom" secondItem="R2C-Pi-5iV" secondAttribute="bottom" id="qVl-BX-Rk2"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="dWY-4S-pu1" secondAttribute="trailing" constant="5" id="y50-aI-7OQ"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="CJ8-XK-PMP" secondAttribute="bottom" constant="5" id="zDj-0O-cDb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

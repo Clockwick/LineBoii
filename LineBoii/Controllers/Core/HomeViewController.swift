@@ -263,7 +263,6 @@ class HomeViewController: UIViewController {
     // MARK: - Selector
     
     @objc func didTapDelivery() {
-        print("Tap")
         let vc = OrderFoodViewController()
         vc.title = "สั่งอาหาร"
         vc.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: nil)

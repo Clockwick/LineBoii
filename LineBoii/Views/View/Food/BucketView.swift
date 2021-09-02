@@ -14,7 +14,6 @@ class BucketView: UIView {
         label.text = "ใส่ในตะกร้า"
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -23,7 +22,6 @@ class BucketView: UIView {
         label.textColor = .white
         label.numberOfLines = 1
         label.font = .systemFont(ofSize: 17, weight: .semibold)
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "0฿"
         label.textAlignment = .right
         return label

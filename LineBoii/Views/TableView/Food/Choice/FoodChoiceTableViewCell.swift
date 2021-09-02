@@ -46,7 +46,6 @@ class FoodChoiceTableViewCell: UITableViewCell {
         chevronSetup()
         menuTableViewSetup()
         
-        
     }
 
     // MARK: - Set up

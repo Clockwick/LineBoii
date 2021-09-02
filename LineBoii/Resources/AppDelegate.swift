@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            let _ = Int(channelID)
         {
             LoginManager.shared.setup(channelID: channelID, universalLinkURL: nil)
-            
+            UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
             if AuthManager.shared.isSignedIn {
                 print("Sign in")
                 
