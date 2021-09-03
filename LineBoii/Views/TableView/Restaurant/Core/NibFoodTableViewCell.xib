@@ -59,10 +59,10 @@
                     <constraint firstItem="CJ8-XK-PMP" firstAttribute="top" secondItem="dWY-4S-pu1" secondAttribute="bottom" constant="5" id="Y02-cq-nKQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="LPV-yc-nvl" secondAttribute="trailing" constant="5" id="YXi-W7-3Ss"/>
                     <constraint firstItem="dWY-4S-pu1" firstAttribute="top" secondItem="LPV-yc-nvl" secondAttribute="bottom" constant="5" id="cdR-Vv-6Qn"/>
+                    <constraint firstItem="R2C-Pi-5iV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iiW-gT-abK"/>
                     <constraint firstItem="LPV-yc-nvl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="js3-Yt-iyb"/>
                     <constraint firstAttribute="bottom" secondItem="CJ8-XK-PMP" secondAttribute="bottom" constant="5" id="kU3-FR-MF6"/>
                     <constraint firstItem="CJ8-XK-PMP" firstAttribute="top" secondItem="dWY-4S-pu1" secondAttribute="bottom" constant="5" id="pQV-N7-ICb"/>
-                    <constraint firstItem="R2C-Pi-5iV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qL5-v6-yPF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

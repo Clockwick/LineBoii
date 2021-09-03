@@ -102,6 +102,7 @@ class StretchyFoodViewController: UIViewController{
     
     private func triggerBucket() {
         self.totalPrice = 0
+        dump(priceForSection)
         priceForSection.values.forEach { (price) in
             self.totalPrice += price
         }
@@ -159,7 +160,9 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
             return cell
         default:
             let type = self.foodAdditions[indexPath.section - 1].type
-            priceForSection[indexPath.section - 1] = 0
+            if priceForSection[indexPath.section - 1] == nil {
+                priceForSection[indexPath.section - 1] = 0
+            }
             switch type {
             case .checkbox:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodCheckboxTableViewCell.identifier, for: indexPath) as? FoodCheckboxTableViewCell else {
@@ -196,7 +199,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == textFieldSection {
             return 120
         }
-        
+         
         if indexPath.section == addToCartSection {
             return 150
         }
@@ -209,7 +212,7 @@ extension StretchyFoodViewController: UITableViewDelegate, UITableViewDataSource
                 // Dynamic Height for Row
                 return sectionsHeightForRow[indexPath.section]!
             }
-//            // Default Height for Row of inactive Menu bar
+            // Default Height for Row of inactive Menu bar
             let type = self.foodAdditions[indexPath.section - 1].type
             switch type {
             case .choice:
@@ -259,6 +262,7 @@ extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
     }
     
     func currentSelectedCheckbox(_ menus: [Menu], indexPath: IndexPath) {
+        print("Checkbox indexpath : \(indexPath)")
         priceForSection[indexPath.section - 1]! = 0
         menus.forEach { (menu) in
             if menu.status {
@@ -285,6 +289,7 @@ extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
     }
     
     func currentSelectedChoice(_ menus: [Menu], indexPath: IndexPath) {
+        print("Choice indexpath : \(indexPath)")
         priceForSection[indexPath.section - 1]! = 0
         menus.forEach { (menu) in
             if menu.status {

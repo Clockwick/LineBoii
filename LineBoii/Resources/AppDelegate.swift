@@ -10,9 +10,6 @@ import LineSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -41,23 +38,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-
-//    func application(
-//        _ application: UIApplication,
-//        open url: URL,
-//        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
-//    {
-//        return LoginManager.shared.application(application, open: url, options: options)
-//    }
-//
-//    func application(
-//        _ application: UIApplication,
-//        continue userActivity: NSUserActivity,
-//        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
-//    {
-//        return LoginManager.shared.application(application, open: userActivity.webpageURL)
-//    }
-//
-
 }
 
