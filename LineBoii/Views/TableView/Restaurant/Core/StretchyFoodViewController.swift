@@ -102,12 +102,17 @@ class StretchyFoodViewController: UIViewController{
     
     private func triggerBucket() {
         self.totalPrice = 0
-        dump(priceForSection)
         priceForSection.values.forEach { (price) in
             self.totalPrice += price
         }
         let resultPrice = self.totalPrice * self.totalItems
-        bucketView.configure(with: resultPrice)
+        if resultPrice > 0 {
+            bucketView.configure(with: resultPrice)
+        }
+        if resultPrice == 0 {
+            bucketView.showNonActive()
+        }
+        
     }
     
 }
@@ -262,7 +267,6 @@ extension StretchyFoodViewController: FoodCheckboxTableViewCellDelegate {
     }
     
     func currentSelectedCheckbox(_ menus: [Menu], indexPath: IndexPath) {
-        print("Checkbox indexpath : \(indexPath)")
         priceForSection[indexPath.section - 1]! = 0
         menus.forEach { (menu) in
             if menu.status {
@@ -289,7 +293,6 @@ extension StretchyFoodViewController: FoodChoiceTableViewCellDelegate {
     }
     
     func currentSelectedChoice(_ menus: [Menu], indexPath: IndexPath) {
-        print("Choice indexpath : \(indexPath)")
         priceForSection[indexPath.section - 1]! = 0
         menus.forEach { (menu) in
             if menu.status {

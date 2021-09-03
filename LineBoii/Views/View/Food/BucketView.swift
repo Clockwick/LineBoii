@@ -30,7 +30,7 @@ class BucketView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .darkGreen
+        showNonActive()
         layer.masksToBounds = true
         layer.cornerRadius = 10
         
@@ -49,11 +49,12 @@ class BucketView: UIView {
         
     }
     
-    
-    
     func configure(with price: Int) {
         self.sumPriceLabel.text = "\(String(price))฿"
+        backgroundColor = .darkGreen
     }
-
-
+    
+    func showNonActive() {
+        backgroundColor = .lightGray
+    }
 }

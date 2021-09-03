@@ -184,7 +184,7 @@ class RestaurantViewController: UIViewController {
         
         let c2_f1_a2 = FoodAddition(title: "เพิ่ม", subtitle: "", type: .choice, menuId: menusC4)
         
-        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1, c1_f1_a5 ,c1_f1_a2, c1_f1_a3]
+        let foodAddtionalsC1: [FoodAddition] = [c1_f1_a1]
         let foodAddtionalsC2: [FoodAddition] = [c2_f1_a1, c2_f1_a2]
         
         // Food
